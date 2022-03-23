@@ -1,0 +1,45 @@
+{
+    "name": "PlayerController",
+    "maps": [
+        {
+            "name": "Players",
+            "id": "c2c97df1-387a-48fc-a45c-867592be7318",
+            "actions": [
+                {
+                    "name": "move1",
+                    "type": "Value",
+                    "id": "f764e579-9941-4653-9b8c-cfee1bb0fb5e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c41363d1-aa6c-4417-8eed-580f194fbbd5",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "move1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Mobile",
+            "bindingGroup": "Mobile",
+            "devices": []
+        },
+        {
+            "name": "PC",
+            "bindingGroup": "PC",
+            "devices": []
+        }
+    ]
+}
