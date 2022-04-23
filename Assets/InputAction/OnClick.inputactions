@@ -1,0 +1,34 @@
+{
+    "name": "OnClick",
+    "maps": [
+        {
+            "name": "Click",
+            "id": "c1b6c026-d418-43e5-8aea-2d9de253c283",
+            "actions": [
+                {
+                    "name": "OnClick",
+                    "type": "Value",
+                    "id": "2aa2b828-1a78-46c3-b8a0-32159d8a9419",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e9741c93-c3f9-4ea6-a872-88515e6b5229",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

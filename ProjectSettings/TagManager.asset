@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - TakeButton
+  - WoodOnGround
+  - Slot
+  - dialogueIcon
   layers:
   - Default
   - TransparentFX
@@ -43,4 +47,10 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1585231725
+    locked: 0
+  - name: MapItem
+    uniqueID: 681251929
+    locked: 0
+  - name: UI
+    uniqueID: 1349425721
     locked: 0

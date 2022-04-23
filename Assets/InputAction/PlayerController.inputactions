@@ -2,13 +2,13 @@
     "name": "PlayerController",
     "maps": [
         {
-            "name": "Players",
-            "id": "c2c97df1-387a-48fc-a45c-867592be7318",
+            "name": "Player",
+            "id": "4c06df7d-139e-4e32-9230-b2e0f0b23b1f",
             "actions": [
                 {
-                    "name": "move1",
+                    "name": "Move",
                     "type": "Value",
-                    "id": "f764e579-9941-4653-9b8c-cfee1bb0fb5e",
+                    "id": "9c4ad7d8-4000-4b9c-a124-6cba08aee3f8",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -18,28 +18,17 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "c41363d1-aa6c-4417-8eed-580f194fbbd5",
-                    "path": "<Gamepad>/leftStickPress",
+                    "id": "8fdcb9d6-39d6-4192-90d0-09ead46ddf9e",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Mobile",
-                    "action": "move1",
+                    "groups": "",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": [
-        {
-            "name": "Mobile",
-            "bindingGroup": "Mobile",
-            "devices": []
-        },
-        {
-            "name": "PC",
-            "bindingGroup": "PC",
-            "devices": []
-        }
-    ]
+    "controlSchemes": []
 }
