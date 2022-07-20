@@ -10,9 +10,12 @@ public class Wood : MonoBehaviour
     public Inventory playerInventory;
     public static Wood Instance;
 
+    string myTag; 
+
     private void Awake()
     {
         Instance = this;
+        myTag = this.tag;
     }
 
     void Update()
@@ -23,17 +26,23 @@ public class Wood : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("已經碰觸");
-        UIManager.Instance.CacheVisible(true);
+        //UIManager.Instance.CacheVisible(true);
+        InterectiveManager.Instance.openIcon(myTag);
+        Debug.Log("木頭的tag:" + myTag);
+        InterectiveManager.Instance.WhichITouch(this.name);
+        Debug.Log(this.name);
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
         Debug.Log("已經離開");
-        UIManager.Instance.CacheVisible(false);
+        //UIManager.Instance.CacheVisible(false);
+        InterectiveManager.Instance.closeAllIcon();
     }
 
    
 
+    
     public void AddNewItem()
     {
         if (!playerInventory.itemList.Contains(thisItem))

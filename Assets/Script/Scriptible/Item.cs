@@ -6,6 +6,7 @@ using TMPro;
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/New Item")] 
 public class Item : ScriptableObject
 {
+    public int itemID;
     public string itemName;
     public Sprite itemImage;
     public string itemTag;

@@ -7,9 +7,9 @@
             "actions": [
                 {
                     "name": "OnClick",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "2aa2b828-1a78-46c3-b8a0-32159d8a9419",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -18,11 +18,11 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "e9741c93-c3f9-4ea6-a872-88515e6b5229",
-                    "path": "<Mouse>/leftButton",
+                    "id": "d0aa6368-f2c0-4615-8a81-d39b6a8b99b0",
+                    "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mouse",
                     "action": "OnClick",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -30,5 +30,17 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Mouse",
+            "bindingGroup": "Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5667301411389043629}
   - component: {fileID: 320126619234152294}
   - component: {fileID: 4276257019847161547}
+  - component: {fileID: 8605404345699941316}
+  - component: {fileID: 7097469475047073287}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -106,6 +108,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originalParent: {fileID: 0}
+  myBag: {fileID: 11400000, guid: 19b78654e9597a940beb0afb9f368936, type: 2}
+--- !u!114 &8605404345699941316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3324574228651556750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!225 &7097469475047073287
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3324574228651556750}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7870042295276379062
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +176,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1461462439003943756
 CanvasRenderer:
@@ -193,7 +228,6 @@ GameObject:
   - component: {fileID: 8014263561874850911}
   - component: {fileID: 8014263561874850908}
   - component: {fileID: 5787456777130009844}
-  - component: {fileID: 1456084842630515611}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Slot
@@ -216,11 +250,11 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 1, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8014263561874850911
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -271,24 +305,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1653353134dc148a52ce4e87800f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotItem: {fileID: 11400000, guid: 726f3f62235edd44984be802eb081085, type: 2}
+  slotID: 0
+  slotItem: {fileID: 0}
   slotImage: {fileID: 2286077615876789059}
   slotNum: {fileID: 3895860960546428028}
   slotInfo: 
   slotName: 
   itemInSlot: {fileID: 3324574228651556750}
---- !u!225 &1456084842630515611
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8014263561874850906}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &8920931710169445567
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,8 +346,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 90.61755, y: 50}
+  m_AnchoredPosition: {x: -28.9, y: 3.3}
+  m_SizeDelta: {x: 27.109253, y: 23.253632}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1197312623710250204
 CanvasRenderer:

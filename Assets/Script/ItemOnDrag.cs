@@ -6,25 +6,27 @@ using UnityEngine.EventSystems;
 public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Transform originalParent;
-    private Vector3 origPosition;
+    public Inventory myBag;
+    private int currentSlotID;
     
     public void OnBeginDrag(PointerEventData eventData)
     {
         originalParent = transform.parent;
-        //transform.SetParent(transform.parent.parent);
+        currentSlotID = originalParent.GetComponent<Slot>().slotID;
+        transform.SetParent(transform.parent.parent);
         //獲取點級位置
-        origPosition = transform.localPosition;
-        Debug.Log($"transform position:{transform.position} localPosiotion:{transform.localPosition}");
-        Debug.Log($"anchored:{((RectTransform)transform).anchoredPosition}");
-        Debug.Log($"eventData position:{eventData.position} press:{eventData.pressPosition}");
-        //transform.position = eventData.position;
-        //GetComponent<CanvasGroup>().blocksRaycasts = false;
+        originalParent.position = transform.position;
+        //Debug.Log($"transform position:{transform.position} localPosiotion:{transform.localPosition}");
+        //Debug.Log($"anchored:{((RectTransform)transform).anchoredPosition}");
+        //Debug.Log($"eventData position:{eventData.position} press:{eventData.pressPosition}");
+        transform.position = eventData.position;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.localPosition = origPosition + (Vector3)(eventData.position - eventData.pressPosition);
-        //transform.position = eventData.position;
+        //transform.localPosition = origPosition + (Vector3)(eventData.position - eventData.pressPosition);
+        transform.position = eventData.position;
         //Debug.Log("移動座標：" + transform.position);
         //Debug.Log("雷射座標：" + eventData.position);
 
@@ -34,30 +36,52 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.localPosition = origPosition;
-        //if (eventData.pointerCurrentRaycast.gameObject.name == "ItemImage")
-        //{
-        //    transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform.parent.parent);
-        //    transform.position = eventData.pointerCurrentRaycast.gameObject.transform.parent.parent.position;
+        if (eventData.pointerCurrentRaycast.gameObject != null)
+        {
+            //transform.localPosition = origPosition;
+            if (eventData.pointerCurrentRaycast.gameObject.name == "ItemImage")
+            {
+                Debug.Log("可換換");
+                transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform.parent.parent);
+                transform.position = eventData.pointerCurrentRaycast.gameObject.transform.parent.parent.position;
 
-        //    eventData.pointerCurrentRaycast.gameObject.transform.parent.position = originalParent.position;
-        //    eventData.pointerCurrentRaycast.gameObject.transform.parent.SetParent(originalParent);
-        //    GetComponent<CanvasGroup>().blocksRaycasts = true;
-        //    return;
-        //}
-
-        //if (eventData.pointerCurrentRaycast.gameObject == null || !eventData.pointerCurrentRaycast.gameObject.CompareTag("Slot"))
-        //{
-        //    transform.position = originalParent.position;
-        //    transform.SetParent(originalParent);
-        //    GetComponent<CanvasGroup>().blocksRaycasts = true;
-
-        //    return;
-        //}
+                var temp = myBag.itemList[currentSlotID];
+                myBag.itemList[currentSlotID] = myBag.itemList[eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<Slot>().slotID];
+                myBag.itemList[eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<Slot>().slotID] = temp;
 
 
-        //transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);
-        //transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
-        //GetComponent<CanvasGroup>().blocksRaycasts = true;
+                eventData.pointerCurrentRaycast.gameObject.transform.parent.position = originalParent.position;
+                eventData.pointerCurrentRaycast.gameObject.transform.parent.SetParent(originalParent);
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+                return;
+            }
+
+            if (eventData.pointerCurrentRaycast.gameObject.name == "Slot(Clone)")
+            {
+                //如果沒東西就直接放上去
+                transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);
+                transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
+
+                //若為空的數據轉換
+                myBag.itemList[eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<Slot>().slotID] = myBag.itemList[currentSlotID];
+
+                //防止自己移動到自己的格子裡。
+                if (eventData.pointerCurrentRaycast.gameObject.GetComponent<Slot>().slotID != currentSlotID)
+                    myBag.itemList[currentSlotID] = null;
+
+
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+                return;
+            }
+        }
+        else
+        {
+            transform.position = originalParent.position;
+            transform.SetParent(originalParent);
+            GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+            return;
+        }
+        
     }
 }

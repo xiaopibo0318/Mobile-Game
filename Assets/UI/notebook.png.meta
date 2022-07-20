@@ -5,6 +5,12 @@ TextureImporter:
   - first:
       213: 4495440122235666822
     second: notebook_0
+  - first:
+      213: 8093278259594180482
+    second: notebook_1
+  - first:
+      213: -1812551610301912546
+    second: notebook_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -134,7 +140,7 @@ TextureImporter:
         width: 5958
         height: 4021
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,6 +148,48 @@ TextureImporter:
       bones: []
       spriteID: 68145ea29f2036e30800000000000000
       internalID: 4495440122235666822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: notebook_1
+      rect:
+        serializedVersion: 2
+        x: 4703
+        y: 857
+        width: 2664
+        height: 3235
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 287b08372b9115070800000000000000
+      internalID: 8093278259594180482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: notebook_2
+      rect:
+        serializedVersion: 2
+        x: 1863
+        y: 864
+        width: 2788
+        height: 3228
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1a64eae9e588d6e0800000000000000
+      internalID: -1812551610301912546
       vertices: []
       indices: 
       edges: []

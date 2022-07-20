@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3284a4da7f52a5740bee82ec381f8593, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
+  itemID: 1
   itemName: Wood
   itemImage: {fileID: -7094692010748122413, guid: 0f43f72e6f6b2ff458d85b4af2bbabcd,
     type: 3}
   itemTag: 
-  itemHave: 4
+  itemHave: 6
   itemInfo: 
   missioable: 0
   storyable: 0

@@ -6,6 +6,7 @@ using TMPro;
 
 public class Slot : MonoBehaviour
 {
+    public int slotID;
     public Item slotItem;
     public Image slotImage;
     public TMP_Text slotNum;
@@ -19,6 +20,9 @@ public class Slot : MonoBehaviour
     public void ItemOnClick()
     {
         InventoryManager.Instance.UpdateItemInfo(slotInfo);
+        CanvasManager.Instance.openCanvas("ItemIntroduce");
+        Debug.Log(slotItem.itemID);
+        ItemIntroduceMananger.Instance.openWhich(slotItem.itemID);
     }
 
     public void SetupSlot(Item item)

@@ -7,7 +7,21 @@ public class CanvasManager : MonoBehaviour
 
     [SerializeField] IamCanvas[] _canvas;
     //目前五個 0基本、1鳳凰 、2手線鋸、3花、4偏房
-   
+
+    public static CanvasManager Instance;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            //DontDestroyOnLoad(this);
+        }
+        else if (this != Instance)
+        {
+            //Destroy(gameObject);
+        }
+        openCanvas("original");
+    }
 
     public void openCanvas(string canvasName)
     {

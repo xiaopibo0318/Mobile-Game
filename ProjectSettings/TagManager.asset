@@ -8,6 +8,10 @@ TagManager:
   - WoodOnGround
   - Slot
   - dialogueIcon
+  - Interective
+  - cache
+  - net
+  - interective
   layers:
   - Default
   - TransparentFX
@@ -53,4 +57,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1349425721
+    locked: 0
+  - name: AboveUI
+    uniqueID: 1309942411
     locked: 0

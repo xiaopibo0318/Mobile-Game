@@ -9,7 +9,7 @@ public class InventoryManager : MonoBehaviour
 
     public Inventory myBag;
     public GameObject slotGrid;
-    //public Slot slotPrefab;
+    public Slot slotPrefab;
     public GameObject emptySlot;
     public TMP_Text itemInformation;
 
@@ -31,25 +31,38 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateItemInfo(string ItemDescription)
     {
-        ///itemInformation.text = ItemDescription;
+        //itemInformation.text = ItemDescription;
     }
 
-    /*
-    public static void CreateNewItem(Item item)
+    
+
+    public void AddNewItem(Item thisItem)
     {
-        //生成(東西、位置、角度)
-        Slot newItem = Instantiate(Instance.slotPrefab, Instance.slotGrid.transform.position, Quaternion.identity);
-        //設定其位置到slotGrid的子集
-        newItem.gameObject.transform.SetParent(Instance.slotGrid.transform);
-        //設定其Item大小
-        newItem.transform.localScale = new Vector3(1, 1, 1);
-        
-        //設定這個newItem的信息
-        newItem.slotItem = item;
-        newItem.slotImage.sprite = item.itemImage;
-        newItem.slotNum.text = item.itemHave.ToString();
+        if (!myBag.itemList.Contains(thisItem))
+        {
+            //myBag.itemList.Add(thisItem);
+            //背包創建新物品
+            //InventoryManager.CreateNewItem(thisItem);
+            for (int i = 0; i < myBag.itemList.Count; i++)
+            {
+                if (myBag.itemList[i] == null)
+                {
+                    myBag.itemList[i] = thisItem;
+
+                    //將Slot編號的物品改為這項東西
+                    Instance.slots[i].GetComponent<Slot>().slotItem = thisItem;
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            thisItem.itemHave += 1;
+        }
+
+        RefreshItem();
     }
-    */
 
 
     public static void RefreshItem()
@@ -74,9 +87,31 @@ public class InventoryManager : MonoBehaviour
             Instance.slots[i].transform.SetParent(Instance.slotGrid.transform);
             Instance.slots[i].transform.localScale = new Vector3(1, 1, 1);
 
+            //給ID值
+            Instance.slots[i].GetComponent<Slot>().slotID = i;
+
+            //將背包系統的物品掛到slot格子上
+            Instance.slots[i].GetComponent<Slot>().slotItem = Instance.myBag.itemList[i];
+
             //把背包的物品給列表
             Instance.slots[i].GetComponent<Slot>().SetupSlot(Instance.myBag.itemList[i]);
         }
 
     }
+
+    public void SubItem(Item thisItem,int num=1)
+    {
+        if (myBag.itemList.Contains(thisItem))
+        {
+            thisItem.itemHave -= num;
+        }
+        else
+        {
+            return;
+        }
+
+        RefreshItem();
+    }
+
+
 }

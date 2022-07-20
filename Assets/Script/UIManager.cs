@@ -5,17 +5,21 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] Image cache;
-    [SerializeField] Image cache_background;
     [SerializeField] GameObject Book_2;
 
     public static UIManager Instance;
     bool book_open;
     private void Awake()
     {
-        Instance = this;
-        cache.enabled = false;
-        cache_background.enabled = false;
+        if (Instance == null)
+        {
+            Instance = this;
+            //DontDestroyOnLoad(this);
+        }
+        else if (this != Instance)
+        {
+            Destroy(gameObject);
+        }
 
         if (Book_2.activeInHierarchy == true)
         {
@@ -23,23 +27,10 @@ public class UIManager : MonoBehaviour
         }
 
         book_open = false;
+       
 
     }
     
-    public void CacheVisible(bool visible)
-    {
-        
-        if(visible == true)
-        {
-            cache.enabled = true;
-            cache_background.enabled = true;
-
-        }else if(visible == false)
-        {
-            cache.enabled = false;
-            cache_background.enabled = false;
-        }
-    }
 
     public void OnClickBook()
     {

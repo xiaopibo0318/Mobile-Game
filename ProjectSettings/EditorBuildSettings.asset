@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleSceane.unity
     guid: 40fbdfdf639ba6f4e99be47a84f5c0fe
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/MtKL1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/MtKL2.unity
+    guid: 2b711619bb56f5b4e848d67422925fe9
   m_configObjects: {}

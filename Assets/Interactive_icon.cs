@@ -5,35 +5,35 @@ using UnityEngine;
 
 public class Interactive_icon : MonoBehaviour
 {
-    [SerializeField] GameObject icon;
+    string myTag;
+    string myName;
+    GameObject mysSelf;
+    public static Interactive_icon Instance;
 
-
-    private void Awake()
+    public void Awake()
     {
-        icon.SetActive(false);
+        myTag = this.tag;
+        myName = this.name;
+        Instance = this;
+        mysSelf = this.gameObject;
     }
-
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        icon.SetActive(true);
+        InterectiveManager.Instance.openIcon(myTag);
+        Debug.Log(myTag);
+        InterectiveManager.Instance.WhichITouch(myName);
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        icon.SetActive(false);
+        InterectiveManager.Instance.closeAllIcon();
     }
 
-
-    // Start is called before the first frame update
-    void Start()
+    public void DestroyGameObject()
     {
-        
+        Transform myParent = mysSelf.transform.parent;
+        Destroy(myParent.gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

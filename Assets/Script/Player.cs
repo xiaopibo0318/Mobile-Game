@@ -15,13 +15,25 @@ public class Player : MonoBehaviour
     InputAction playerMove;
     float cache_time;
 
+    [SerializeField] GameObject[] PlayerStyle;
+
+
     public void Awake()
     {
         playerMove = GetComponent<PlayerInput>().currentActionMap["Move"];
-        myAnime = GetComponent<Animator>();
+        //這邊先確保
+        myAnime = PlayerStyle[1].GetComponent<Animator>();
         myRigid = GetComponent<Rigidbody2D>();
         //this.enabled = false;
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if (this != Instance)
+        {
+            Destroy(gameObject);
+        }
         cache_time = 2;
     }
     
@@ -76,11 +88,22 @@ public class Player : MonoBehaviour
 
     public void PlayerCache()
     {
-        myAnime.SetBool("Cache", true);
-        cache_time -= Time.deltaTime;
-        if (cache_time <= 0)
-            myAnime.SetBool("Cache", false);
-            cache_time = 2;
+        StartCoroutine(playerCache());
+ 
     }
+
+    IEnumerator playerCache()
+    {
+        myAnime.SetBool("Cache", true);
+        while (cache_time >= 0)
+        {
+            yield return new WaitForSeconds(1);
+            cache_time -= 1;
+        }
+        myAnime.SetBool("Cache", false);
+        cache_time = 2;
+    }
+
+    
 
 }
