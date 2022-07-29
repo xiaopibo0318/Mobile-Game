@@ -109,6 +109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalParent: {fileID: 0}
   myBag: {fileID: 11400000, guid: 19b78654e9597a940beb0afb9f368936, type: 2}
+  siginalContent: {fileID: 0}
+  siginalText: {fileID: 0}
 --- !u!114 &8605404345699941316
 MonoBehaviour:
   m_ObjectHideFlags: 0

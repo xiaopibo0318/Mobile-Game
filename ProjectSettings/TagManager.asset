@@ -12,6 +12,8 @@ TagManager:
   - cache
   - net
   - interective
+  - love
+  - siginal
   layers:
   - Default
   - TransparentFX

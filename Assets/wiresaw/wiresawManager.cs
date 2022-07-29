@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class wiresawManager : MonoBehaviour
 {
 
     [Header("UI組件")]
-    public TMP_Text textLabel;
+    public Text textLabel;
 
 
     [Header("文本文件")]

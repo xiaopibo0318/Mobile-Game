@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class Player : MonoBehaviour
     float cache_time;
 
     [SerializeField] GameObject[] PlayerStyle;
+
+    public playerStatus myStatus;
 
 
     public void Awake()
@@ -35,8 +38,18 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
         }
         cache_time = 2;
+        myStatus = new playerStatus(SceneManager.GetActiveScene().buildIndex);
     }
-    
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            Debug.Log(myStatus.GetGameStatus());
+        }
+    }
+
     public void FixedUpdate()
     {
         float a = playerMove.ReadValue<Vector2>().x;
@@ -81,10 +94,7 @@ public class Player : MonoBehaviour
         myRigid.position = new Vector2(change_x, change_y);
     }
 
-    private void Start()
-    {
-        
-    }
+
 
     public void PlayerCache()
     {
@@ -105,5 +115,30 @@ public class Player : MonoBehaviour
     }
 
     
+
+}
+
+
+public class playerStatus {
+
+    string name;
+    int gameStatus;
+    int time;
+
+    public playerStatus(int gameStatus)
+    {
+        this.gameStatus = gameStatus;
+    }
+
+    public void ChangeGameStatus(int index)
+    {
+        gameStatus = index;
+    }
+
+    public int GetGameStatus()
+    {
+        return gameStatus;
+    }
+
 
 }

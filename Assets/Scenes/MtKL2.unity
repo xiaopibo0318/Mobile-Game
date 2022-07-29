@@ -1813,10 +1813,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce318ab823a3a84f9f0427d737a388b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBag: {fileID: 0}
   lovePrefab: {fileID: 4772727463348186242, guid: 660d90fcc93fba54e848593478630fd1,
     type: 3}
   player: {fileID: 0}
   Love: {fileID: 11400000, guid: 7780aed07722d264b850df2a27d14e06, type: 2}
+  interectiveWood: {fileID: 0}
+  wood: {fileID: 0}
+  woodBoard: {fileID: 0}
+  interectiveBoard: {fileID: 0}
+  wiresaw: {fileID: 0}
 --- !u!114 &201951845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3137,9 +3143,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7802\u7D19"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4149b413e3504db478ae097b8d08f410, type: 2}
-  m_sharedMaterial: {fileID: 6762746757071652897, guid: 4149b413e3504db478ae097b8d08f410,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3606,6 +3611,8 @@ MonoBehaviour:
     type: 3}
   itemInformation: {fileID: 0}
   slots: []
+  siginalContent: {fileID: 0}
+  siginalText: {fileID: 0}
 --- !u!114 &408532224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3759,7 +3766,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 424062061}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 09cecc0fc572ae54dba9218ab3841c84, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3782,7 +3789,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 10
-  m_Material: {fileID: 6200000, guid: 09cecc0fc572ae54dba9218ab3841c84, type: 2}
+  m_Material: {fileID: 6200000, guid: cc2c42139c56c5b489b6cff9ac3dd9b5, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -4297,9 +4304,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u624B\u7DDA\u92F8"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4149b413e3504db478ae097b8d08f410, type: 2}
-  m_sharedMaterial: {fileID: 6762746757071652897, guid: 4149b413e3504db478ae097b8d08f410,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6209,7 +6215,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 745878666}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 09cecc0fc572ae54dba9218ab3841c84, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -6232,7 +6238,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 10
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 09cecc0fc572ae54dba9218ab3841c84, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -6295,7 +6301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &764418886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8384,7 +8390,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 10
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5523f0a0ebf69d545a49e93056be0eaa, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -8436,7 +8442,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 983925053}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 09cecc0fc572ae54dba9218ab3841c84, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -11533,10 +11539,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce318ab823a3a84f9f0427d737a388b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBag: {fileID: 0}
   lovePrefab: {fileID: 4772727463348186242, guid: 660d90fcc93fba54e848593478630fd1,
     type: 3}
   player: {fileID: 0}
   Love: {fileID: 11400000, guid: 7780aed07722d264b850df2a27d14e06, type: 2}
+  interectiveWood: {fileID: 0}
+  wood: {fileID: 0}
+  woodBoard: {fileID: 0}
+  interectiveBoard: {fileID: 0}
+  wiresaw: {fileID: 0}
 --- !u!114 &1456399836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12184,8 +12196,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -128.94403, y: 429.44617}
-  - {x: -124.77124, y: 357.58868}
+  - {x: -148.56305, y: 423.67438}
+  - {x: -147.85242, y: 355.27997}
   - {x: 734.4612, y: 353.30447}
   - {x: 736.44763, y: -370.92383}
   - {x: 815.92993, y: -438.59482}
@@ -12194,9 +12206,9 @@ EdgeCollider2D:
   - {x: 611.803, y: -377.92374}
   - {x: -361.0166, y: -369.79904}
   - {x: -364.23798, y: 356.27356}
-  - {x: -280.32123, y: 353.167}
-  - {x: -281.21503, y: 427.25793}
-  - {x: -128.39874, y: 432.3088}
+  - {x: -269.93475, y: 353.167}
+  - {x: -269.6745, y: 423.79486}
+  - {x: -145.7096, y: 424.2283}
 --- !u!1 &1527967637
 GameObject:
   m_ObjectHideFlags: 0
