@@ -39,8 +39,8 @@ namespace HKZ
         private float aniDuration = 0.5f;
         private bool isDragging;
 
-        [Header("知識訊息")]
-        public GameObject wireSaw;
+        //[Header("知識訊息")]
+        //public GameObject wireSaw;
 
 
 
@@ -125,7 +125,7 @@ namespace HKZ
         {
             bookModels = new BookModels();//创建并初始化
 
-            bookSprites = Resources.LoadAll<Sprite>("Book");//加载所有的图片（书页）
+            bookSprites = Resources.LoadAll<Sprite>("Introduce");//加载所有的图片（书页）
 
             if (bookSprites.Length > 0)
             {
@@ -426,16 +426,16 @@ namespace HKZ
             }
         }
 
-        public void openWhich(string name)
-        {
-            switch (name)
-            {
-                case "wiresaw":
-                    wireSaw.SetActive(true);
-                    break;
-            }
+        //public void openWhich(string name)
+        //{
+        //    switch (name)
+        //    {
+        //        case "wiresaw":
+        //            wireSaw.SetActive(true);
+        //            break;
+        //    }
 
-        }
+        //}
 
 
     }

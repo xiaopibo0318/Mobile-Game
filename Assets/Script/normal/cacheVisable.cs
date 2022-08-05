@@ -48,6 +48,7 @@ public class cacheVisable : MonoBehaviour
 
     public void cacheSomething(Item item)
     {
+        visibaleTime = 1;
         isVisable = true;
         isInfoFinished = false;
         imageInfo.SetActive(true);
@@ -55,6 +56,19 @@ public class cacheVisable : MonoBehaviour
         imageInfo.GetComponent<Image>().color = colorBegin;
         StartCoroutine(changeColor());
     }
+
+
+    public void siginalSomething(string myText)
+    {
+        visibaleTime = 3;
+        isVisable = true;
+        isInfoFinished = false;
+        imageInfo.SetActive(true);
+        itemInfo.text = myText;
+        imageInfo.GetComponent<Image>().color = colorBegin;
+        StartCoroutine(changeColor());
+    }
+
 
     IEnumerator changeColor()
     {
@@ -68,7 +82,7 @@ public class cacheVisable : MonoBehaviour
         while (visibaleTime > 0)
         {
             yield return new WaitForSeconds(0.1f);
-            visibaleTime -= 1;
+            visibaleTime -= 0.1f;
         }
         while (changeOpacity >0)
         {

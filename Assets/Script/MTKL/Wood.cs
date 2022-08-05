@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Wood : MonoBehaviour
 {
-    [SerializeField] float lifetime;
+    
     public Item thisItem;
     public Inventory playerInventory;
     public static Wood Instance;
@@ -20,7 +20,7 @@ public class Wood : MonoBehaviour
 
     void Update()
     {
-        Destroy(gameObject, lifetime);
+        
     }
 
     void OnTriggerEnter2D(Collider2D collision)

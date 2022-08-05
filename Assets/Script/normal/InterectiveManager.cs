@@ -106,6 +106,9 @@ public class InterectiveManager : MonoBehaviour
             case "teleportNotion":
                 nextWay = 110;
                 break;
+            case "northNotion":
+                nextWay = 120;
+                break;
 
 
             case "WoodOnGround(Clone)":
@@ -120,6 +123,21 @@ public class InterectiveManager : MonoBehaviour
 
             case "ballInterective":
                 nextWay = 21;
+                break;
+
+
+            case "paperInterectiveTop":
+                nextWay = 201;
+                break;
+
+            case "sandInterective150":
+                nextWay = 211;
+                break;
+            case "sandInterective240":
+                nextWay = 212;
+                break;
+            case "sandInterective400":
+                nextWay = 213;
                 break;
         }
 
@@ -159,10 +177,17 @@ public class InterectiveManager : MonoBehaviour
             case 100:
                 CanvasManager.Instance.openCanvas("Notion");
                 NotionManager.Instance.setText(nextWay);
+                NotionManager.Instance.closeQues();
                 break;
             case 110:
                 CanvasManager.Instance.openCanvas("Notion");
                 NotionManager.Instance.setText(nextWay);
+                NotionManager.Instance.closeQues();
+                break;
+            case 120:
+                CanvasManager.Instance.openCanvas("Notion");
+                NotionManager.Instance.setText(nextWay);
+                NotionManager.Instance.openQues();
                 break;
 
             case 1111:
@@ -183,6 +208,22 @@ public class InterectiveManager : MonoBehaviour
 
             case 21:
                 CanvasManager.Instance.openCanvas("ball");
+                break;
+
+            case 201:
+                CanvasManager.Instance.openCanvas("sandPaper");
+                BookContentManager.Instance.ActivateKnowledge(1);
+                cacheVisable.Instance.siginalSomething("有關砂紙的知識已登入百科全書");
+                break;
+
+            case 211:
+                InventoryManager.Instance.AddNewItem(myItemList[3]);
+                break;
+            case 212:
+                InventoryManager.Instance.AddNewItem(myItemList[4]);
+                break;
+            case 213:
+                InventoryManager.Instance.AddNewItem(myItemList[5]);
                 break;
         }
     }

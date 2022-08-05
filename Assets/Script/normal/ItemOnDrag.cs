@@ -80,7 +80,21 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         else
         {
             //丟棄系統 還沒寫好
-            //InventoryManager.Instance.SiginalText(myBag.itemList[currentSlotID]);
+            if (myBag.itemList[currentSlotID] != null)
+            {
+                //不可丟棄道具，如西王母的愛
+                if (myBag.itemList[currentSlotID].missioable)
+                {
+                    InventoryManager.Instance.CouldNotCrash();
+                    transform.position = originalParent.position;
+                    transform.SetParent(originalParent);
+                    GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+                    return;
+                }
+                InventoryManager.Instance.SiginalText(myBag.itemList[currentSlotID]);
+            }
+            
             
             
             transform.position = originalParent.position;

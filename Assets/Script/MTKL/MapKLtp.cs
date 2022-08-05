@@ -5,20 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class MapKLtp : MonoBehaviour
 {
+    int nowPos = 1;
+
+
+    public static MapKLtp Instance;
+    public void wake()
+    {
+        Instance = this;
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (SceneManager.GetActiveScene().buildIndex == 2)
-        {
-            SceneManager.LoadScene(1);
-            KLMTmanager.Instance.KLMTinitial();
-        }
-        else if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            SceneManager.LoadScene(2);
-           
-        }
+        //Debug.Log("AAA");
+        //Debug.Log(nowPos);
+        //if (nowPos == 1)
+        //{
+        //    Debug.Log("BBA");
+        //    Player.Instance.transform.position = new Vector3(-50, 0, 0);
+        //    nowPos = 2;
+        //}
+        //else if (nowPos == 2)
+        //{
+        //    Debug.Log("CCA");
+        //    Player.Instance.transform.position = new Vector3(0, 0, 0);
+        //    nowPos = 1;
+
+        //}
+        Camerafollowww.Instance.changeMyPos();
         
     }
 
     
+    public int GetNowPos()
+    {
+        return nowPos;
+    }
+
 }

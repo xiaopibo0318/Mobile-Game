@@ -6,12 +6,13 @@ public class WoodManager : MonoBehaviour
 {
     [SerializeField] float SpawnTime;
     [SerializeField] GameObject WoodPrefab;
-
+    [SerializeField] float lifetime;
     float time;
 
     public void Awake()
     {
         time = SpawnTime;
+        lifetime = 40;
     }
 
     public void Update()
@@ -32,10 +33,11 @@ public class WoodManager : MonoBehaviour
         {
             GameObject wood = Instantiate(WoodPrefab, transform);
             wood.transform.position = new Vector3(Random.Range(-5, 20), Random.Range(0, 6), 0);
+            Destroy(wood, lifetime);
             break;
         }  
     }
 
-    
+   
 
 }

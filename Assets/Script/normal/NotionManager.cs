@@ -12,6 +12,9 @@ public class NotionManager : MonoBehaviour
     public Text textLabel;
     int index;
 
+    [Header("八卦圖")]
+    public GameObject ques;
+
     List<string> textList = new List<string>();
 
     public static NotionManager Instance;
@@ -49,5 +52,14 @@ public class NotionManager : MonoBehaviour
         }
     }
 
+    public void openQues()
+    {
+        ques.SetActive(true);
+    }
+
+    public void closeQues()
+    {
+        ques.SetActive(false);
+    }
 
 }

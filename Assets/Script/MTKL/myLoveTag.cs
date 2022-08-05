@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class myLoveTag : MonoBehaviour
 {
-    [SerializeField] Inventory mybeg;
+    [SerializeField] public Inventory mybeg;
 
     bool netHave;
 
@@ -25,20 +25,25 @@ public class myLoveTag : MonoBehaviour
             this.transform.tag = "net";
         }
 
-        //for (int i =0; i< mybeg.itemList.Count; i++)
-        //{
-        //    if (mybeg.itemList[i].itemID == 21)
-        //    {
-        //        netHave = true;
-        //    }else
-        //    {
-        //        netHave = false;
-        //    }
-        //}
         
+
     }
 
 
+    public void IsNetInBag()
+    {
+        for (int i = 0; i < mybeg.itemList.Count; i++)
+        {
+            if (mybeg.itemList[i].itemID == 21)
+            {
+                netHave = true;
+            }
+            else
+            {
+                netHave = false;
+            }
+        }
+    }
 
 
 

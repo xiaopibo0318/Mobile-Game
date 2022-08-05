@@ -58,6 +58,7 @@ public class wiresawManager : MonoBehaviour
         knifeAdd = false;
         _OTV = true;
         textRange = 0;
+        textLabel.text = "您可以藉由拖動鋸條以及尖嘴鉗來組裝手線鋸";
     }
 
     private void FixedUpdate()
@@ -82,9 +83,9 @@ public class wiresawManager : MonoBehaviour
                 status = 8;
             }
         }
-        //Debug.Log("狀態為"+status);
-        //Debug.Log("上方按鈕"+topButtonOpen);
-        //Debug.Log("下方按鈕"+underButtonOpen);
+        Debug.Log("狀態為"+status);
+        Debug.Log("上方按鈕"+topButtonOpen);
+        Debug.Log("下方按鈕"+underButtonOpen);
         if (status == 8)
         {
             StartCoroutine(delay(5));
@@ -99,6 +100,7 @@ public class wiresawManager : MonoBehaviour
         }
         if (status == 9)
         {
+            BookContentManager.Instance.ActivateKnowledge(0);
             textLabel.text = "您以成功組裝手線鋸，可去背包查看，知識也同步進百科全書了。";
         }
     }
@@ -254,7 +256,7 @@ public class wiresawManager : MonoBehaviour
 
     public void addKnife()
     {
-        if (status != 3)
+        if (status < 3)
         {
             DraggableKnife.Instance.goToOriginal();
             StartCoroutine( SetTextUI(5));

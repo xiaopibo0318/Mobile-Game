@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: key
   m_EditorClassIdentifier: 
   itemID: 201
-  itemName: Key
+  itemName: "\u9470\u5319"
   itemImage: {fileID: -2892331306269035282, guid: d992c01979571534b9cde316613ad931,
     type: 3}
   itemTag: 

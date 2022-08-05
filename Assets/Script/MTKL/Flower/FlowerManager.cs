@@ -15,9 +15,12 @@ public class FlowerManager : MonoBehaviour
     bool firstStep;
     bool isEqual;
 
+    [Header("臨時的東西")]
+    public Item ball;
+
     public void Awake()
     {
-        answer = new int[8] { 0, 0, 1, 1, 0, 1, 0, 1};
+        answer = new int[8] { 1, 0, 1, 0, 0, 0, 1, 1};   //0,2,6,7  對應 原始密碼2,3,5,7 => 變換的結果。
         myAnswer = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
         index = 0;
         firstStep = true;
@@ -63,6 +66,12 @@ public class FlowerManager : MonoBehaviour
             flowerActivate.SetActive(true);
             flowerUnactivateLook.SetActive(false);
             flowerActivateLook.SetActive(true);
+            cacheVisable.Instance.siginalSomething("偏房似乎有了變化，去看看吧！");
+            InventoryManager.Instance.AddNewItem(ball);
+            InventoryManager.Instance.AddNewItem(ball);
+            InventoryManager.Instance.AddNewItem(ball);
+            InventoryManager.Instance.AddNewItem(ball);
+            InventoryManager.Instance.AddNewItem(ball);
             //KLMTmanager.Instance.gameStatus = KLMTmanager.GameStatus.beforeHouse;
             KLMTmanager.Instance.secondStepKL();
             

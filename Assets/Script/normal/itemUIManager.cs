@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class itemUIManager : MonoBehaviour
 {
@@ -23,18 +24,29 @@ public class itemUIManager : MonoBehaviour
     public Item wiresaw;
     bool isWiresaw;
 
+    [Header("鑰匙")]
+    public GameObject interectiveKey;
+
+    [Header("引用")]
+    public static itemUIManager Instance;
     public void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        interectiveKey.SetActive(false);
+        Instance = this;
     }
 
     private void FixedUpdate()
     {
-        if (MachineWithLove.Instance.GetIsElectric())
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            interectiveWood.SetActive(true);
+            if (MachineWithLove.Instance.GetIsElectric())
+            {
+                interectiveWood.SetActive(true);
+            }
+            else interectiveWood.SetActive(false);
         }
-        else interectiveWood.SetActive(false);
+        
 
         if (myBag.itemList.Contains(wiresaw))
         {
@@ -48,6 +60,7 @@ public class itemUIManager : MonoBehaviour
     {
         Instantiate(lovePrefab, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z), Quaternion.identity);
         InventoryManager.Instance.SubItem(Love,1);
+        CanvasManager.Instance.openCanvas("original");
     }
 
     public void CutWood()
@@ -61,5 +74,24 @@ public class itemUIManager : MonoBehaviour
         CanvasManager.Instance.openCanvas("cuttingWood");
     }
     
+    public void ballCracker()
+    {
+        CanvasManager.Instance.openCanvas("SandPaperBall");
+    }
 
+
+    public void KeyUsable(bool inZone)
+    {
+        if (inZone)
+            interectiveKey.SetActive(true);
+        else
+            interectiveKey.SetActive(false);
+    }
+
+    public void openBox()
+    {
+        cacheVisable.Instance.siginalSomething("遠處好像有一些聲音，某處可能有了變化");
+    }
+
+    
 }

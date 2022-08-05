@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Love
   m_EditorClassIdentifier: 
   itemID: 520
-  itemName: 
+  itemName: "\u897F\u738B\u6BCD\u7684\u611B"
   itemImage: {fileID: 6306790644149753060, guid: 28c15754b5e5b9a4c86e081ef507cf27,
     type: 3}
   itemTag: 
-  itemHave: 1
+  itemHave: 0
   itemInfo: 
-  missioable: 0
+  missioable: 1
   storyable: 0

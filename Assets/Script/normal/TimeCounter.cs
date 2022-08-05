@@ -14,10 +14,18 @@ public class TimeCounter : MonoBehaviour
     public int needMin;
     public int needSec;
 
+    bool isStart = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Countdown());
+        if (!isStart)
+        {
+            StartCoroutine(Countdown());
+            isStart = true;
+        }
+        
     }
 
     IEnumerator Countdown()

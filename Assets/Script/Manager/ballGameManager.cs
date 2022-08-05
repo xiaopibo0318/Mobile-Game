@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ballGameManager : MonoBehaviour
 {
@@ -20,6 +21,13 @@ public class ballGameManager : MonoBehaviour
     public bool downLeft;
     public bool downRight;
 
+    [Header("背包裡的球圖片")]
+    public GameObject ball1;
+    public GameObject ball2;
+    public GameObject ball3;
+    public GameObject Content;
+
+    int nowType;
 
     public Item Key;
 
@@ -36,7 +44,8 @@ public class ballGameManager : MonoBehaviour
         downGroundRotateNum = 0;
         upGrondTrans = upGround.transform;
         downGroundTrans = downGround.transform;
-
+        nowType = 0;
+        ReStartGame();
     }
 
 
@@ -53,14 +62,17 @@ public class ballGameManager : MonoBehaviour
 
     public void StartGame()
     {
-        
-        if (!isStart)
+        if (nowType != 0)
         {
-            ballType[0].SetActive(true);
-            ResetPosition();
-            ballType[0].GetComponent<Rigidbody2D>().gravityScale = 20;
-            isStart = true;
+            if (!isStart)
+            {
+                ballType[nowType-1].SetActive(true);
+                ResetPosition();
+                ballType[nowType-1].GetComponent<Rigidbody2D>().gravityScale = 20;
+                isStart = true;
+            }
         }
+        
         
         
     }
@@ -107,7 +119,11 @@ public class ballGameManager : MonoBehaviour
     public void ReStartGame()
     {
         isStart = false;
-        ballType[0].GetComponent<Rigidbody2D>().gravityScale = 0;
+        if(nowType != 0)
+        {
+            ballType[nowType - 1].GetComponent<Rigidbody2D>().gravityScale = 0;
+        }
+            
         ResetPosition();
     }
 
@@ -116,7 +132,11 @@ public class ballGameManager : MonoBehaviour
     {
         topGroundRotateNum = 0;
         downGroundRotateNum = 0;
-        ballType[0].GetComponent<RectTransform>().localPosition = new Vector3(-205, 369, 0);
+        if (nowType != 0)
+        {
+            ballType[nowType-1].GetComponent<RectTransform>().localPosition = new Vector3(-205, 369, 0);
+        }
+       
         upGround.transform.rotation = Quaternion.Euler(0, 0, topGroundRotateNum);
         downGround.transform.rotation = Quaternion.Euler(0, 0, topGroundRotateNum);
     }
@@ -157,5 +177,39 @@ public class ballGameManager : MonoBehaviour
         InventoryManager.Instance.AddNewItem(Key);
     }
 
+    public void BallOnClick()
+    {
+        var n = EventSystem.current.currentSelectedGameObject.name;
+        
+        if (n == "ball1")
+        {
+            ball1.SetActive(true);
+            ball2.SetActive(false);
+            ball3.SetActive(false);
+            nowType = 1;
+        }else if (n== "ball2")
+        {
+            ball1.SetActive(false);
+            ball2.SetActive(true);
+            ball3.SetActive(false);
+            nowType = 2;
+        }else if ( n == "ball3")
+        {
+            ball1.SetActive(false);
+            ball2.SetActive(false);
+            ball3.SetActive(true);
+            nowType = 3;
+        }
+    }
 
+    public void openBackPack()
+    {
+        if(Content.activeInHierarchy== true)
+        {
+            Content.SetActive(false);
+        } else
+        {
+            Content.SetActive(true);
+        }
+    }
 }

@@ -18,16 +18,21 @@ public class InventoryManager : MonoBehaviour
     [Header("丟棄提示信息")]
     public GameObject siginalContent;
     public Text siginalText;
+    public GameObject confirm;
+    public GameObject dontDo;
 
+    Item temp;
 
 
     private void Awake()
     {
+        
+        siginalContent.SetActive(false);
+
         if (Instance != null)
             Destroy(this);
         Instance = this;
-        siginalContent = GameObject.FindWithTag("siginal");
-       
+
     }
 
     private void OnEnable()
@@ -59,7 +64,7 @@ public class InventoryManager : MonoBehaviour
 
                     //將Slot編號的物品改為這項東西
                     Instance.slots[i].GetComponent<Slot>().slotItem = thisItem;
-
+                    thisItem.itemHave += 1;
                     break;
                 }
             }
@@ -89,6 +94,15 @@ public class InventoryManager : MonoBehaviour
         //判斷背包內有多少物品
         for(int i = 0; i < Instance.myBag.itemList.Count; i++)
         {
+            //小於1的數量刪掉
+            if (Instance.myBag.itemList[i] != null)
+            {
+                if (Instance.myBag.itemList[i].itemHave < 1)
+                {
+                    Instance.myBag.itemList[i] = null;
+                }
+            }
+                
             //CreateNewItem(Instance.myBag.itemList[i]);
 
             //生成空格子
@@ -104,6 +118,9 @@ public class InventoryManager : MonoBehaviour
 
             //把背包的物品給列表
             Instance.slots[i].GetComponent<Slot>().SetupSlot(Instance.myBag.itemList[i]);
+
+            
+
         }
 
     }
@@ -127,6 +144,42 @@ public class InventoryManager : MonoBehaviour
     {
         siginalContent.SetActive(true);
         siginalText.text = "確定要丟棄" + item.itemName;
+        temp = item;
+        confirm.SetActive(true);
+        dontDo.SetActive(true);
     }
+
+    public void CouldNotCrash()
+    {
+        siginalContent.SetActive(true);
+        siginalText.text = "該物品不可丟棄";
+        confirm.SetActive(false);
+        dontDo.SetActive(false);
+        StartCoroutine(signalDisable());
+    }
+
+    public void RemoveSomethong()
+    {
+        siginalContent.SetActive(false);
+        SubItem(temp, 1);
+
+    }
+
+    public void CancelRemove()
+    {
+        siginalContent.SetActive(false);
+    }
+
+    IEnumerator signalDisable()
+    {
+        float myTime = 5;
+        while (myTime > 0)
+        {
+            yield return new WaitForSeconds(1);
+            myTime -= 1;
+        }
+        siginalContent.SetActive(false);
+    }
+
 
 }

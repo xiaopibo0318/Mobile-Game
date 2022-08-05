@@ -15,8 +15,9 @@ public class Camerafollowww : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
         myPos = 1;
+        Instance = this;
+        
         
     }
 
@@ -31,7 +32,7 @@ public class Camerafollowww : MonoBehaviour
 
     private void LateUpdate()
     {
-        if( SceneManager.GetActiveScene().buildIndex == 1)
+        if( target.position.x > -25)
         {
             if (target.position.x >= -9.367892 && target.position.x <= 9.01498)
             {
@@ -56,11 +57,12 @@ public class Camerafollowww : MonoBehaviour
             {
                 return;
             }
-        }else if (SceneManager.GetActiveScene().buildIndex == 2)
+        }else  if (target.position.x < 35)
         {
-            if (target.position.y >= -7.5 && target.position.y <= 7.5)
+     
+            if (target.position.y <7.5f && target.position.y > -7.5f)
             {
-                transform.position = new Vector3(transform.position.x, target.position.y, transform.position.z);
+                transform.position = new Vector3(-50, target.position.y, target.position.z);
             }
 
         }
@@ -68,7 +70,7 @@ public class Camerafollowww : MonoBehaviour
         {
             Debug.Log("找不到人");
         }
-        
+
     }
 
     public void changeMyPos()
@@ -76,7 +78,7 @@ public class Camerafollowww : MonoBehaviour
         if(myPos == 1)
         {
             myPos = 2;
-            Player.Instance.myRigid.position = new Vector2(-49.05f,2.39f);
+            Player.Instance.myRigid.position = new Vector2(-50,0);
         }else if (myPos == 2)
         {
             myPos = 1;

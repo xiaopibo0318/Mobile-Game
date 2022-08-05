@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Net
   m_EditorClassIdentifier: 
   itemID: 21
-  itemName: net
+  itemName: "\u7DB2\u5B50"
   itemImage: {fileID: -848701720097944118, guid: db027a021d092f643b36065a77c2e477,
     type: 3}
   itemTag: 
