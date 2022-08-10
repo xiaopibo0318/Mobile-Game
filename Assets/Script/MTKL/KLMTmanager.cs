@@ -37,6 +37,9 @@ public class KLMTmanager : MonoBehaviour
                 case 12:    //第二階段
                     secondStepKL();
                     break;
+                case 13:
+                    thirdStepKL();
+                    break;
             }
                 
 
@@ -76,8 +79,16 @@ public class KLMTmanager : MonoBehaviour
         woodUnactive.SetActive(false);
         woodActive.SetActive(true);
         Debug.Log("第一階段已完成");
-        teleport.SetActive(true);
         Player.Instance.myStatus.ChangeGameStatus(12);
+    }
+
+    //前往第二場景
+    public void thirdStepKL()
+    {
+        woodActive.SetActive(false);
+        woodAnswer.SetActive(true);
+        teleport.SetActive(true);
+        Player.Instance.myStatus.ChangeGameStatus(13);
     }
 
     private int GetGameStatus()
@@ -96,6 +107,9 @@ public class KLMTmanager : MonoBehaviour
                 case 12:    //第二階段
                     Debug.Log("重製至第二階段");
                     secondStepKL();
+                    break;
+                case 13:
+                    thirdStepKL();
                     break;
             }
 

@@ -14,6 +14,9 @@ TagManager:
   - interective
   - love
   - siginal
+  - ball0
+  - ball1
+  - ball2
   layers:
   - Default
   - TransparentFX

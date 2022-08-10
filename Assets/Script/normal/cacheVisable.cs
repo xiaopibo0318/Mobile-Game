@@ -48,7 +48,7 @@ public class cacheVisable : MonoBehaviour
 
     public void cacheSomething(Item item)
     {
-        visibaleTime = 1;
+        visibaleTime = 1.5f;
         isVisable = true;
         isInfoFinished = false;
         imageInfo.SetActive(true);
@@ -60,7 +60,7 @@ public class cacheVisable : MonoBehaviour
 
     public void siginalSomething(string myText)
     {
-        visibaleTime = 3;
+        visibaleTime = 10;
         isVisable = true;
         isInfoFinished = false;
         imageInfo.SetActive(true);

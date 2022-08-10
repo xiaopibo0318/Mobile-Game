@@ -9,6 +9,8 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     public Vector3 shapeSelectedScale;
     public Vector2 offset ;
 
+    private Transform originalParent;
+
     [HideInInspector]
     public ShapeData CurrentShapeData;  //現在從Storage那邊隨機挑，不用了
 
@@ -23,6 +25,9 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     private Vector3 _startPosition;
     private bool _shapeActive = true;
 
+    [Header("有問題的東東")]
+    public float now_x, now_y;
+
     void Awake()
     {
         _shapeStartScale = this.GetComponent<RectTransform>().localScale;
@@ -31,12 +36,19 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
         _shapeDraggable = true;
         _startPosition = _transform.localPosition;
         _shapeActive = true;
+        //有問題
+        now_x = _startPosition.x;
+        now_y = _startPosition.y;
+
+        originalParent = this.gameObject.transform.parent;
     }
 
     private void Start()
     {
         //RequestNewShape(CurrentShapeData);
     }
+
+
 
     public void OnEnable()
     {
@@ -276,6 +288,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     public void OnBeginDrag(PointerEventData eventData)
     { 
         this.GetComponent<RectTransform>().localScale = shapeSelectedScale;
+        this.gameObject.transform.SetParent(originalParent.parent.parent);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -294,6 +307,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     {
         this.GetComponent<RectTransform>().localScale = _shapeStartScale;
         GameEvent.CheckIfShapeCanBePlaced();
+        this.gameObject.transform.SetParent(originalParent);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -303,7 +317,8 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
     private void MoveShapeToStartPosition()
     {
-        _transform.transform.localPosition = _startPosition;
+
+        _transform.localPosition =_startPosition;
     }
 
 

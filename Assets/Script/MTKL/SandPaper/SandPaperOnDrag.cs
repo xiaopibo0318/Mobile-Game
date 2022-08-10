@@ -45,7 +45,7 @@ public class SandPaperOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             if(stayTime >= 5)
             {
                 Debug.Log("成功砂磨");
-                //InventoryManager.Instance.AddNewItem()
+                SandPaperManager.Instance.IfCrackSucess();
                 Destroy(gameObject);
                 stayTime = 0;
             }
@@ -56,6 +56,7 @@ public class SandPaperOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             Destroy(gameObject);
             stayTime = 0;
         }
+        Destroy(gameObject);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 

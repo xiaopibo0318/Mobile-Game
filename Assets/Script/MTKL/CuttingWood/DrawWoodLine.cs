@@ -21,6 +21,8 @@ public class DrawWoodLine : MonoBehaviour
     public GameObject goalInMap;
     bool isCircle;
 
+    [Header("動畫")]
+    public RectTransform brokenWood;
 
     public static DrawWoodLine Insatnce;
 

@@ -24,8 +24,16 @@ public class itemUIManager : MonoBehaviour
     public Item wiresaw;
     bool isWiresaw;
 
+    [Header("球")]
+    public GameObject ball0;
+    public GameObject ball1;
+    public GameObject ball2;
+
+
     [Header("鑰匙")]
     public GameObject interectiveKey;
+
+
 
     [Header("引用")]
     public static itemUIManager Instance;
@@ -74,9 +82,27 @@ public class itemUIManager : MonoBehaviour
         CanvasManager.Instance.openCanvas("cuttingWood");
     }
     
+    public string GetWhichBall()
+    {
+        if (ball0.activeInHierarchy)
+        {
+            return ball0.tag;
+        }else if (ball1.activeInHierarchy)
+        {
+            return ball1.tag;
+        }else if (ball2.activeInHierarchy)
+        {
+            return ball2.tag;
+        }
+        else { return null; }
+    }
+
     public void ballCracker()
     {
+        ///這個一定要先Get
+        SandPaperManager.Instance.NowBallType(GetWhichBall());
         CanvasManager.Instance.openCanvas("SandPaperBall");
+        
     }
 
 

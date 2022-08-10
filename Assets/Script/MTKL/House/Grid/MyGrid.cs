@@ -8,10 +8,17 @@ public class MyGrid : MonoBehaviour
 
     public List<GameObject> _girdSquares;
 
+
+    private int[] answer;
+    private int[] myAnswer;
+
+
     private void Awake()
     {
+        answer = new int[9] { 0, 1, 1, 1, 1, 0, 0, 1, 0 };
+        myAnswer = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         //幫每個格子上編號
-        for(int i=0; i < _girdSquares.Count; i++)
+        for (int i=0; i < _girdSquares.Count; i++)
         {
             _girdSquares[i].GetComponent<GridSquare>().SquareIndex = i;
         }
@@ -69,10 +76,49 @@ public class MyGrid : MonoBehaviour
         //shapeStorage.GetCurrentSelectedSquare().DeactiveShape();
 
 
+    }
 
+    public void checkAnswer()
+    {
+        var myCorrect = 0;
+        for (int i =0; i < answer.Length; i++)
+        {
+            if (_girdSquares[i].GetComponent<GridSquare>().SquareOccupied)
+            {
+                myAnswer[i] = 1;
+            }
+            if (myAnswer[i] == answer[i])
+            {
+                myCorrect += 1;
+            }
+            Debug.Log(myAnswer[i]);
+
+        }
+        Debug.Log("放對幾個" + myCorrect);
+        
+        if (myCorrect == 9)
+        {
+            KLMTmanager.Instance.thirdStepKL();
+            cacheVisable.Instance.siginalSomething("好像有哪裡產生了一些變化");
+        }
+        else
+        {
+            
+            Debug.Log("好像哪裡怪怪的");
+        }
 
     }
 
 
+    public void ClearBoard()
+    {
+        for(int i= 0 ;i < _girdSquares.Count; i++) 
+        {
+            var comp = _girdSquares[i].GetComponent<GridSquare>();
+            myAnswer[i] = 0;
+            comp.DeActivateSquare();
+        }
+        
+    }
 
 }

@@ -21,11 +21,20 @@ public class ballGameManager : MonoBehaviour
     public bool downLeft;
     public bool downRight;
 
-    [Header("背包裡的球圖片")]
+    [Header("背包裡的球圖片與遊戲上")]
     public GameObject ball1;
     public GameObject ball2;
     public GameObject ball3;
     public GameObject Content;
+
+    [Header("判斷背包是否有球")]
+    public GameObject panel1;
+    public GameObject panel2;
+    public GameObject panel3;
+    public Item myBall1;
+    public Item myBall2;
+    public Item myBall3;
+    public Inventory myBag;
 
     int nowType;
 
@@ -55,7 +64,7 @@ public class ballGameManager : MonoBehaviour
         {
             RotateBoard();
         }
-        
+        CheckBallInBag();
     }
 
 
@@ -66,17 +75,29 @@ public class ballGameManager : MonoBehaviour
         {
             if (!isStart)
             {
+
+                InventoryManager.Instance.SubItem(GetNowBall(nowType));
                 ballType[nowType-1].SetActive(true);
                 ResetPosition();
                 ballType[nowType-1].GetComponent<Rigidbody2D>().gravityScale = 20;
                 isStart = true;
             }
         }
-        
-        
+        else
+        {
+            //之後要換大字
+            cacheVisable.Instance.siginalSomething("還沒選擇球球喔");
+        }
         
     }
 
+    public Item GetNowBall(int NowType)
+    {
+        if (NowType == 1) return myBall1;
+        else if (NowType == 2) return myBall2;
+        else if (NowType == 3) return myBall3;
+        else return null;
+    }
 
     /// <summary>
     /// 四個板子的旋轉狀態
@@ -180,26 +201,29 @@ public class ballGameManager : MonoBehaviour
     public void BallOnClick()
     {
         var n = EventSystem.current.currentSelectedGameObject.name;
-        
+
         if (n == "ball1")
         {
             ball1.SetActive(true);
             ball2.SetActive(false);
             ball3.SetActive(false);
             nowType = 1;
-        }else if (n== "ball2")
+        }
+        else if (n == "ball2")
         {
             ball1.SetActive(false);
             ball2.SetActive(true);
             ball3.SetActive(false);
             nowType = 2;
-        }else if ( n == "ball3")
+        }
+        else if (n == "ball3")
         {
             ball1.SetActive(false);
             ball2.SetActive(false);
             ball3.SetActive(true);
             nowType = 3;
         }
+        else nowType = 0;
     }
 
     public void openBackPack()
@@ -212,4 +236,25 @@ public class ballGameManager : MonoBehaviour
             Content.SetActive(true);
         }
     }
+
+    public void CheckBallInBag()
+    {
+        if (myBag.itemList.Contains(myBall1))
+        {
+            panel1.SetActive(false);
+        }
+        else panel1.SetActive(true);
+        if (myBag.itemList.Contains(myBall2))
+        {
+            panel2.SetActive(false);
+        }
+        else panel2.SetActive(true);
+        if (myBag.itemList.Contains(myBall3))
+        {
+            panel3.SetActive(false);
+        }
+        else panel3.SetActive(true);
+    }
+
+   
 }

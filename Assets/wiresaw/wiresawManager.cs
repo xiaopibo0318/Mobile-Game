@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class wiresawManager : MonoBehaviour
 {
+    [Header("壓力表")]
+    public GameObject myStress;
+    private float stressValue;
+    public GameObject myClcikObject;
+    private Button mybutton;
+    private bool isStart;
+    
 
     [Header("UI組件")]
     public Text textLabel;
@@ -42,23 +49,16 @@ public class wiresawManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-        textFinished = true;
-        delayFinished = false;
-        topButtonOpen = false;
-        underButtonOpen = false;
-        change_z = topButton.transform.rotation.z;
-
-        status = 0;
-        inverse = 1;
+        Instance = this;  
         getTextFromFile(textFile);
-        
-        SetTextUI(0);
 
-        knifeAdd = false;
-        _OTV = true;
-        textRange = 0;
-        textLabel.text = "您可以藉由拖動鋸條以及尖嘴鉗來組裝手線鋸";
+        mybutton = myClcikObject.GetComponent<Button>();
+        //mybutton.onClick.AddListener(buttonOnClick);
+        mybutton.onClick.AddListener(delegate () { buttonOnClick(); });
+
+        ResetWireSaw();
+        //StartMyGame();
+
     }
 
     private void FixedUpdate()
@@ -83,9 +83,9 @@ public class wiresawManager : MonoBehaviour
                 status = 8;
             }
         }
-        Debug.Log("狀態為"+status);
-        Debug.Log("上方按鈕"+topButtonOpen);
-        Debug.Log("下方按鈕"+underButtonOpen);
+        //Debug.Log("狀態為"+status);
+        //Debug.Log("上方按鈕"+topButtonOpen);
+        //Debug.Log("下方按鈕"+underButtonOpen);
         if (status == 8)
         {
             StartCoroutine(delay(5));
@@ -268,6 +268,8 @@ public class wiresawManager : MonoBehaviour
             StartCoroutine( SetTextUI(10));
             status = 4;
             DraggableKnife.Instance.addKnifeToWiresaw();
+            isStart = true;
+            StartMyGame();
         }
     }
 
@@ -331,6 +333,69 @@ public class wiresawManager : MonoBehaviour
             _time -= 1;
         }
         delayFinished = true;
+    }
+
+    public void buttonOnClick()
+    {
+        myStress.GetComponent<Slider>().value += 0.5f;
+    }
+
+    public void StartMyGame()
+    {
+        myStress.SetActive(true);
+        myClcikObject.SetActive(true);
+        StartCoroutine(StartStressGame());
+    }
+
+    IEnumerator StartStressGame()
+    {
+        var myRange = new List<float>(8) { 0.3f, 0.6f, 0.9f, 0.9f, 3f, 8f, 4f, 2f };
+        var thisTime = 10f;
+        while (thisTime>0)
+        {
+            var index = Random.Range(0, myRange.Count);
+            var myTIme = myRange[index];
+            yield return new WaitForFixedUpdate();
+            myStress.GetComponent<Slider>().value -= Time.deltaTime * myTIme;
+            thisTime -= Time.fixedDeltaTime;
+            if (status == 5 || status == 6)
+                break;
+        }
+        if (myStress.GetComponent<Slider>().value<11.25 && myStress.GetComponent<Slider>().value > 8.75)
+        {
+            Debug.Log("成功");
+
+        }
+        else
+        {
+            Debug.Log("失敗");
+            ResetWireSaw();
+        }
+    }
+
+    public void ResetWireSaw()
+    {
+        myStress.SetActive(false);
+        myClcikObject.SetActive(false);
+
+        textFinished = true;
+        delayFinished = false;
+        topButtonOpen = false;
+        underButtonOpen = false;
+        change_z = topButton.transform.rotation.z;
+
+        status = 0;
+        inverse = 1;
+
+        SetTextUI(0);
+
+        knifeAdd = false;
+        DraggableKnife.Instance.goToOriginal();
+        _OTV = true;
+        textRange = 0;
+        textLabel.text = "您可以藉由拖動鋸條以及尖嘴鉗來組裝手線鋸";
+
+        isStart = false;
     }
 
 }

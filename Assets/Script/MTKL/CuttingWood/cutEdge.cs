@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class cutEdge : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         Debug.Log("碰到牆壁啦");
         DrawWoodLine.Insatnce.ClearLine();
     }
+
+    private void OnColliderEnter2D(Collider2D collision)
+    {
+        Debug.Log("碰到牆壁啦");
+        DrawWoodLine.Insatnce.ClearLine();
+    }
+
+   
 }
