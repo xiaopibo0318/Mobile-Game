@@ -22,9 +22,21 @@ public class DialogueMTKL : MonoBehaviour
     {
         if (story != null) return false;
         story = new Story(inkAsset.text);
-        story.variablesState["chatStatus"] = Player.Instance.myStatus.GetGameStatus();
+        story.variablesState["gameStatus"] = Player.Instance.myStatus.GetGameStatus();
         return true;
     }
+
+    public void ChangeChatStatus()
+    {
+        if (Player.Instance.myStatus.GetGameStatus() == 1)
+            story.variablesState["chatStatus"] = 1;
+        else if ((Player.Instance.myStatus.GetGameStatus() == 12))
+            story.variablesState["chatStatus"] = 11;
+        else if ((Player.Instance.myStatus.GetGameStatus() == 13))
+            story.variablesState["chatStatus"] = 21;
+        else story.variablesState["chatStatus"] = 999;
+    }
+
 
     public void NextDialog()
     {

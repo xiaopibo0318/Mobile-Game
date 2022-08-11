@@ -80,6 +80,7 @@ public class KLMTmanager : MonoBehaviour
         woodActive.SetActive(true);
         Debug.Log("第一階段已完成");
         Player.Instance.myStatus.ChangeGameStatus(12);
+        DialogueMTKL.Instance.ChangeChatStatus();
     }
 
     //前往第二場景
@@ -89,6 +90,7 @@ public class KLMTmanager : MonoBehaviour
         woodAnswer.SetActive(true);
         teleport.SetActive(true);
         Player.Instance.myStatus.ChangeGameStatus(13);
+        DialogueMTKL.Instance.ChangeChatStatus();
     }
 
     private int GetGameStatus()

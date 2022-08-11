@@ -26,12 +26,18 @@ public class DrawWoodLine : MonoBehaviour
 
     public static DrawWoodLine Insatnce;
 
+    [Header("事件判定")]
+    public EventSystem eventSystem;
+    private CutWoodUI cutwoodUI;
+
+
     private void Awake()
     {
         lr = GetComponent<UILineRenderer>();
         Insatnce = this;
         isInstantiate = false;
         isCircle = false;
+        //cutwoodUI.AddOperateLineListener(LineClickDown,LineOnClick,LineClickUp);
     }
 
     public void SetUpLine(Transform[] points)
@@ -59,11 +65,11 @@ public class DrawWoodLine : MonoBehaviour
         {
             a -= Time.deltaTime;
         }
-        if (Input.GetMouseButton(1))
-        {
-            
+        if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
+        { 
             AddNewPoint();
-            
+           // cutwoodUI.DrawLine();
+           
         }
         if (isInstantiate)
         {
@@ -106,8 +112,23 @@ public class DrawWoodLine : MonoBehaviour
             goalInMap = Instantiate(goal,pos , Quaternion.Euler(0,0,0), this.transform.parent);
             isInstantiate = true;
         }
+        PointerEventData eventData = new PointerEventData(eventSystem);
+        eventData.pressPosition = point;
+        eventData.position = point;
+        LineOnClick(eventData);
+        //IsGoAway(eventData);
 
 
+
+    }
+
+
+    public void IsGoAway(PointerEventData _eventData)
+    {
+        if(_eventData.pointerCurrentRaycast.gameObject.name == "Path")
+        {
+            Debug.Log("不是Path");
+        }
     }
 
     public void ClearLine()
@@ -117,5 +138,43 @@ public class DrawWoodLine : MonoBehaviour
         isInstantiate = false;
         isCircle = false;
     }
+
+    //public void OnPointerUp(PointerEventData eventData)
+    //{
+    //    this.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    //}
+
+    //public void OnPointerDown(PointerEventData eventData)
+    //{
+    //    this.GetComponent<CanvasGroup>().blocksRaycasts = false;
+    //    if (eventData.pointerCurrentRaycast.gameObject.name == "Path")
+    //        Debug.Log("Yes");
+    //    Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
+    //}
+
+    private void LineClickDown()
+    {
+
+    }
+    private void LineOnClick(PointerEventData eventData)
+    {
+        this.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        Debug.Log("1");
+        Debug.Log(eventData.position);
+        if (eventData.pointerCurrentRaycast.gameObject != null)
+        {
+            Debug.Log(3);
+            Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
+        }
+           
+           
+        Debug.Log(eventData.pointerCurrentRaycast.screenPosition);
+    }
+
+    private void LineClickUp()
+    {
+
+    }
+
 
 }

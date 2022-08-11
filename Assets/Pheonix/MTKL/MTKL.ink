@@ -1,10 +1,19 @@
-VAR gameStatus = 0
+VAR gameStatus = 1
 VAR chatStatus = 1
 
 ->initial
 
-//蓮花題目前面的問答
 === initial ===
+{gameStatus:
+-1 : ->initial_1
+-12: ->initial_2
+-13: ->initial_3
+}
+
+
+//蓮花題目前面的問答
+=== initial_1 ===
+
 
 {chatStatus:
  -1: ->firstStep
@@ -13,6 +22,15 @@ VAR chatStatus = 1
  -else: ->endDiaoluge
 }
 
+=== initial_2 ===
+{chatStatus:
+-11: ->endDiaoluge
+}
+
+=== initial_3 ===
+{chatStatus:
+-21: ->endDiaoluge
+}
 
 === firstStep ===
 哈囉！探險家，遇到甚麼問題了嗎？
