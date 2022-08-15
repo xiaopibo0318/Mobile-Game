@@ -248,9 +248,9 @@ public class InterectiveManager : MonoBehaviour
     }
 
 
-    public void TakeWood()
-    {
-        Wood.Instance.AddNewItem();
-    }
+    //public void TakeWood()
+    //{
+    //    Wood.Instance.AddNewItem();
+    //}
 
 }

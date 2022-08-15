@@ -29,7 +29,7 @@ public class DrawWoodLine : MonoBehaviour
     [Header("事件判定")]
     public EventSystem eventSystem;
     private CutWoodUI cutwoodUI;
-
+    private EventTrigger eventTrigger;
 
     private void Awake()
     {
@@ -37,6 +37,7 @@ public class DrawWoodLine : MonoBehaviour
         Insatnce = this;
         isInstantiate = false;
         isCircle = false;
+        eventTrigger = GetComponent<EventTrigger>();
         //cutwoodUI.AddOperateLineListener(LineClickDown,LineOnClick,LineClickUp);
     }
 
@@ -54,6 +55,7 @@ public class DrawWoodLine : MonoBehaviour
     {
         pos_x = Input.mousePosition.x-900;
         pos_y = Input.mousePosition.y-450;
+        //Debug.Log(TouchDetect());
 
     }
 
@@ -113,8 +115,9 @@ public class DrawWoodLine : MonoBehaviour
             isInstantiate = true;
         }
         PointerEventData eventData = new PointerEventData(eventSystem);
-        eventData.pressPosition = point;
-        eventData.position = point;
+
+        //eventData.pressPosition = point;
+        //eventData.position = point;
         LineOnClick(eventData);
         //IsGoAway(eventData);
 
@@ -169,6 +172,7 @@ public class DrawWoodLine : MonoBehaviour
            
            
         Debug.Log(eventData.pointerCurrentRaycast.screenPosition);
+        Debug.Log(eventData.pointerCurrentRaycast.worldPosition);
     }
 
     private void LineClickUp()
@@ -176,5 +180,9 @@ public class DrawWoodLine : MonoBehaviour
 
     }
 
-
+    public bool TouchDetect()
+    {
+        bool isTouch = EventSystem.current.IsPointerOverGameObject();
+        return isTouch;
+    }
 }

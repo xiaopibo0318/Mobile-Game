@@ -23,10 +23,13 @@ public class InventoryManager : MonoBehaviour
 
     Item temp;
 
-
+    public GameObject siginalObject;
+    public SiginalUI siginalUI;
+    
     private void Awake()
     {
-        
+        //siginalObject = GameObject.FindGameObjectWithTag("SiginalUI");
+        //siginalUI = siginalObject.GetComponent<SiginalUI>();
         siginalContent.SetActive(false);
 
         if (Instance != null)
@@ -48,11 +51,18 @@ public class InventoryManager : MonoBehaviour
     }
 
     
-
+    /// <summary>
+    /// 背包添加物品
+    /// </summary>
+    /// <param name="thisItem"></param>
     public void AddNewItem(Item thisItem)
     {
         if (!myBag.itemList.Contains(thisItem))
         {
+            if (CheckBagFull())
+            {
+                return;
+            }
             //myBag.itemList.Add(thisItem);
             //背包創建新物品
             //InventoryManager.CreateNewItem(thisItem);
@@ -181,5 +191,33 @@ public class InventoryManager : MonoBehaviour
         siginalContent.SetActive(false);
     }
 
+
+    public bool isBagFull()
+    {
+        var Count = 0;
+        for (int i = 0; i < 8; i++)
+        {
+            if (Instance.myBag.itemList[i] == null)
+            {
+                return false;
+            }
+            else
+            {
+                Count += 1;
+            }
+        }
+        if (Count == 8) return true;
+        else return false;
+    }
+
+    public bool CheckBagFull()
+    {
+        if (isBagFull())
+        {
+            siginalUI.SiginalText("背包已滿，請丟棄物品在撿取");
+            return true;
+        }
+        return false;
+    }
 
 }

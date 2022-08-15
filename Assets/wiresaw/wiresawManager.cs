@@ -28,7 +28,7 @@ public class wiresawManager : MonoBehaviour
 
     [SerializeField] int rotateSpeed;
     [SerializeField] Item wiresaw;
-
+    [SerializeField] DraggableKnife myKnife;
     float change_z;
     int inverse;
     int textRange;
@@ -364,6 +364,8 @@ public class wiresawManager : MonoBehaviour
         if (myStress.GetComponent<Slider>().value<11.25 && myStress.GetComponent<Slider>().value > 8.75)
         {
             Debug.Log("成功");
+            myStress.SetActive(false);
+            myClcikObject.SetActive(false);
 
         }
         else
@@ -390,7 +392,7 @@ public class wiresawManager : MonoBehaviour
         SetTextUI(0);
 
         knifeAdd = false;
-        DraggableKnife.Instance.goToOriginal();
+        myKnife.goToOriginal();
         _OTV = true;
         textRange = 0;
         textLabel.text = "您可以藉由拖動鋸條以及尖嘴鉗來組裝手線鋸";
