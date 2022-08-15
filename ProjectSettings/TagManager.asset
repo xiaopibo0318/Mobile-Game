@@ -17,6 +17,7 @@ TagManager:
   - ball0
   - ball1
   - ball2
+  - SiginalUI
   layers:
   - Default
   - TransparentFX

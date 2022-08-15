@@ -16,6 +16,8 @@ public class DialogueMTKL : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        StartDialogue();
     }
 
     public bool StartDialogue()
@@ -23,18 +25,39 @@ public class DialogueMTKL : MonoBehaviour
         if (story != null) return false;
         story = new Story(inkAsset.text);
         story.variablesState["gameStatus"] = Player.Instance.myStatus.GetGameStatus();
+        story.variablesState["chatStatus"] = 1;
         return true;
     }
 
     public void ChangeChatStatus()
     {
+        var relationshipStrength = (int)story.variablesState["gameStatus"];
+        var mentalHealth = (int)story.variablesState["chatStatus"];
+
+        Debug.Log($"Logging ink variables. 遊戲狀態: {relationshipStrength}, 聊天狀態: {mentalHealth}");
+        //Debug.Log(Player.Instance.myStatus.GetGameStatus());
         if (Player.Instance.myStatus.GetGameStatus() == 1)
             story.variablesState["chatStatus"] = 1;
         else if ((Player.Instance.myStatus.GetGameStatus() == 12))
+        {
+            story.variablesState["gameStatus"] = 12;
             story.variablesState["chatStatus"] = 11;
+        }
+
         else if ((Player.Instance.myStatus.GetGameStatus() == 13))
+        {
+            story.variablesState["gameStatus"] = 13;
             story.variablesState["chatStatus"] = 21;
-        else story.variablesState["chatStatus"] = 999;
+        }
+        else
+        {
+            story.variablesState["gameStatus"] = 999;
+            story.variablesState["chatStatus"] = 999;
+        }
+        relationshipStrength = (int)story.variablesState["gameStatus"];
+        mentalHealth = (int)story.variablesState["chatStatus"];
+        Debug.Log($"Logging ink variables. 遊戲狀態: {relationshipStrength}, 聊天狀態: {mentalHealth}");
+
     }
 
 

@@ -24,8 +24,8 @@ public class DraggableKnife : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     {
         Instance = this;
 
-        rectTransform = GetComponent<RectTransform>();
-        initialPosition = GetComponent<RectTransform>().anchoredPosition;
+        rectTransform = gameObject.GetComponent<RectTransform>();
+        initialPosition = new Vector3(23, 238, 0);
         EndPosition = new Vector3 (-300, 200, 0);
 
         knifeOn = false;
@@ -74,14 +74,14 @@ public class DraggableKnife : MonoBehaviour, IPointerDownHandler, IBeginDragHand
 
     public void goToOriginal()
     {
-        rectTransform.anchoredPosition = initialPosition;
+        gameObject.GetComponent<RectTransform>().localPosition = initialPosition;
     }
 
     public void addKnifeToWiresaw()
     {
         knifeOn = true;
         //wiresawManager.Instance.textBridge(10);
-        rectTransform.anchoredPosition = EndPosition;
+        gameObject.GetComponent<RectTransform>().localPosition = EndPosition;
     }
 
 }
