@@ -139,6 +139,11 @@ public class InterectiveManager : MonoBehaviour
             case "sandInterective400":
                 nextWay = 213;
                 break;
+
+            case "interectiveLove":
+                nextWay = 11;
+                break;
+
         }
 
  
@@ -225,6 +230,11 @@ public class InterectiveManager : MonoBehaviour
             case 213:
                 InventoryManager.Instance.AddNewItem(myItemList[5]);
                 break;
+
+            case 11:
+                InventoryManager.Instance.AddNewItem(myItemList[2]);
+                break;
+
         }
     }
 

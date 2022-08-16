@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class CutWoodManager : MonoBehaviour
 {
+    public GameObject mySelf;
+
     [Header("储存路径信息")]
     public List<GameObject> pathStorage;
+
+    [Header("木頭種類信息")]
+    public List<Item> woodList;
 
     [Header("分镜")]
     public GameObject woodChoose;
@@ -15,7 +22,7 @@ public class CutWoodManager : MonoBehaviour
     [Header("选择要切的木头")]
     public List<GameObject> woodSelectStorage;
     public List<GameObject> woodSimpleStorage;
-    List<int> woodIDList = new List<int> {301,302,303,311,321,331,341,351,361,371,391 };
+    List<int> woodIDList = new List<int> {301,302,303,311,321,331,341,351,361,371,601 };
     Button buttonCutWoodYes;
     Button buttonCutWoodNo;
     public GameObject siginal;
@@ -33,7 +40,15 @@ public class CutWoodManager : MonoBehaviour
     float totalTime;
     public float needMin;
     public float needSec;
+    bool timeFinished;
 
+    [Header("顯示信息")]
+    public SiginalUI siginalUI;
+
+
+    [Header("事件")]
+    private UnityAction<PointerEventData> onPointerDown;
+    
 
     public void Awake()
     {
@@ -55,7 +70,7 @@ public class CutWoodManager : MonoBehaviour
         var j = 0;
         foreach (var woodPath in pathStorage)
         {
-            //woodPath.GetComponent<WoodPath>().woodID = woodIDList[j];
+            woodPath.GetComponent<WoodPath>().woodID = woodIDList[j];
             j += 1;
         }
     }
@@ -113,6 +128,7 @@ public class CutWoodManager : MonoBehaviour
 
     private void Init()
     {
+        mySelf.SetActive(true);
         woodChoose.SetActive(true);
         cutWood.SetActive(true);
         siginal.SetActive(true);
@@ -122,6 +138,10 @@ public class CutWoodManager : MonoBehaviour
         buttonCutWoodNo.onClick.AddListener(CloseAllWoodSimple);
         buttonGoBack = GameObject.Find("GoBack").GetComponent<Button>();
         buttonGoBack.onClick.AddListener(GoBackPage);
+        woodChoose.SetActive(false);
+        cutWood.SetActive(false);
+        siginal.SetActive(false);
+        mySelf.SetActive(false);
     }
 
 
@@ -135,7 +155,21 @@ public class CutWoodManager : MonoBehaviour
 
     public void CutSucced()
     {
+        siginalUI.SiginalText("切割成功，木頭已放入背包");
+        StopCoroutine(Countdown());
+        foreach (var myWood in woodList)
+        {
+            if(myWood.itemID == nowWoodID)
+            {
+                InventoryManager.Instance.AddNewItem(myWood);
+                break;
+            }
+        }
+    }
 
+    public void CutFail()
+    {
+        siginalUI.SiginalText("切割失敗");
     }
 
     public void StartCutWood()
@@ -149,7 +183,7 @@ public class CutWoodManager : MonoBehaviour
         //var temp = string.Format("{0}", needSec.ToString("f2")).Replace(".",":");
         timerText.text = string.Format("{0}", needSec.ToString("f2")).Replace(".", ":");
         totalTime =  needSec;
-
+        timeFinished = false;
         while (totalTime > 0)
         {
             //等待一秒後執行
@@ -162,6 +196,7 @@ public class CutWoodManager : MonoBehaviour
             {
                 needSec = 0;
                 Debug.Log("結束");
+                timeFinished = true;
             }
             timerText.text = string.Format("{0}", needSec.ToString("f2")).Replace(".", ":");
         }
@@ -173,5 +208,20 @@ public class CutWoodManager : MonoBehaviour
             StartCutWood();
         }
     }
+
+    public bool getTimeStatus()
+    {
+        return timeFinished;
+    }
+
+    //public void AddPointerDownListener(UnityAction<PointerEventData> _onPointerDown)
+    //{
+    //    onPointerDown = _onPointerDown;
+    //}
+
+    //void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    //{
+    //    onPointerDown?.Invoke(eventData);
+    //}
 
 }

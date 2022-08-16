@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3284a4da7f52a5740bee82ec381f8593, type: 3}
   m_Name: wood331
   m_EditorClassIdentifier: 
-  itemID: 0
-  itemName: 
+  itemID: 331
+  itemName: "\u6728\u982DA"
   itemImage: {fileID: 4130601749051680448, guid: 85f3d7e2c89e5614abeb4428bc0a80a9,
     type: 3}
   itemTag: 

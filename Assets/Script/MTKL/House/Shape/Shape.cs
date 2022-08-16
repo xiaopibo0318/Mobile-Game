@@ -25,16 +25,19 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     private Vector3 _startPosition;
     private bool _shapeActive = true;
 
-    [Header("有問題的東東")]
+    [Header("有問題的東東(已解決)")]
     public float now_x, now_y;
+
+    private PutWoodUI putWoodUI;
 
     void Awake()
     {
+        putWoodUI = GameObject.Find("House_Ques").GetComponent<PutWoodUI>();
         _shapeStartScale = this.GetComponent<RectTransform>().localScale;
         _transform = this.GetComponent<RectTransform>();
         _canvas = GetComponentInParent<Canvas>();
         _shapeDraggable = true;
-        _startPosition = _transform.localPosition;
+        _startPosition = _transform.anchoredPosition;
         _shapeActive = true;
         //有問題
         now_x = _startPosition.x;
@@ -103,7 +106,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
     public void RequestNewShape(ShapeData shapeData)
     {
-        _transform.localPosition = _startPosition;
+        _transform.anchoredPosition = _startPosition;
         CreateShape(shapeData);
     }
 
@@ -293,9 +296,9 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
     public void OnDrag(PointerEventData eventData)
     {
-        _transform.anchorMin = new Vector2(0, 0);
-        _transform.anchorMax = new Vector2(0, 0);
-        _transform.pivot = new Vector2(0, 0);
+        _transform.anchorMin = new Vector2(0, 1);
+        _transform.anchorMax = new Vector2(0, 1);
+        _transform.pivot = new Vector2(0.5f, 0.5f);
 
         //Vector2 pos;
         //RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas.transform as RectTransform,
@@ -318,8 +321,11 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     private void MoveShapeToStartPosition()
     {
 
-        _transform.localPosition =_startPosition;
+        _transform.anchoredPosition =_startPosition;
     }
+
+
+
 
 
 }

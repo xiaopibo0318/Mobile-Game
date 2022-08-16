@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3284a4da7f52a5740bee82ec381f8593, type: 3}
-  m_Name: wood305
+  m_Name: wood311
   m_EditorClassIdentifier: 
-  itemID: 0
-  itemName: 
+  itemID: 311
+  itemName: "\u6728\u982D(1x2)"
   itemImage: {fileID: -8592016319655837145, guid: 85f3d7e2c89e5614abeb4428bc0a80a9,
     type: 3}
   itemTag: 

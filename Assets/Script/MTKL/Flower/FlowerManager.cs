@@ -67,11 +67,6 @@ public class FlowerManager : MonoBehaviour
             flowerUnactivateLook.SetActive(false);
             flowerActivateLook.SetActive(true);
             cacheVisable.Instance.siginalSomething("偏房似乎有了變化，去看看吧！");
-            InventoryManager.Instance.AddNewItem(ball);
-            InventoryManager.Instance.AddNewItem(ball);
-            InventoryManager.Instance.AddNewItem(ball);
-            InventoryManager.Instance.AddNewItem(ball);
-            InventoryManager.Instance.AddNewItem(ball);
             //KLMTmanager.Instance.gameStatus = KLMTmanager.GameStatus.beforeHouse;
             KLMTmanager.Instance.secondStepKL();
             

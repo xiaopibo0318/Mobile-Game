@@ -49,12 +49,22 @@ public class MyGrid : MonoBehaviour
             {
                 equalIndexs.Add(gridSquare.SquareIndex);
                 gridSquare.Selected = false;
+                Debug.Log(gridSquare.SquareIndex); //檢測
                 //gridSquare.ActivateSquare();
             }
+        }
+        //檢測
+        for (int i = 0; i < equalIndexs.Count; i++)
+        {
+            Debug.Log(equalIndexs[i]);
         }
 
         var currentSelectedShape = shapeStorage.GetCurrentSelectedSquare();
         if (currentSelectedShape == null) return;
+
+        //檢測
+        Debug.Log("選擇的方塊有幾格" + currentSelectedShape.totalSquareNumber);
+        Debug.Log("接觸到了幾個方塊" + equalIndexs.Count);
 
         if(currentSelectedShape.totalSquareNumber == equalIndexs.Count)
         {

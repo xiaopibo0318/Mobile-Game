@@ -29,6 +29,7 @@ public class DraggableKnife : MonoBehaviour, IPointerDownHandler, IBeginDragHand
         EndPosition = new Vector3 (-300, 200, 0);
 
         knifeOn = false;
+        goToOriginal();
 
     }
     public void OnPointerDown(PointerEventData eventData)

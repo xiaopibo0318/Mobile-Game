@@ -124,6 +124,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void CreateCharacter()
     {
+
         MenuManager.Instance.OpenMenu("createcharacter");
         Debug.Log("Entering Characre_create Menu");
     }

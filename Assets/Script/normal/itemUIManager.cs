@@ -32,6 +32,7 @@ public class itemUIManager : MonoBehaviour
 
     [Header("鑰匙")]
     public GameObject interectiveKey;
+    public GameObject treasureBox;
 
 
 
@@ -117,6 +118,7 @@ public class itemUIManager : MonoBehaviour
     public void openBox()
     {
         cacheVisable.Instance.siginalSomething("遠處好像有一些聲音，某處可能有了變化");
+        treasureBox.SetActive(true);
     }
 
     

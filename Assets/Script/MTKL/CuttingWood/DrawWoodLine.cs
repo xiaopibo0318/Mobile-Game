@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 using UnityEngine.EventSystems;
+using System;
 
 public class DrawWoodLine : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class DrawWoodLine : MonoBehaviour
     public Transform[] points;
     float pos_x, pos_y;
     List<Vector2> pointlist = new List<Vector2>();
+    bool startDraw;
 
     [Header("邊界判定")]
     EdgeCollider2D myCollider;
@@ -30,6 +32,14 @@ public class DrawWoodLine : MonoBehaviour
     public EventSystem eventSystem;
     private CutWoodUI cutwoodUI;
     private EventTrigger eventTrigger;
+    public GameObject myPos;
+    private bool isOperate = false;
+
+    [Header("計時")]
+    bool timeStart;
+
+    CutWoodManager cutWoodManager;
+    DragImageWood dragImageWood;
 
     private void Awake()
     {
@@ -38,8 +48,25 @@ public class DrawWoodLine : MonoBehaviour
         isInstantiate = false;
         isCircle = false;
         eventTrigger = GetComponent<EventTrigger>();
+        startDraw = false;
+        timeStart = false;
+        cutWoodManager = GameObject.Find("CuttingWood").GetComponent<CutWoodManager>();
+        //siginalUI = GameObject.FindGameObjectWithTag("SignalUI").GetComponent<SiginalUI>();
+        dragImageWood = GameObject.Find("CuttingWood").GetComponent<DragImageWood>();
+        ///<summary>
+        ///添加 "點擊、拖曳" 的處理
+        /// </summary>
+
+        dragImageWood.AddPointerDownListener(OnUserPointerDown);
+        dragImageWood.AddOnDragListener(OnOperateRangeDrag);
+        dragImageWood.AddBeginDragListener(OnOperateRangeBeginDrag);
+        dragImageWood.AddEndDragListener(OnOperateRangeEndDrag);
+
+        ClearLine();
         //cutwoodUI.AddOperateLineListener(LineClickDown,LineOnClick,LineClickUp);
     }
+
+ 
 
     public void SetUpLine(Transform[] points)
     {
@@ -68,7 +95,8 @@ public class DrawWoodLine : MonoBehaviour
             a -= Time.deltaTime;
         }
         if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
-        { 
+        {
+            startDraw = true;
             AddNewPoint();
            // cutwoodUI.DrawLine();
            
@@ -79,6 +107,7 @@ public class DrawWoodLine : MonoBehaviour
             {
                 Debug.Log("成功繞圈");
                 isCircle = true;
+                cutWoodManager.CutSucced();
             }
         }
         
@@ -87,11 +116,23 @@ public class DrawWoodLine : MonoBehaviour
 
     public void AddNewPoint()
     {
+        if (!timeStart)
+        {
+            //開始計時
+            cutWoodManager.StartCutWood();
+            timeStart = true;
+        }
         var point = new Vector2(pos_x, pos_y);
         myCollider = gameObject.GetComponent<EdgeCollider2D>();
-        if (pointlist.Count< 300)
+        if (!cutWoodManager.getTimeStatus())
         {
-            if (pointlist.Count>3 && pointlist[pointlist.Count-1] == point)
+            if (pointlist.Count < 3)
+            {
+                myCollider.points[0] = point;
+                myCollider.points[1] = point;
+            }
+            
+            if (pointlist.Count > 3 && pointlist[pointlist.Count - 1] == point)
             {
                 return;
             }
@@ -104,6 +145,7 @@ public class DrawWoodLine : MonoBehaviour
             //}
             myCollider.points = lr.Points;
         }
+        else timeStart = false;
 
         ///<summary>
         ///繞完一圈的判定
@@ -116,23 +158,18 @@ public class DrawWoodLine : MonoBehaviour
         }
         PointerEventData eventData = new PointerEventData(eventSystem);
 
-        //eventData.pressPosition = point;
-        //eventData.position = point;
-        LineOnClick(eventData);
-        //IsGoAway(eventData);
 
 
 
     }
 
 
-    public void IsGoAway(PointerEventData _eventData)
+    public void CutFail()
     {
-        if(_eventData.pointerCurrentRaycast.gameObject.name == "Path")
-        {
-            Debug.Log("不是Path");
-        }
+        cutWoodManager.CutFail();
+        ClearLine();
     }
+
 
     public void ClearLine()
     {
@@ -142,47 +179,63 @@ public class DrawWoodLine : MonoBehaviour
         isCircle = false;
     }
 
-    //public void OnPointerUp(PointerEventData eventData)
-    //{
-    //    this.GetComponent<CanvasGroup>().blocksRaycasts = true;
-    //}
-
-    //public void OnPointerDown(PointerEventData eventData)
-    //{
-    //    this.GetComponent<CanvasGroup>().blocksRaycasts = false;
-    //    if (eventData.pointerCurrentRaycast.gameObject.name == "Path")
-    //        Debug.Log("Yes");
-    //    Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
-    //}
-
-    private void LineClickDown()
-    {
-
-    }
-    private void LineOnClick(PointerEventData eventData)
-    {
-        this.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        Debug.Log("1");
-        Debug.Log(eventData.position);
-        if (eventData.pointerCurrentRaycast.gameObject != null)
-        {
-            Debug.Log(3);
-            Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
-        }
-           
-           
-        Debug.Log(eventData.pointerCurrentRaycast.screenPosition);
-        Debug.Log(eventData.pointerCurrentRaycast.worldPosition);
-    }
-
-    private void LineClickUp()
-    {
-
-    }
-
     public bool TouchDetect()
     {
         bool isTouch = EventSystem.current.IsPointerOverGameObject();
         return isTouch;
     }
+
+
+    private void OnUserPointerDown(PointerEventData eventData)
+    { 
+        if (cutWoodManager.getTimeStatus())
+        {
+            cutWoodManager.StartCutWood();
+            isOperate = true;
+        }
+        else
+        {
+            isOperate = false;
+            return;
+        }
+
+        
+        Debug.Log("pointer down is touch.");
+        if (eventData.pointerCurrentRaycast.gameObject != null)
+        {
+            Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
+        }
+        else Debug.Log("沒東西");
+
+    }
+
+    private void OnOperateRangeBeginDrag(PointerEventData eventData)
+    {
+        if (!isOperate) return;
+
+        myPos.GetComponent<CanvasGroup>().blocksRaycasts = false;
+    }
+
+    private void OnOperateRangeDrag(PointerEventData eventData)
+    {
+        if (!isOperate) return;
+
+        if (eventData.pointerCurrentRaycast.gameObject != null)
+        {
+            if(eventData.pointerCurrentRaycast.gameObject.name != "Path")
+            {
+                CutFail();
+            }
+        }
+        else Debug.Log("沒東西");
+    }
+
+    private void OnOperateRangeEndDrag(PointerEventData eventData)
+    {
+        isOperate = false;
+
+        myPos.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
+
 }
