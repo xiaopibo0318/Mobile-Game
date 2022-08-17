@@ -7,11 +7,16 @@ public class myLoveTag : MonoBehaviour
     [SerializeField] private Inventory mybeg;
 
     [SerializeField] private SiginalUI signalUI;
+    [SerializeField] private Item love;
+    [SerializeField] private GameObject mySelf;
 
     string myTag;
     string myName;
     bool netHave;
 
+
+    public static myLoveTag Instance;
+    
     // Start is called before the first frame update
     private void Awake()
     {
@@ -19,7 +24,7 @@ public class myLoveTag : MonoBehaviour
         myName = this.name;
         netHave = false;
         this.transform.tag = "cache";
-
+        Instance = this;
     }
 
     private void FixedUpdate()
@@ -61,21 +66,33 @@ public class myLoveTag : MonoBehaviour
         myTag = this.tag;
         InterectiveManager.Instance.openIcon(myTag);
         Debug.Log(myTag);
-        if(myTag != "net")
-        {
-            signalUI.SiginalText("水有點深，好像需要一些工具才能撈到");
-        }
-        else
-        {
-            InterectiveManager.Instance.WhichITouch(myName);
-        }
-        
+        InterectiveManager.Instance.WhichITouch(myName);
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
         InterectiveManager.Instance.closeAllIcon();
     }
+
+    public void CacheOrSignal()
+    {
+        IsNetInBag();
+        myTag = this.tag;
+
+        if (myTag != "net")
+        {
+            signalUI.SiginalText("水有點深，好像需要一些工具才能撈到");
+        }
+        else
+        {
+            Debug.Log("A");
+            InventoryManager.Instance.AddNewItem(love);
+            InterectiveManager.Instance.closeAllIcon();
+            mySelf.SetActive(false);
+        }
+        Debug.Log("B");
+    }
+
 
 
 }

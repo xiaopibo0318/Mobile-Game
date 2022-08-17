@@ -30,8 +30,6 @@ public class DrawWoodLine : MonoBehaviour
 
     [Header("事件判定")]
     public EventSystem eventSystem;
-    private CutWoodUI cutwoodUI;
-    private EventTrigger eventTrigger;
     public GameObject myPos;
     private bool isOperate = false;
 
@@ -47,7 +45,6 @@ public class DrawWoodLine : MonoBehaviour
         Insatnce = this;
         isInstantiate = false;
         isCircle = false;
-        eventTrigger = GetComponent<EventTrigger>();
         startDraw = false;
         timeStart = false;
         cutWoodManager = GameObject.Find("CuttingWood").GetComponent<CutWoodManager>();
@@ -212,7 +209,10 @@ public class DrawWoodLine : MonoBehaviour
     private void OnOperateRangeBeginDrag(PointerEventData eventData)
     {
         if (!isOperate) return;
-
+        if (cutWoodManager.getTimeStatus()){
+            CutFail();
+            myPos.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
         myPos.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
@@ -234,6 +234,21 @@ public class DrawWoodLine : MonoBehaviour
     {
         isOperate = false;
 
+
+        if (isInstantiate)
+        {
+            if (Goal.Instance.getInZone())
+            {
+                Debug.Log("成功繞圈");
+                isCircle = true;
+                cutWoodManager.CutSucced();
+                ClearLine();
+            }
+        }
+        else
+        {
+            CutFail();
+        }
         myPos.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 

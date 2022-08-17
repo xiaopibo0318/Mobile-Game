@@ -159,6 +159,7 @@ public class CutWoodManager : MonoBehaviour
         StopCoroutine(Countdown());
         foreach (var myWood in woodList)
         {
+            Debug.Log(nowWoodID);
             if(myWood.itemID == nowWoodID)
             {
                 InventoryManager.Instance.AddNewItem(myWood);
@@ -169,6 +170,7 @@ public class CutWoodManager : MonoBehaviour
 
     public void CutFail()
     {
+        StopCoroutine(Countdown());
         siginalUI.SiginalText("切割失敗");
     }
 

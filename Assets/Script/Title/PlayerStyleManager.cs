@@ -8,7 +8,7 @@ public class PlayerStyleManager : MonoBehaviour
 
     public static PlayerStyleManager Instance;
 
-    int mystyle;
+    int mystyle = 1;
     // Start is called before the first frame update
     void Start()
     {

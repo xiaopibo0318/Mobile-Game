@@ -232,7 +232,7 @@ public class InterectiveManager : MonoBehaviour
                 break;
 
             case 11:
-                InventoryManager.Instance.AddNewItem(myItemList[2]);
+                myLoveTag.Instance.CacheOrSignal();
                 break;
 
         }

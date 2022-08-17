@@ -75,6 +75,7 @@ public class DraggableKnife : MonoBehaviour, IPointerDownHandler, IBeginDragHand
 
     public void goToOriginal()
     {
+        knifeOn = false;
         gameObject.GetComponent<RectTransform>().localPosition = initialPosition;
     }
 
