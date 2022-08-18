@@ -67,6 +67,7 @@ public class CutWoodManager : MonoBehaviour
             myWood.GetComponent<WoodWantToCut>().slotID = i;
             i += 1;
         }
+
         var j = 0;
         foreach (var woodPath in pathStorage)
         {

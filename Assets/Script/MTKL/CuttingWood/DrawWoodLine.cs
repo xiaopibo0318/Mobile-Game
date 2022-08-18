@@ -91,6 +91,7 @@ public class DrawWoodLine : MonoBehaviour
         {
             a -= Time.deltaTime;
         }
+
         if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
         {
             startDraw = true;
@@ -98,6 +99,7 @@ public class DrawWoodLine : MonoBehaviour
            // cutwoodUI.DrawLine();
            
         }
+
         if (isInstantiate)
         {
             if (Goal.Instance.getInZone())

@@ -161,11 +161,12 @@ public class InventoryManager : MonoBehaviour
 
     public void CouldNotCrash()
     {
-        siginalContent.SetActive(true);
-        siginalText.text = "該物品不可丟棄";
-        confirm.SetActive(false);
-        dontDo.SetActive(false);
-        StartCoroutine(signalDisable());
+        //siginalContent.SetActive(true);
+        //siginalText.text = "該物品不可丟棄";
+        //confirm.SetActive(false);
+        //dontDo.SetActive(false);
+        //StartCoroutine(signalDisable());
+        siginalUI.SiginalText("該物品不可丟棄");
     }
 
     public void RemoveSomethong()

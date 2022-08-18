@@ -39,16 +39,14 @@ public class WoodManager : MonoBehaviour
         //將Missing的全部刪除掉
         woodOnGroundList.RemoveAll(GameObject => GameObject == null); 
 
-        while (true)
-        {
-            GameObject wood = Instantiate(WoodPrefab, transform);
-            wood.transform.position = new Vector3(Random.Range(-5, 20), Random.Range(0, 6), 0);
-            woodOnGroundList.Add(wood);
-            woodIndex = woodOnGroundList.IndexOf(wood);
-            wood.GetComponent<Wood>().woodID = woodIndex;
-            Destroy(wood, lifetime);
-            break;
-        }  
+
+        GameObject wood = Instantiate(WoodPrefab, transform);
+        wood.transform.position = new Vector3(Random.Range(-5, 20), Random.Range(0, 6), 0);
+        woodOnGroundList.Add(wood);
+        woodIndex = woodOnGroundList.IndexOf(wood);
+        wood.GetComponent<Wood>().woodID = woodIndex;
+        Destroy(wood, lifetime);
+
     }
 
    
