@@ -121,7 +121,11 @@ public class Launcher : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         MenuManager.Instance.OpenMenu("loading");
     }
-
+    public void UserLogin()
+    {
+        MenuManager.Instance.OpenMenu("loginsystem");
+        Debug.Log("Login");
+    }
     public void CreateCharacter()
     {
 
