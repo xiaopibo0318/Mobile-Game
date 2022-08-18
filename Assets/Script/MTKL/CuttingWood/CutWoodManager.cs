@@ -159,7 +159,8 @@ public class CutWoodManager : MonoBehaviour
         StopCoroutine(Countdown());
         foreach (var myWood in woodList)
         {
-            Debug.Log(nowWoodID);
+            Debug.Log("現在的ID:"+nowWoodID);
+            Debug.Log("切的木頭ID"+myWood.itemID);
             if(myWood.itemID == nowWoodID)
             {
                 InventoryManager.Instance.AddNewItem(myWood);

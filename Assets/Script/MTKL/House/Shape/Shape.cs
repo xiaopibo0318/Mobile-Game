@@ -14,6 +14,10 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     [HideInInspector]
     public ShapeData CurrentShapeData;  //現在從Storage那邊隨機挑，不用了
 
+
+    public int shapeNum;
+    public int shapeID;
+
     public int totalSquareNumber { get; set; }
 
 
@@ -22,7 +26,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     private RectTransform _transform;
     private bool _shapeDraggable = true;
     private Canvas _canvas;
-    private Vector3 _startPosition;
+    private Vector2 _startPosition;
     private bool _shapeActive = true;
 
     [Header("有問題的東東(已解決)")]
@@ -66,7 +70,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
     public bool IsOnStartPosition()
     {
-        return _transform.localPosition == _startPosition;
+        return _transform.anchoredPosition == _startPosition;
     }
 
     public bool IsAnyOfShapeSquareActive()
@@ -146,7 +150,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
                 }
             }
         }
-
+        shapeNum = currentIndextInList;
     }
 
 

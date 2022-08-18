@@ -17,7 +17,7 @@ MonoBehaviour:
   itemImage: {fileID: -1594812924763574435, guid: 7ff03028d6af536458d7dabc04d1aa03,
     type: 3}
   itemTag: 
-  itemHave: 2
+  itemHave: 0
   itemInfo: "\u5C1A\u672A\u6253\u78E8\u7684\u7403\u3002"
   missioable: 0
   storyable: 0

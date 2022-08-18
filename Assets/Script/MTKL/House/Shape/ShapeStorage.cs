@@ -15,6 +15,7 @@ public class ShapeStorage : MonoBehaviour
         { 
             //var shapeIndex = UnityEngine.Random.Range(0, shapeData.Count); //隨機挑選
             shape.CreateShape(shapeData[shapeIndex]);
+            shape.shapeID = shapeIndex;
             shapeIndex++;
         }
         
@@ -24,12 +25,14 @@ public class ShapeStorage : MonoBehaviour
     {
         foreach (var shape in shapeList)
         {
+            
             if(shape.IsOnStartPosition() == false && shape.IsAnyOfShapeSquareActive())
             {
+                Debug.Log(shape.IsOnStartPosition());
                 return shape;
             }
         }
-        //Debug.LogError("沒有方塊被選");
+        Debug.Log("沒有方塊被選");
         return null;
     }
 

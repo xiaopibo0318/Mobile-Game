@@ -8,13 +8,13 @@ public class Wood : MonoBehaviour
     
     public Item thisItem;
     public Inventory playerInventory;
-    public static Wood Instance;
     private bool isMe;
-    string myTag; 
+    string myTag;
+    public int woodID;
 
     private void Awake()
     {
-        Instance = this;
+      
         myTag = this.tag;
         isMe = false;
     }
@@ -33,6 +33,8 @@ public class Wood : MonoBehaviour
         InterectiveManager.Instance.WhichITouch(this.name);
         Debug.Log(this.name);
         isMe = true;
+        Debug.Log("木頭ID" + woodID);
+        WoodManager.Instance.GetNowWood(woodID);
     }
 
     void OnTriggerExit2D(Collider2D collision)
@@ -45,33 +47,6 @@ public class Wood : MonoBehaviour
 
    
 
-    
-    public void AddNewItem()
-    {
-        if (!playerInventory.itemList.Contains(thisItem))
-        {
-            //playerInventory.itemList.Add(thisItem);
-            //背包創建新物品
-            //InventoryManager.CreateNewItem(thisItem);
-            for(int i =0; i < playerInventory.itemList.Count; i++)
-            {
-                if(playerInventory.itemList[i] == null)
-                {
-                    playerInventory.itemList[i] = thisItem;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            thisItem.itemHave += 1;
-        }
 
-        InventoryManager.RefreshItem();
-
-        //gameObject.SetActive(false);
-        if(isMe) Destroy(this.gameObject);
-        
-    }
     
 }

@@ -12,6 +12,7 @@ public class MyGrid : MonoBehaviour
     private int[] answer;
     private int[] myAnswer;
 
+    public SiginalUI siginalUI;
 
     private void Awake()
     {
@@ -49,22 +50,23 @@ public class MyGrid : MonoBehaviour
             {
                 equalIndexs.Add(gridSquare.SquareIndex);
                 gridSquare.Selected = false;
-                Debug.Log(gridSquare.SquareIndex); //檢測
                 //gridSquare.ActivateSquare();
             }
         }
         //檢測
-        for (int i = 0; i < equalIndexs.Count; i++)
-        {
-            Debug.Log(equalIndexs[i]);
-        }
+        //for (int i = 0; i < equalIndexs.Count; i++)
+        //{
+        //    Debug.Log(equalIndexs[i]);
+        //}
 
         var currentSelectedShape = shapeStorage.GetCurrentSelectedSquare();
         if (currentSelectedShape == null) return;
 
         //檢測
         Debug.Log("選擇的方塊有幾格" + currentSelectedShape.totalSquareNumber);
-        Debug.Log("接觸到了幾個方塊" + equalIndexs.Count);
+        //Debug.Log("選擇的方塊有X格" + currentSelectedShape.shapeNum);
+        //Debug.Log("選擇的方塊有編號" + currentSelectedShape.shapeID);
+        //Debug.Log("接觸到了幾個方塊" + equalIndexs.Count);
 
         if(currentSelectedShape.totalSquareNumber == equalIndexs.Count)
         {
@@ -113,7 +115,7 @@ public class MyGrid : MonoBehaviour
         }
         else
         {
-            
+            siginalUI.SiginalText("好像哪裡怪怪的");
             Debug.Log("好像哪裡怪怪的");
         }
 
@@ -127,6 +129,9 @@ public class MyGrid : MonoBehaviour
             var comp = _girdSquares[i].GetComponent<GridSquare>();
             myAnswer[i] = 0;
             comp.DeActivateSquare();
+            
+
+
         }
         
     }

@@ -196,7 +196,8 @@ public class InterectiveManager : MonoBehaviour
                 break;
 
             case 1111:
-                Wood.Instance.AddNewItem();
+                InventoryManager.Instance.AddNewItem(myItemList[0]);
+                WoodManager.Instance.DestroyNowWood();
                 Player.Instance.PlayerCache();
                 break;
             case 1112:

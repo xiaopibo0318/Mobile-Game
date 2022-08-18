@@ -62,6 +62,8 @@ public class myLoveTag : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!mySelf.activeInHierarchy) return;
+
         IsNetInBag();
         myTag = this.tag;
         InterectiveManager.Instance.openIcon(myTag);

@@ -76,6 +76,8 @@ public class itemUIManager : MonoBehaviour
     {
         InventoryManager.Instance.SubItem(wood, 1);
         InventoryManager.Instance.AddNewItem(woodBoard);
+        
+        
     }
 
     public void UsingWiresawToCut()
