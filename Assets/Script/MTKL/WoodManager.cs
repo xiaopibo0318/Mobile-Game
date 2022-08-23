@@ -63,7 +63,7 @@ public class WoodManager : MonoBehaviour
 
 
 
-    public void PassNowWood(int n)
+    public void ChangeNowWood(int n)
     {
         nowWoodID = n;
     }

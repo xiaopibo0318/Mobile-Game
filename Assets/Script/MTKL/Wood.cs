@@ -27,7 +27,7 @@ public class Wood : MonoBehaviour
         InterectiveManager.Instance.WhichITouch(this.name);
         //Debug.Log(this.name);
         //Debug.Log("木頭ID" + woodID);
-        WoodManager.Instance.PassNowWood(woodID);
+        WoodManager.Instance.ChangeNowWood(woodID);
     }
 
     void OnTriggerExit2D(Collider2D collision)
