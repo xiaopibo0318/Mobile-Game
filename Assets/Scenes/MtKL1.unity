@@ -50483,15 +50483,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1273626390}
   - component: {fileID: 1273626393}
-  - component: {fileID: 1273626392}
-  - component: {fileID: 1273626391}
   m_Layer: 0
   m_Name: machineInterective
-  m_TagString: interective
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1273626390
 Transform:
   m_ObjectHideFlags: 0
@@ -50506,44 +50504,6 @@ Transform:
   m_Father: {fileID: 360674980}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1273626391
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1273626389}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 7.7274036, y: -6.538433}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.58, y: 1.85}
-    newSize: {x: 4.58, y: 1.85}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.8434486, y: 3.6475525}
-  m_EdgeRadius: 0
---- !u!114 &1273626392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1273626389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edc50b603194ab942a318fde68442479, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &1273626393
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -56473,7 +56433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa5d80e2b3185541bf1a7f2eb9db3aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnTime: 1000
   WoodPrefab: {fileID: 2486768246830981521, guid: 862242ee1227e1f4c93e98f37b86951c,
     type: 3}
   lifetime: 0
