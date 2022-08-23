@@ -41,6 +41,7 @@ public class CutWoodManager : MonoBehaviour
     public float needMin;
     public float needSec;
     bool timeFinished;
+    Coroutine timeCoroutine = null;
 
     [Header("顯示信息")]
     public SiginalUI siginalUI;
@@ -172,14 +173,16 @@ public class CutWoodManager : MonoBehaviour
 
     public void CutFail()
     {
-        StopCoroutine(Countdown());
+        StopCoroutine(timeCoroutine);
+        needSec = 0;
+        timerText.text = string.Format("{0}", needSec.ToString("f2")).Replace(".", ":");
         siginalUI.SiginalText("切割失敗");
     }
 
     public void StartCutWood()
     {
         needSec = 20;
-        StartCoroutine(Countdown());
+        timeCoroutine = StartCoroutine(Countdown());
     }
 
     IEnumerator Countdown()

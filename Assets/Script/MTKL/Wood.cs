@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class Wood : MonoBehaviour
 {
-    
-    public Item thisItem;
-    public Inventory playerInventory;
-    private bool isMe;
     string myTag;
     public int woodID;
 
@@ -16,7 +12,6 @@ public class Wood : MonoBehaviour
     {
       
         myTag = this.tag;
-        isMe = false;
     }
 
     void Update()
@@ -26,23 +21,19 @@ public class Wood : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("已經碰觸");
         //UIManager.Instance.CacheVisible(true);
         InterectiveManager.Instance.openIcon(myTag);
-        Debug.Log("木頭的tag:" + myTag);
+        //Debug.Log("木頭的tag:" + myTag);
         InterectiveManager.Instance.WhichITouch(this.name);
-        Debug.Log(this.name);
-        isMe = true;
-        Debug.Log("木頭ID" + woodID);
-        WoodManager.Instance.GetNowWood(woodID);
+        //Debug.Log(this.name);
+        //Debug.Log("木頭ID" + woodID);
+        WoodManager.Instance.PassNowWood(woodID);
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("已經離開");
         //UIManager.Instance.CacheVisible(false);
         InterectiveManager.Instance.closeAllIcon();
-        isMe = false;
     }
 
    

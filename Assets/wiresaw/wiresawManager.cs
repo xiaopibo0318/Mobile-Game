@@ -7,7 +7,6 @@ public class wiresawManager : MonoBehaviour
 {
     [Header("壓力表")]
     public GameObject myStress;
-    private float stressValue;
     public GameObject myClcikObject;
     private Button mybutton;
     private bool isStart;

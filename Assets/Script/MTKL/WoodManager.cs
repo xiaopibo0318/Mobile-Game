@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WoodManager : MonoBehaviour
 {
-    [SerializeField] float SpawnTime;
+    private float SpawnTime;
     [SerializeField] GameObject WoodPrefab;
     [SerializeField] float lifetime;
-    float time;
-    int woodIndex = 0;
-    int nowWoodID;
+    private float time;
+    private int woodIndex = 0;
+    private int nowWoodID;
 
     [SerializeField] List<GameObject> woodOnGroundList = new List<GameObject>();
 
@@ -63,7 +63,7 @@ public class WoodManager : MonoBehaviour
 
 
 
-    public void GetNowWood(int n)
+    public void PassNowWood(int n)
     {
         nowWoodID = n;
     }

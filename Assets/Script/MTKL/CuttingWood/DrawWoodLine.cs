@@ -206,6 +206,8 @@ public class DrawWoodLine : MonoBehaviour
         }
         else Debug.Log("沒東西");
 
+        myPos.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
     }
 
     private void OnOperateRangeBeginDrag(PointerEventData eventData)
