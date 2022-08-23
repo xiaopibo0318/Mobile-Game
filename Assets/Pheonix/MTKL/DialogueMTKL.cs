@@ -15,8 +15,14 @@ public class DialogueMTKL : MonoBehaviour
 
     private void Awake()
     {
+        //for (int i = 0; i < options.Length; i++)
+        //{
+        //    options[i].onClick.AddListener(delegate () { MakeChoice(i); });
+        //}
+        options[0].onClick.AddListener(delegate () { MakeChoice(0); });
+        options[1].onClick.AddListener(delegate () { MakeChoice(1); });
+        options[2].onClick.AddListener(delegate () { MakeChoice(2); });
         Instance = this;
-
         StartDialogue();
     }
 
@@ -86,6 +92,7 @@ public class DialogueMTKL : MonoBehaviour
 
     public void MakeChoice(int index)
     {
+        //Debug.Log("現在的Index:" + index);
         story.ChooseChoiceIndex(index); //使用 ChooseChoiceIndex 選擇當前選項
         for (int i = 0; i < options.Length; i++)
         { //選擇完，將按鈕隱藏
