@@ -26,6 +26,7 @@ public class DialogueMTKL : MonoBehaviour
         story = new Story(inkAsset.text);
         story.variablesState["gameStatus"] = Player.Instance.myStatus.GetGameStatus();
         story.variablesState["chatStatus"] = 1;
+        NextDialog();
         return true;
     }
 
