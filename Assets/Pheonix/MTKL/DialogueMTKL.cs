@@ -15,13 +15,14 @@ public class DialogueMTKL : MonoBehaviour
 
     private void Awake()
     {
-        //for (int i = 0; i < options.Length; i++)
-        //{
-        //    options[i].onClick.AddListener(delegate () { MakeChoice(i); });
-        //}
-        options[0].onClick.AddListener(delegate () { MakeChoice(0); });
-        options[1].onClick.AddListener(delegate () { MakeChoice(1); });
-        options[2].onClick.AddListener(delegate () { MakeChoice(2); });
+        for (int i = 0; i < options.Length; i++)
+        {
+            int index = i;
+            options[i].onClick.AddListener(delegate () { MakeChoice(index); });
+        }
+        //options[0].onClick.AddListener(delegate () { MakeChoice(0); });
+        //options[1].onClick.AddListener(delegate () { MakeChoice(1); });
+        //options[2].onClick.AddListener(delegate () { MakeChoice(2); });
         Instance = this;
         StartDialogue();
     }
@@ -92,7 +93,7 @@ public class DialogueMTKL : MonoBehaviour
 
     public void MakeChoice(int index)
     {
-        //Debug.Log("現在的Index:" + index);
+        Debug.Log("現在的Index:" + index);
         story.ChooseChoiceIndex(index); //使用 ChooseChoiceIndex 選擇當前選項
         for (int i = 0; i < options.Length; i++)
         { //選擇完，將按鈕隱藏
@@ -102,3 +103,16 @@ public class DialogueMTKL : MonoBehaviour
     }
 
 }
+
+
+///<summery>
+///
+///1.先找print印出來的東西
+///2.判斷跟哪裡有關，可能是迴圈，可能是條件
+///3.都沒有的話 開始找規律，有些題目一看就是有規律的
+///4.找不到規律，且低於40次，並根據你覺得5min左右能暴力破解完，那就先跳過，之後回來開始暴力
+///5.若有規律，試著列出前三個與最後一個，找出其中可消除的部分、或有規律的部分
+/// 
+/// 
+/// 
+/// </summery>

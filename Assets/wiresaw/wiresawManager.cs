@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class wiresawManager : MonoBehaviour
+public class WiresawManager : MonoBehaviour
 {
     [Header("壓力表")]
-    public GameObject myStress;
-    public GameObject myClcikObject;
-    private Button mybutton;
+    public Slider myStressSlider;
+    private Button myButton;
     private bool isStart;
+    [SerializeField] private Text timerText;
+
+    [Header("螺絲")]
+    private const float rotateTarget = 540;
+    private const float rotateSpeed = 180;
     
 
     [Header("UI組件")]
@@ -21,25 +25,19 @@ public class wiresawManager : MonoBehaviour
     public float textSpeed;
 
     [Header("內部係數")]
-    public static wiresawManager Instance;
+    public static WiresawManager Instance;
     [SerializeField] GameObject topButton;
     [SerializeField] GameObject underButton;
-
-    [SerializeField] int rotateSpeed;
     [SerializeField] Item wiresaw;
     [SerializeField] DraggableKnife myKnife;
-    float change_z;
-    int inverse;
     int textRange;
     bool topButtonOpen;
     bool underButtonOpen;
     bool textFinished;
     bool delayFinished;
-    bool _OTV;
+    public bool isFinished;
 
-    int status;
-    // 0 = 兩鎖, 1 = 上鎖下開, 2 = 下鎖上開, 3 = 全開
-    // 4 = 上刀, 5 = 上鎖下開, 6 = 下鎖上開, 7 = 全鎖 
+    private Coroutine rotateCoroutine = null;
 
     bool knifeAdd;
 
@@ -48,13 +46,11 @@ public class wiresawManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;  
-        getTextFromFile(textFile);
+        Instance = this;
+        GetTextFromFile(textFile);
 
-        mybutton = myClcikObject.GetComponent<Button>();
-        //mybutton.onClick.AddListener(buttonOnClick);
-        mybutton.onClick.AddListener(delegate () { buttonOnClick(); });
-
+        myButton = transform.Find("Stress/click").GetComponent<Button>();
+        myButton.onClick.AddListener(delegate () { buttonOnClick(); });
         ResetWireSaw();
         //StartMyGame();
 
@@ -62,130 +58,88 @@ public class wiresawManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (topButtonOpen == true && underButtonOpen == true)
+        if (isFinished == false)
         {
-            if (knifeAdd == false)
+            if (topButtonOpen == true && underButtonOpen == true)
             {
-                StartCoroutine(delay(5));
-                if (textFinished == true)
+                if (knifeAdd == false)
                 {
-                    status = 3;
-                    OTV();
-                    textFinished = false;
+                    StartCoroutine(Delay(5));
+                    if (textFinished == true)
+                    {
+                        textFinished = false;
+                    }
+                }
+            }
+            if (knifeAdd == true)
+            {
+                if (topButtonOpen == false && underButtonOpen == false)
+                {
+                    if (textFinished == false)
+                    {
+                        //StartCoroutine(SetTextUI(45));
+                        InventoryManager.Instance.AddNewItem(wiresaw);
+                        textFinished = true;
+                        BookContentManager.Instance.ActivateKnowledge(0);
+                        isFinished = true;
+                        textLabel.text = "您以成功組裝手線鋸，可去背包查看，知識也同步進百科全書了。";
+                    }
                 }
             }
         }
-        if (knifeAdd == true)
-        {
-            if(topButtonOpen == false && underButtonOpen == false)
-            {
-                status = 8;
-            }
-        }
-        //Debug.Log("狀態為"+status);
-        //Debug.Log("上方按鈕"+topButtonOpen);
-        //Debug.Log("下方按鈕"+underButtonOpen);
-        if (status == 8)
-        {
-            StartCoroutine(delay(5));
-            if (textFinished == false)
-            {
-                //StartCoroutine(SetTextUI(45));
-                InventoryManager.Instance.AddNewItem(wiresaw);
-                status = 0;
-                textFinished = true;
-            }
-            status = 9;
-        }
-        if (status == 9)
-        {
-            BookContentManager.Instance.ActivateKnowledge(0);
-            textLabel.text = "您以成功組裝手線鋸，可去背包查看，知識也同步進百科全書了。";
-        }
+
     }
+
+
+
+
+
+
 
     public void topButtonMananger()
     {
-        if(textFinished == true)
+        if (textFinished == true)
         {
-            if (topButtonOpen == false && knifeAdd == false)
+            if (topButtonOpen == false)
             {
-                inverse = 1;
-                StartCoroutine(rotateTopButton());
-                status = 1;
+                rotateCoroutine = StartCoroutine(RotateTopButton(1));
                 topButtonOpen = true;
                 StartCoroutine(SetTextUI(15));
 
             }
-            else if (topButtonOpen == true && knifeAdd == false)
+            else if (topButtonOpen == true)
             {
-                inverse = -1;
-                StartCoroutine(rotateTopButton());
-                status = 1;
+                rotateCoroutine = StartCoroutine(RotateTopButton(-1));
                 topButtonOpen = false;
                 StartCoroutine(SetTextUI(25));
             }
-            else if (topButtonOpen == false && knifeAdd == true)
-            {
-                inverse = 1;
-                StartCoroutine(rotateTopButton());
-                status = 6;
-                topButtonOpen = true;
-                StartCoroutine(SetTextUI(15));
-            }
-            else if (topButtonOpen == true && knifeAdd == true)
-            {
-                inverse = -1;
-                StartCoroutine(rotateTopButton());
-                status = 5;
-                topButtonOpen = false;
-                StartCoroutine(SetTextUI(25));
-            }
-        }else if (textFinished == false)
+        }
+        else if (textFinished == false)
         {
             textLabel.text = "您動作太快了，請稍帶三秒後再繼續盡情操作";
         }
-        
+
     }
 
     public void underButtonManager()
     {
-        if(textFinished == true)
+        if (textFinished == true)
         {
-            if (underButtonOpen == false && knifeAdd == false)
+            if (underButtonOpen == false)
             {
-                inverse = 1;
-                StartCoroutine(rotateUnderButton());
-                status = 2;
+                rotateCoroutine = StartCoroutine(RotateUnderButton(1));
                 underButtonOpen = true;
                 StartCoroutine(SetTextUI(20));
 
             }
-            else if (underButtonOpen == true && knifeAdd == false)
+            else if (underButtonOpen == true)
             {
-                inverse = -1;
-                StartCoroutine(rotateUnderButton());
-                status = 0;
+                rotateCoroutine = StartCoroutine(RotateUnderButton(-1));
                 underButtonOpen = false;
                 StartCoroutine(SetTextUI(30));
             }
-            else if (underButtonOpen == false && knifeAdd == true)
-            {
-                inverse = 1;
-                StartCoroutine(rotateUnderButton());
-                status = 5;
-                underButtonOpen = true;
-                StartCoroutine(SetTextUI(20));
-            }
-            else if (underButtonOpen == true && knifeAdd == true)
-            {
-                inverse = -1;
-                StartCoroutine(rotateUnderButton());
-                status = 6;
-                underButtonOpen = false;
-                StartCoroutine(SetTextUI(30));
-            }
-        }else if (textFinished == false)
+        }
+        else if (textFinished == false)
         {
             textLabel.text = "您動作太快了，請稍帶三秒後再繼續盡情操作";
         }
@@ -193,96 +147,61 @@ public class wiresawManager : MonoBehaviour
     }
 
 
-    IEnumerator rotateTopButton()
+    IEnumerator RotateTopButton(int inverse)
     {
-        if( inverse == 1)
+        float deltaZ = 0;
+        while (deltaZ < rotateTarget)
         {
-            change_z = 0;
-            while (change_z < 180)
-            {
-                yield return new WaitForSeconds(.1f);
-                change_z += rotateSpeed * Time.fixedDeltaTime * 10 * inverse;
-                topButton.transform.localEulerAngles = new Vector3(topButton.transform.rotation.x, topButton.transform.rotation.y, change_z);
-                //Debug.Log(change_z);
-                Draggable.Instance.goToOriginal();
-                if (change_z < 0) break;
-            }
-        }else if (inverse == -1)
-        {
-            change_z = 180;
-            while (change_z > 0)
-            {
-                yield return new WaitForSeconds(.1f);
-                change_z += rotateSpeed * Time.fixedDeltaTime * 10 * inverse;
-                topButton.transform.localEulerAngles = new Vector3(topButton.transform.rotation.x, topButton.transform.rotation.y, change_z);
-                //Debug.Log(change_z);
-                Draggable.Instance.goToOriginal();
-                if (change_z < 0) break;
-            }
+            deltaZ += rotateSpeed * Time.deltaTime;
+            topButton.transform.localEulerAngles = new Vector3(topButton.transform.rotation.x, topButton.transform.rotation.y, deltaZ * inverse);
+            yield return null;
         }
-        
     }
 
-    IEnumerator rotateUnderButton()
+    IEnumerator RotateUnderButton(int inverse)
     {
-        if(inverse == 1)
-        {
-            change_z = 0;
-            while (change_z < 180)
-            {
-                yield return new WaitForSeconds(.1f);
-                change_z += rotateSpeed * Time.fixedDeltaTime * 10 * inverse;
-                underButton.transform.localEulerAngles = new Vector3(underButton.transform.rotation.x, underButton.transform.rotation.y, change_z);
-                //Debug.Log(change_z);
-                Draggable.Instance.goToOriginal();
-                if (change_z < 0) break;
-            }
-        }else if (inverse == -1)
-        {
-            change_z = 180;
-            while (change_z >0)
-            {
-                yield return new WaitForSeconds(.1f);
-                change_z += rotateSpeed * Time.fixedDeltaTime * 10 * inverse;
-                underButton.transform.localEulerAngles = new Vector3(underButton.transform.rotation.x, underButton.transform.rotation.y, change_z);
-                //Debug.Log(change_z);
-                Draggable.Instance.goToOriginal();
-                if (change_z < 0) break;
-            }
-        }
+        float deltaZ = 0;
         
-    }
-
-    public void addKnife()
-    {
-        if (status < 3)
+        while (deltaZ < rotateTarget)
         {
+            deltaZ += rotateSpeed * Time.deltaTime;
+            underButton.transform.localEulerAngles = new Vector3(underButton.transform.rotation.x, underButton.transform.rotation.y, deltaZ * inverse);
+            yield return null;
+        }
+
+    }
+    //1是逆時針鬆開，-1是順時針轉緊
+    //private void RotateZ(GameObject button,float startValue, int direct)
+    //{
+    //    var changeValue = startValue;
+    //    changeValue += rotateSpeed * Time.deltaTime * direct;
+    //    button.transform.localEulerAngles = new Vector3(button.transform.rotation.x, button.transform.rotation.y, changeValue);
+
+    //}
+
+
+
+    public void AddKnife()
+    {
+        if (topButtonOpen == false || underButtonOpen == false)
+        {
+            knifeAdd = false;
             DraggableKnife.Instance.goToOriginal();
-            StartCoroutine( SetTextUI(5));
+            StartCoroutine(SetTextUI(5));
+
         }
-        
-        if (status == 3)
+
+        if (topButtonOpen == true && underButtonOpen == true)
         {
             knifeAdd = true;
-            StartCoroutine( SetTextUI(10));
-            status = 4;
+            StartCoroutine(SetTextUI(10));
             DraggableKnife.Instance.addKnifeToWiresaw();
             isStart = true;
             StartMyGame();
         }
     }
 
-    public void OTV()
-    {
-        if(_OTV == true)
-        {
-            StartCoroutine(SetTextUI(35));
-        }
-        _OTV = false;
-    }
-
-
-    void getTextFromFile(TextAsset file)
+    void GetTextFromFile(TextAsset file)
     {
         textList.Clear();
 
@@ -299,6 +218,8 @@ public class wiresawManager : MonoBehaviour
     //public void textBridge(int n)
     //{
     //    StartCoroutine(SetTextUI(n));
+    //    10秒倒數壞了
+    //      失敗後下方螺絲不停尋轉
     //}
 
 
@@ -309,7 +230,7 @@ public class wiresawManager : MonoBehaviour
         textFinished = false;
         textLabel.text = "";
         textRange = n;
-        while ( n - textRange < 5)
+        while (n - textRange < 5)
         {
             for (int i = 0; i < textList[n].Length; i++)
             {
@@ -318,13 +239,13 @@ public class wiresawManager : MonoBehaviour
             }
             n += 1;
         }
-        
+
 
         textFinished = true;
     }
 
 
-    IEnumerator delay(int _time)
+    IEnumerator Delay(int _time)
     {
         while (_time > 0)
         {
@@ -336,13 +257,14 @@ public class wiresawManager : MonoBehaviour
 
     public void buttonOnClick()
     {
-        myStress.GetComponent<Slider>().value += 0.5f;
+        myStressSlider.GetComponent<Slider>().value += 0.5f;
     }
 
     public void StartMyGame()
     {
-        myStress.SetActive(true);
-        myClcikObject.SetActive(true);
+        myStressSlider.gameObject.SetActive(true);
+        myButton.gameObject.SetActive(true);
+        timerText.gameObject.SetActive(true);
         StartCoroutine(StartStressGame());
     }
 
@@ -350,53 +272,64 @@ public class wiresawManager : MonoBehaviour
     {
         var myRange = new List<float>(8) { 0.3f, 0.6f, 0.9f, 0.9f, 3f, 8f, 4f, 2f };
         var thisTime = 10f;
-        while (thisTime>0)
+        myStressSlider.GetComponent<Slider>().value = 10;
+        var addKnifeSuccess = false;
+        while (thisTime > 0)
         {
+            timerText.text = string.Format("{0}", thisTime.ToString("f2")).Replace(".", ":");
             var index = Random.Range(0, myRange.Count);
             var myTIme = myRange[index];
             yield return new WaitForFixedUpdate();
-            myStress.GetComponent<Slider>().value -= Time.deltaTime * myTIme;
+            myStressSlider.GetComponent<Slider>().value -= Time.deltaTime * myTIme;
             thisTime -= Time.fixedDeltaTime;
-            if (status == 5 || status == 6)
+            if (topButtonOpen == false || underButtonOpen == false)
+            {
+                addKnifeSuccess = true;
                 break;
+            }
+
         }
-        if (myStress.GetComponent<Slider>().value<11.25 && myStress.GetComponent<Slider>().value > 8.75)
+        if (myStressSlider.GetComponent<Slider>().value < 11.25 && myStressSlider.GetComponent<Slider>().value > 8.75 && addKnifeSuccess)
         {
             Debug.Log("成功");
-            myStress.SetActive(false);
-            myClcikObject.SetActive(false);
+            myStressSlider.gameObject.SetActive(false);
+            myButton.gameObject.SetActive(false);
+            timerText.gameObject.SetActive(false);
+
 
         }
         else
         {
-            Debug.Log("失敗");
+            SiginalUI.Instance.SiginalText("組裝失敗，請繼續加油");
             ResetWireSaw();
+            StopCoroutine(rotateCoroutine);
         }
     }
 
     public void ResetWireSaw()
     {
-        myStress.SetActive(false);
-        myClcikObject.SetActive(false);
+        myStressSlider.gameObject.SetActive(false);
+        myButton.gameObject.SetActive(false);
+        timerText.gameObject.SetActive(false);
 
+        isFinished = false;
         textFinished = true;
         delayFinished = false;
         topButtonOpen = false;
         underButtonOpen = false;
-        change_z = topButton.transform.rotation.z;
 
-        status = 0;
-        inverse = 1;
 
         SetTextUI(0);
 
         knifeAdd = false;
         myKnife.goToOriginal();
-        _OTV = true;
         textRange = 0;
         textLabel.text = "您可以藉由拖動鋸條以及尖嘴鉗來組裝手線鋸";
 
         isStart = false;
     }
+
+
+
 
 }

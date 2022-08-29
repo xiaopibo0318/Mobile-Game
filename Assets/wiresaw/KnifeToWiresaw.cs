@@ -8,6 +8,6 @@ public class KnifeToWiresaw : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("刀有放進去");
-        wiresawManager.Instance.addKnife();
+        WiresawManager.Instance.AddKnife();
     }
 }

@@ -10,9 +10,12 @@ public class SiginalUI : MonoBehaviour
     public GameObject confirm;
     public GameObject dontDo;
 
+    public static SiginalUI Instance;
     public void Awake()
     {
+        Instance = this;
         ResetSiginal();
+        
     }
 
 

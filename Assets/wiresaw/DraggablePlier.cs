@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Draggable : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class DraggablePlier : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private Canvas canvas;
     private RectTransform rectTransform;
     private Vector3 initialPosition;
     [SerializeField] private CanvasGroup canvasGroup;
 
-    public static Draggable Instance;
+    public static DraggablePlier Instance;
 
     [SerializeField] GameObject topzone;
     [SerializeField] GameObject underzone;
@@ -31,6 +31,12 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (WiresawManager.Instance.isFinished)
+        {
+            SiginalUI.Instance.SiginalText("已組裝完成，想重新組裝請重新進入此頁面");
+            return;
+        }
+        
         canvasGroup.blocksRaycasts = false;
         //canvasGroup.alpha = .6f;
         topzone.SetActive(true);
@@ -50,13 +56,8 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
         goToOriginal();
     }
 
-    public void OnDrop(PointerEventData eventData)
-    {
-        
-    }
-
     public void goToOriginal()
-    { 
+    {
         rectTransform.anchoredPosition = initialPosition;
     }
 

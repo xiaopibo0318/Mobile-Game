@@ -158,6 +158,7 @@ public class InterectiveManager : MonoBehaviour
         {
             case 1:
                 CanvasManager.Instance.openCanvas("Wiresaw");
+                WiresawManager.Instance.ResetWireSaw();
                 break;
             case 2:
                 DialogueMTKL.Instance.StartDialogue();
