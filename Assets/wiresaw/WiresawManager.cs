@@ -216,7 +216,7 @@ public class WiresawManager : MonoBehaviour
 
     public void buttonOnClick()
     {
-        myStressSlider.GetComponent<Slider>().value += 0.5f;
+        myStressSlider.value += 0.5f;
     }
 
     public void StartMyGame()
@@ -231,16 +231,16 @@ public class WiresawManager : MonoBehaviour
     {
         var myRange = new List<float>(8) { 0.3f, 0.6f, 0.9f, 0.9f, 3f, 0.88f, 0.4f, 2f };
         var thisTime = 10f;
-        myStressSlider.GetComponent<Slider>().value = 10;
+        myStressSlider.value = 10;
         var addKnifeSuccess = false;
         while (thisTime > 0)
         {
             timerText.text = string.Format("{0}", thisTime.ToString("f2")).Replace(".", ":");
             var index = Random.Range(0, myRange.Count);
             var myTIme = myRange[index];
-            yield return new WaitForFixedUpdate();
-            myStressSlider.GetComponent<Slider>().value -= Time.deltaTime * myTIme;
-            thisTime -= Time.fixedDeltaTime;
+            yield return null;
+            myStressSlider.value -= Time.deltaTime * myTIme;
+            thisTime -= Time.deltaTime;
             if (topButtonOpen == false || underButtonOpen == false)
             {
                 addKnifeSuccess = true;
