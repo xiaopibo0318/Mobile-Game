@@ -17,6 +17,8 @@ public class DraggablePlier : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     [SerializeField] GameObject topzone;
     [SerializeField] GameObject underzone;
 
+    [SerializeField] GameObject knifeZone;
+
     private void Awake()
     {
         Instance = this;
@@ -41,6 +43,7 @@ public class DraggablePlier : MonoBehaviour, IPointerDownHandler, IBeginDragHand
         //canvasGroup.alpha = .6f;
         topzone.SetActive(true);
         underzone.SetActive(true);
+        knifeZone.SetActive(false);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -54,6 +57,7 @@ public class DraggablePlier : MonoBehaviour, IPointerDownHandler, IBeginDragHand
         //canvasGroup.alpha = 1f;
         //rectTransform.anchoredPosition = initialPosition;
         goToOriginal();
+        knifeZone.SetActive(true);
     }
 
     public void goToOriginal()

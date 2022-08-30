@@ -10,7 +10,7 @@ public class cacheVisable : MonoBehaviour
     public GameObject imageInfo;
     public Text itemInfo;
     
-   Transform originalTrans;
+    Transform originalTrans;
 
     float timeBegin;
     float timeEnd;
@@ -21,6 +21,9 @@ public class cacheVisable : MonoBehaviour
     bool isVisable;
     bool isInfoFinished;
 
+
+    Vector3 originalPos;
+
     public static cacheVisable Instance;
 
     public void Awake()
@@ -28,6 +31,8 @@ public class cacheVisable : MonoBehaviour
         colorOriginal = imageInfo.GetComponent<Image>().color;
         colorBegin = new Color(colorOriginal.r, colorOriginal.g, colorOriginal.b, .0f);
         originalTrans = imageInfo.GetComponent<RectTransform>();
+        originalPos = originalTrans.localPosition;
+        
         itemInfo.text = " ";
         imageInfo.SetActive(false);
         
@@ -92,7 +97,8 @@ public class cacheVisable : MonoBehaviour
             imageInfo.GetComponent<RectTransform>().position = new Vector3(originalTrans.position.x, originalTrans.position.y + changePos, originalTrans.position.z);
         }
         itemInfo.text = "";
-        imageInfo.GetComponent<RectTransform>().position = new Vector3(900, 844.77f, 0);
+        //imageInfo.GetComponent<RectTransform>().position = new Vector3(900, 844.77f, 0);
+        originalTrans.localPosition = originalPos;
         isInfoFinished = true;
         
     }

@@ -49,7 +49,7 @@ public class DrawWoodLine : MonoBehaviour
         timeStart = false;
         cutWoodManager = GameObject.Find("CuttingWood").GetComponent<CutWoodManager>();
         //siginalUI = GameObject.FindGameObjectWithTag("SignalUI").GetComponent<SiginalUI>();
-        dragImageWood = GameObject.Find("CuttingWood").GetComponent<DragImageWood>();
+        dragImageWood = transform.Find("../woodBoard").GetComponent<DragImageWood>();
         ///<summary>
         ///添加 "點擊、拖曳" 的處理
         /// </summary>
@@ -63,29 +63,29 @@ public class DrawWoodLine : MonoBehaviour
         //cutwoodUI.AddOperateLineListener(LineClickDown,LineOnClick,LineClickUp);
     }
 
- 
+
 
     public void SetUpLine(Transform[] points)
     {
 
         //lr.positionCount = points.Length;
         this.points = points;
-        
-        
+
+
     }
 
 
     public void FixedUpdate()
     {
-        pos_x = Input.mousePosition.x-900;
-        pos_y = Input.mousePosition.y-450;
+        pos_x = Input.mousePosition.x - 900;
+        pos_y = Input.mousePosition.y - 450;
         //Debug.Log(TouchDetect());
 
     }
 
     public void Update()
     {
-        
+
         float a = 10;
         while (a > 0)
         {
@@ -96,8 +96,8 @@ public class DrawWoodLine : MonoBehaviour
         {
             startDraw = true;
             AddNewPoint();
-           // cutwoodUI.DrawLine();
-           
+            // cutwoodUI.DrawLine();
+
         }
 
         if (isInstantiate)
@@ -109,7 +109,7 @@ public class DrawWoodLine : MonoBehaviour
                 cutWoodManager.CutSucced();
             }
         }
-        
+
 
     }
 
@@ -130,7 +130,7 @@ public class DrawWoodLine : MonoBehaviour
                 myCollider.points[0] = point;
                 myCollider.points[1] = point;
             }
-            
+
             if (pointlist.Count > 3 && pointlist[pointlist.Count - 1] == point)
             {
                 return;
@@ -151,8 +151,8 @@ public class DrawWoodLine : MonoBehaviour
         /// </summary>
         if (pointlist.Count > 75 && !isInstantiate)
         {
-            var pos = new Vector2(pointlist[0].x + 900 - 15, pointlist[0].y + 450 - 15 );
-            goalInMap = Instantiate(goal,pos , Quaternion.Euler(0,0,0), this.transform.parent);
+            var pos = new Vector2(pointlist[0].x + 900 - 15, pointlist[0].y + 450 - 15);
+            goalInMap = Instantiate(goal, pos, Quaternion.Euler(0, 0, 0), this.transform.parent);
             isInstantiate = true;
         }
         PointerEventData eventData = new PointerEventData(eventSystem);
@@ -186,7 +186,7 @@ public class DrawWoodLine : MonoBehaviour
 
 
     private void OnUserPointerDown(PointerEventData eventData)
-    { 
+    {
         if (cutWoodManager.getTimeStatus())
         {
             cutWoodManager.StartCutWood();
@@ -198,7 +198,7 @@ public class DrawWoodLine : MonoBehaviour
             return;
         }
 
-        
+
         Debug.Log("pointer down is touch.");
         if (eventData.pointerCurrentRaycast.gameObject != null)
         {
@@ -213,7 +213,8 @@ public class DrawWoodLine : MonoBehaviour
     private void OnOperateRangeBeginDrag(PointerEventData eventData)
     {
         if (!isOperate) return;
-        if (cutWoodManager.getTimeStatus()){
+        if (cutWoodManager.getTimeStatus())
+        {
             CutFail();
             myPos.GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
@@ -226,7 +227,8 @@ public class DrawWoodLine : MonoBehaviour
 
         if (eventData.pointerCurrentRaycast.gameObject != null)
         {
-            if(eventData.pointerCurrentRaycast.gameObject.name != "Path")
+            Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
+            if (eventData.pointerCurrentRaycast.gameObject.name != "Path")
             {
                 CutFail();
             }
