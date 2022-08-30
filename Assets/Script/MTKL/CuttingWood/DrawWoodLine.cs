@@ -15,7 +15,7 @@ public class DrawWoodLine : MonoBehaviour
     bool startDraw;
 
     [Header("邊界判定")]
-    EdgeCollider2D myCollider;
+    //EdgeCollider2D myCollider;
 
     [Header("完成死圈判定")]
     public GameObject goal;
@@ -41,13 +41,13 @@ public class DrawWoodLine : MonoBehaviour
 
     private void Awake()
     {
-        lr = GetComponent<UILineRenderer>();
+        lr =transform.Find("../UI LineRenderer").GetComponent<UILineRenderer>();
         Insatnce = this;
         isInstantiate = false;
         isCircle = false;
         startDraw = false;
         timeStart = false;
-        cutWoodManager = GameObject.Find("CuttingWood").GetComponent<CutWoodManager>();
+        cutWoodManager = GameObject.Find("NewCuttingWood").GetComponent<CutWoodManager>();
         //siginalUI = GameObject.FindGameObjectWithTag("SignalUI").GetComponent<SiginalUI>();
         dragImageWood = transform.Find("../woodBoard").GetComponent<DragImageWood>();
         ///<summary>
@@ -122,14 +122,14 @@ public class DrawWoodLine : MonoBehaviour
             timeStart = true;
         }
         var point = new Vector2(pos_x, pos_y);
-        myCollider = gameObject.GetComponent<EdgeCollider2D>();
+        //myCollider = gameObject.GetComponent<EdgeCollider2D>();
         if (!cutWoodManager.getTimeStatus())
         {
-            if (pointlist.Count < 3)
-            {
-                myCollider.points[0] = point;
-                myCollider.points[1] = point;
-            }
+            //if (pointlist.Count < 3)
+            //{
+            //    myCollider.points[0] = point;
+            //    myCollider.points[1] = point;
+            //}
 
             if (pointlist.Count > 3 && pointlist[pointlist.Count - 1] == point)
             {
@@ -142,7 +142,7 @@ public class DrawWoodLine : MonoBehaviour
             //{
             //    return;
             //}
-            myCollider.points = lr.Points;
+            //myCollider.points = lr.Points;
         }
         else timeStart = false;
 
@@ -195,7 +195,7 @@ public class DrawWoodLine : MonoBehaviour
         else
         {
             isOperate = false;
-            return;
+            //return;
         }
 
 

@@ -19,7 +19,7 @@ public class WoodManager : MonoBehaviour
     {
         SpawnTime = 1000;
         time = SpawnTime;
-        
+
         lifetime = 40;
         Instance = this;
     }
@@ -27,24 +27,25 @@ public class WoodManager : MonoBehaviour
     public void Update()
     {
         //Debug.Log("Update 上的 生成時間 : " + time);
-        time -= Time.deltaTime*100;
-        if(time < 0)
+        time -= Time.deltaTime * 100;
+        if (time < 0)
         {
             SpawnWood();
             time = SpawnTime;
         }
-        
+
     }
 
     public void SpawnWood()
     {
         //將Missing的全部刪除掉
-        woodOnGroundList.RemoveAll(GameObject => GameObject == null); 
+        woodOnGroundList.RemoveAll(GameObject => GameObject == null);
+        if (woodOnGroundList.Count > 10) return;
         GameObject wood = Instantiate(WoodPrefab, transform);
         wood.transform.position = new Vector3(Random.Range(-5, 20), Random.Range(0, 6), 0);
         woodOnGroundList.Add(wood);
         RefreshWoodID();
-        Destroy(wood, lifetime);
+        //Destroy(wood, lifetime);
 
     }
 
@@ -74,7 +75,7 @@ public class WoodManager : MonoBehaviour
         {
             if (woodOnGround == null) continue;
 
-            if(woodOnGround.GetComponent<Wood>().woodID == nowWoodID)
+            if (woodOnGround.GetComponent<Wood>().woodID == nowWoodID)
             {
                 Destroy(woodOnGround);
             }

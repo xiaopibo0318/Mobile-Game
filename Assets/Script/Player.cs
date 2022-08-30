@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    bool isWalk = false;
+
     public void FixedUpdate()
     {
         float a = playerMove.ReadValue<Vector2>().x;
@@ -58,15 +60,31 @@ public class Player : MonoBehaviour
         //float b = Input.GetAxisRaw("Vertical");
 
         velocity = new Vector3(a, 0, b);
-
+        
+        
 
         if (a < 0)
         {
             transform.localScale = new Vector3(1f, 1f, 1f);
+            if (!isWalk)
+            {
+                AudioManager.Instance.Walk(true);
+                isWalk = true;
+            }
         }
         else if (a > 0)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
+            if (!isWalk)
+            {
+                AudioManager.Instance.Walk(true);
+                isWalk = true;
+            }
+        }
+        else
+        {
+            AudioManager.Instance.Walk(false);
+            isWalk = false;
         }
 
         if (Mathf.Abs(a) >= 0.1f && b == 0)

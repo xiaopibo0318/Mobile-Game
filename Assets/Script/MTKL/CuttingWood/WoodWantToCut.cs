@@ -11,7 +11,8 @@ public class WoodWantToCut : MonoBehaviour
 
     private void Awake()
     {
-        cutWoodManager = GameObject.Find("CuttingWood").GetComponent<CutWoodManager>();
+        //這邊有做更改成新的
+        cutWoodManager = GameObject.Find("NewCuttingWood").GetComponent<CutWoodManager>();
         button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(WoodOnClick);
 

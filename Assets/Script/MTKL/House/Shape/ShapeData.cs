@@ -63,5 +63,5 @@ public class ShapeData : ScriptableObject
         }
     }
 
-
+    public int ShapeClass;
 }

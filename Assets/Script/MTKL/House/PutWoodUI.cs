@@ -8,16 +8,27 @@ public class PutWoodUI : MonoBehaviour
     [SerializeField] private Inventory myBag;
     [SerializeField] private List<Item> woodListInBag;
 
+    public static PutWoodUI Instance;
 
-    public void CheckWoodInBag()
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public bool CheckWoodInBag(int nowWoodID)
     {
         foreach (var wood in woodListInBag)
         {
-            if (myBag.itemList.Contains(wood))
-            {
+            //如果沒東西就跳過，
+            if (!myBag.itemList.Contains(wood)) continue;
 
+            //有的話 去回傳值給Shape去做判斷
+            if(nowWoodID == wood.itemID)
+            {
+                return true;
             }
         }
+        return false;
     }
 
 

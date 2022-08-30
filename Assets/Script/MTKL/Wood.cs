@@ -19,6 +19,12 @@ public class Wood : MonoBehaviour
         
     }
 
+
+
+
+
+
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         //UIManager.Instance.CacheVisible(true);

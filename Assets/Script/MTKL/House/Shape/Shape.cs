@@ -7,7 +7,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 {
     public GameObject squareShapeImage;
     public Vector3 shapeSelectedScale;
-    public Vector2 offset ;
+    public Vector2 offset;
 
     private Transform originalParent;
 
@@ -17,6 +17,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
     public int shapeNum;
     public int shapeID;
+    public int shapeClass;
 
     public int totalSquareNumber { get; set; }
 
@@ -75,7 +76,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
     public bool IsAnyOfShapeSquareActive()
     {
-        foreach(var square in _currentShape)
+        foreach (var square in _currentShape)
         {
             if (square.gameObject.activeSelf)
                 return true;
@@ -87,7 +88,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     {
         if (_shapeActive)
         {
-            foreach(var square in _currentShape)
+            foreach (var square in _currentShape)
             {
                 square?.GetComponent<ShapeSquare>().DeactivateShape();
             }
@@ -120,11 +121,11 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
         CurrentShapeData = shapeData;
         totalSquareNumber = GetNumberOfSquares(shapeData);
 
-        while(_currentShape.Count <= totalSquareNumber)
+        while (_currentShape.Count <= totalSquareNumber)
         {
             _currentShape.Add(Instantiate(squareShapeImage, transform) as GameObject);
         }
-        foreach(var square in _currentShape)
+        foreach (var square in _currentShape)
         {
             square.gameObject.transform.position = Vector3.zero;
             square.gameObject.SetActive(false);
@@ -155,17 +156,17 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
 
 
-    private float GetYPositionForShapeSquare(ShapeData shapeData, int row,Vector2 moveDistance)
+    private float GetYPositionForShapeSquare(ShapeData shapeData, int row, Vector2 moveDistance)
     {
         float shiftOnY = 0f;
 
-        if(shapeData.rows > 1)
+        if (shapeData.rows > 1)
         {
-            if(shapeData.rows %2 != 0)
+            if (shapeData.rows % 2 != 0)
             {
                 var middleSquareIndex = (shapeData.rows - 1) / 2;
                 var multiplier = (shapeData.rows - 1) / 2;
-                if (row < middleSquareIndex) 
+                if (row < middleSquareIndex)
                 {
                     shiftOnY = moveDistance.y * 1;
                     shiftOnY *= multiplier;
@@ -187,7 +188,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
                     if (row == middleSquareIndex2)
                         shiftOnY = (moveDistance.x / 2) * -1;
                     if (row == middleSquareIndex1)
-                        shiftOnY = (moveDistance.x / 2) ;
+                        shiftOnY = (moveDistance.x / 2);
                 }
 
                 if (row < middleSquareIndex1 && row < middleSquareIndex2)
@@ -208,13 +209,13 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
     }
 
 
-    private float GetXPositionForShapeSquare(ShapeData shapeData, int column ,Vector2 moveDistance)
+    private float GetXPositionForShapeSquare(ShapeData shapeData, int column, Vector2 moveDistance)
     {
         float shiftOnX = 0f;
 
         if (shapeData.columns > 1)
         {
-            if(shapeData.columns %2 != 0)
+            if (shapeData.columns % 2 != 0)
             {
                 var middleSquareIndex = (shapeData.columns - 1) / 2;
                 var multiplier = (shapeData.columns - 1) / 2;
@@ -223,7 +224,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
                     shiftOnX = moveDistance.x * -1;
                     shiftOnX *= multiplier;
                 }
-                else if ( column > middleSquareIndex)
+                else if (column > middleSquareIndex)
                 {
                     shiftOnX = moveDistance.x * 1;
                     shiftOnX *= multiplier;
@@ -235,7 +236,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
                 var middleSquareIndex1 = (shapeData.columns == 2) ? 0 : (shapeData.columns - 1);
                 var multiplier = shapeData.columns / 2;
 
-                if(column == middleSquareIndex1 || column == middleSquareIndex2)
+                if (column == middleSquareIndex1 || column == middleSquareIndex2)
                 {
                     if (column == middleSquareIndex2)
                         shiftOnX = moveDistance.x / 2;
@@ -248,7 +249,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
                     shiftOnX = moveDistance.x * -1;
                     shiftOnX *= multiplier;
                 }
-                else if (column > middleSquareIndex2 && column >middleSquareIndex1)
+                else if (column > middleSquareIndex2 && column > middleSquareIndex1)
                 {
                     shiftOnX = moveDistance.x * 1;
                     shiftOnX *= multiplier;
@@ -266,7 +267,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
         foreach (var rowData in shapeData.board)
         {
-            foreach(var active in rowData.column)
+            foreach (var active in rowData.column)
             {
                 if (active)
                 {
@@ -284,22 +285,27 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        
+
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
-    { 
+    {
+        if (PutWoodUI.Instance.CheckWoodInBag(shapeClass) == false) {
+            SiginalUI.Instance.SiginalText("背包沒有此物品，不可拖放");
+            return;
+        }
         this.GetComponent<RectTransform>().localScale = shapeSelectedScale;
         this.gameObject.transform.SetParent(originalParent.parent.parent);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (PutWoodUI.Instance.CheckWoodInBag(shapeClass) == false) return;
         _transform.anchorMin = new Vector2(0, 1);
         _transform.anchorMax = new Vector2(0, 1);
         _transform.pivot = new Vector2(0.5f, 0.5f);
@@ -307,7 +313,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
         //Vector2 pos;
         //RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas.transform as RectTransform,
         //    eventData.position, Camera.main, out pos);
-        _transform.localPosition = eventData.position -offset;
+        _transform.localPosition = eventData.position - offset;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -319,13 +325,13 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        
+
     }
 
     private void MoveShapeToStartPosition()
     {
 
-        _transform.anchoredPosition =_startPosition;
+        _transform.anchoredPosition = _startPosition;
     }
 
 

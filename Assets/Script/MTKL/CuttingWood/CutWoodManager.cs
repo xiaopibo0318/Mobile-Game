@@ -169,6 +169,8 @@ public class CutWoodManager : MonoBehaviour
                 break;
             }
         }
+        ResetWoodUI();
+        DrawWoodLine.Insatnce.ClearLine();
     }
 
     public void CutFail()
@@ -177,6 +179,7 @@ public class CutWoodManager : MonoBehaviour
         needSec = 0;
         timerText.text = string.Format("{0}", needSec.ToString("f2")).Replace(".", ":");
         siginalUI.SiginalText("切割失敗");
+        ResetWoodUI();
     }
 
     public void StartCutWood()

@@ -8,7 +8,8 @@ public class AudioResource : MonoBehaviour
     public AudioClip bgmMTKL;
 
     [Header("音效"), SerializeField]
-    public AudioClip rainClip;
+    public AudioClip rain;
+    public AudioClip walkOnGrass;
 
 
 
