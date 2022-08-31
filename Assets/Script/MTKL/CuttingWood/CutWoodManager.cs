@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
@@ -27,6 +28,7 @@ public class CutWoodManager : MonoBehaviour
     Button buttonCutWoodNo;
     public GameObject siginal;
     int nowWoodID;
+    int nowWoodSlotID;
     public Item woodBoard;
     public Inventory myBag;
 
@@ -49,14 +51,62 @@ public class CutWoodManager : MonoBehaviour
 
     [Header("事件")]
     private UnityAction<PointerEventData> onPointerDown;
+    public static CutWoodManager Instance;
+    DrawLine2Main drawLine2Main;
     
+    [Header("拉線系統")]
+    [SerializeField] private DragItem operateRange;
+    [SerializeField] private RectTransform mouseFollower;
+    [SerializeField] private UILineRenderer finishedLine;
+    [SerializeField] private UILineRenderer previewLine;
+    [SerializeField] private GameObject pointOnPath;
+    [SerializeField] private RectTransform[] woodTrans;
+    private Vector2[] targetPoints;
+    private List<Vector2> finishedPoints;
+    private Vector2[] previewPoints;
+
+    private int mouseFollowerSize = 10;
+
+    private bool isOperate = false;
+    private bool isFinished = false;
+    private int startIndex;
+    private int currentIndex;
+    private int nextIndex;
+    private int nextValue;  //計算下一個點是往前還是往後
+
 
     public void Awake()
     {
+        drawLine2Main = GetComponent<DrawLine2Main>();
+        Instance = this;
         Init();
-
+        InitDragLineSystem();
         ResetWoodUI();
         GiveWoodID();
+    }
+
+    private void InitDragLineSystem()
+    {
+        finishedPoints = new List<Vector2>();
+        previewPoints = new Vector2[2];
+        previewLine.Points = previewPoints;
+
+        mouseFollower.sizeDelta = new Vector2(mouseFollowerSize * 2, mouseFollowerSize * 2);
+
+        operateRange.AddPointerDownListener(OnOperateRangePointerDown);
+        operateRange.AddOnDragListener(OnOperateRangeDrag);
+        operateRange.AddBeginDragListener(OnOperateRangeBeginDrag);
+        operateRange.AddEndDragListener(OnOperateRangeEndDrag);
+    }
+    public void CreatePointOnPath()
+    {
+        targetPoints = TargetPoint.GetDict(nowWoodID);
+
+        for (int i = 0; i < targetPoints.Length; i++)
+        {
+            Vector3 nowPos = new Vector3(targetPoints[i].x, targetPoints[i].y, 0);
+            Instantiate(pointOnPath, nowPos, Quaternion.identity, woodTrans[nowWoodSlotID]);
+        }
     }
 
     private void GiveWoodID()
@@ -94,6 +144,7 @@ public class CutWoodManager : MonoBehaviour
             }   
         }
         nowWoodID = woodSelectStorage[openID].GetComponent<WoodWantToCut>().getWoodID();
+        nowWoodSlotID = openID;
     }
 
     private void CloseAllWoodSimple()
@@ -120,6 +171,7 @@ public class CutWoodManager : MonoBehaviour
             }
             else myWood.SetActive(false);
         }
+        CreatePointOnPath();
         InventoryManager.Instance.SubItem(woodBoard);
     }
 
@@ -170,7 +222,7 @@ public class CutWoodManager : MonoBehaviour
             }
         }
         ResetWoodUI();
-        DrawWoodLine.Insatnce.ClearLine();
+        //DrawWoodLine.Insatnce.ClearLine();
     }
 
     public void CutFail()
@@ -184,7 +236,7 @@ public class CutWoodManager : MonoBehaviour
 
     public void StartCutWood()
     {
-        needSec = 20;
+        needSec = 10;
         timeCoroutine = StartCoroutine(Countdown());
     }
 
@@ -206,6 +258,7 @@ public class CutWoodManager : MonoBehaviour
             {
                 needSec = 0;
                 Debug.Log("結束");
+                CutFail();
                 timeFinished = true;
             }
             timerText.text = string.Format("{0}", needSec.ToString("f2")).Replace(".", ":");
@@ -219,19 +272,198 @@ public class CutWoodManager : MonoBehaviour
         }
     }
 
-    public bool getTimeStatus()
+    public bool GetTimeStatus()
     {
         return timeFinished;
     }
 
-    //public void AddPointerDownListener(UnityAction<PointerEventData> _onPointerDown)
-    //{
-    //    onPointerDown = _onPointerDown;
-    //}
+    public int GetNowWoodID()
+    {
+        return nowWoodID;
+    }
+    public int GetWoodIndex()
+    {
+        return nowWoodSlotID;
+    }
 
-    //void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
-    //{
-    //    onPointerDown?.Invoke(eventData);
-    //}
+
+    ///<summary>
+    ///線托拽系統
+    /// </summary>
+    private void OnOperateRangePointerDown(PointerEventData eventData)
+    {
+        Debug.Log("有案到下去");
+        bool isTouch = false;
+        for (int i = 0; i < targetPoints.Length; i++)
+        {
+            Vector2 myPoint = new Vector2(targetPoints[i].x, targetPoints[i].y);
+            if (IsTouch(eventData.position, myPoint, mouseFollowerSize))
+            {
+                startIndex = i;
+                isTouch = true;
+                break;
+            }
+        }
+
+        if (!isTouch)
+            return;
+
+        Debug.Log("pointer down is touch.");
+        isOperate = true;
+        currentIndex = startIndex;
+        nextIndex = -99;
+    }
+
+    private void OnOperateRangeBeginDrag(PointerEventData eventData)
+    {
+        Debug.Log("有開始脫");
+        if (!isOperate)
+            return;
+        StartCutWood();
+        Vector2 point = targetPoints[currentIndex];
+        finishedPoints.Add(point);
+        finishedLine.Points = finishedPoints.ToArray();
+        finishedLine.gameObject.SetActive(true);
+        previewPoints[0] = point;
+        previewPoints[1] = point;
+        previewLine.gameObject.SetActive(true);
+        isFinished = false;
+        nextIndex = -99;
+        nextValue = 0;
+    }
+
+    private void OnOperateRangeDrag(PointerEventData eventData)
+    {
+        if (!isOperate)
+            return;
+
+        //設置mouseFollower的位置
+        mouseFollower.position = eventData.position;
+        previewPoints[1] = eventData.position;
+        previewLine.SetAllDirty();
+
+        //若已完成，則return
+        if (isFinished)
+            return;
+
+        //若為無效值，判斷跟哪個鄰近點比較接近
+        if (nextIndex == -99)
+        {
+            int tempIndex = CycleValue(currentIndex + 1, targetPoints.Length - 1);
+            if (IsTouch(eventData.position, targetPoints[tempIndex], mouseFollowerSize))
+                nextValue = 1;
+            else
+            {
+                tempIndex = CycleValue(currentIndex - 1, targetPoints.Length - 1);
+                if (!IsTouch(eventData.position, targetPoints[tempIndex], mouseFollowerSize))
+                    return;
+
+                nextValue = -1;
+            }
+            nextIndex = tempIndex;
+        }
+        else if (!IsTouch(eventData.position, targetPoints[nextIndex], mouseFollowerSize))
+            return;
+
+        currentIndex = nextIndex;
+        if (currentIndex == startIndex)
+        {
+            Debug.Log("is finish.");
+            CutSucced();
+            isFinished = true;
+        }
+
+        Vector2 point = targetPoints[currentIndex];
+        finishedPoints.Add(point);
+        previewPoints[0] = point;
+        finishedLine.Points = finishedPoints.ToArray();
+
+        nextIndex = CycleValue(nextIndex + nextValue, targetPoints.Length - 1);
+    }
+
+    private void OnOperateRangeEndDrag(PointerEventData eventData)
+    {
+        isOperate = false;
+        isFinished = false;
+        finishedPoints.Clear();
+        //finishedLine.gameObject.SetActive(false);
+        previewLine.gameObject.SetActive(false);
+    }
+
+    private bool IsTouch(Vector2 point1, Vector2 point2, float range)
+    {
+        float x = point1.x - point2.x;
+        float y = point1.y - point2.y;
+        if (x < 0)
+            x = x * -1;
+        if (y < 0)
+            y = y * -1;
+
+        return x <= range && y <= range;
+    }
+
+    /// <summary>
+    /// When value bigger than max, value = 0,
+    /// <para>value smaller than min, value = max.</para>
+    /// </summary>
+    private int CycleValue(int value, int max, int min = 0)
+    {
+        int v = (value > max) ? min : ((value < min) ? max : value);
+        return v;
+    }
+
+    private void ClearLine()
+    {
+
+    }
+}
+
+
+public static class TargetPoint
+{
+
+    private static Vector2[] pointWood301 = new Vector2[8]
+    {
+        new Vector2(1260,810),
+        new Vector2(1150,810),
+        new Vector2(1040,810),
+        new Vector2(1040,700),
+        new Vector2(1040,590),
+        new Vector2(1150,590),
+        new Vector2(1260,590),
+        new Vector2(1260,700)
+    };
+
+    private static Vector2[] pointWood302 = new Vector2[8]
+    {
+        new Vector2(785,795),
+        new Vector2(1015,795),
+        new Vector2(1245,795),
+        new Vector2(1245,565),
+        new Vector2(1245,335),
+        new Vector2(1015,335),
+        new Vector2(785,335),
+        new Vector2(785,565)
+    };
+
+
+    static Dictionary<int, Vector2[]> pointsDict = new Dictionary<int, Vector2[]>()
+    {
+        {301,pointWood301 },{302,pointWood302}
+    };
+
+    public static Vector2[] GetDict(int woodID)
+    {
+        foreach (var woodPoint in pointsDict)
+        {
+            if (woodPoint.Key == woodID)
+            {
+                return woodPoint.Value;
+            }
+        }
+        return null;
+    }
+
+
 
 }

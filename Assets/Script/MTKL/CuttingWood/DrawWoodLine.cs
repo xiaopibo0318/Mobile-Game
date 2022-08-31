@@ -123,7 +123,7 @@ public class DrawWoodLine : MonoBehaviour
         }
         var point = new Vector2(pos_x, pos_y);
         //myCollider = gameObject.GetComponent<EdgeCollider2D>();
-        if (!cutWoodManager.getTimeStatus())
+        if (!cutWoodManager.GetTimeStatus())
         {
             //if (pointlist.Count < 3)
             //{
@@ -187,7 +187,7 @@ public class DrawWoodLine : MonoBehaviour
 
     private void OnUserPointerDown(PointerEventData eventData)
     {
-        if (cutWoodManager.getTimeStatus())
+        if (cutWoodManager.GetTimeStatus())
         {
             cutWoodManager.StartCutWood();
             isOperate = true;
@@ -213,7 +213,7 @@ public class DrawWoodLine : MonoBehaviour
     private void OnOperateRangeBeginDrag(PointerEventData eventData)
     {
         if (!isOperate) return;
-        if (cutWoodManager.getTimeStatus())
+        if (cutWoodManager.GetTimeStatus())
         {
             CutFail();
             myPos.GetComponent<CanvasGroup>().blocksRaycasts = true;

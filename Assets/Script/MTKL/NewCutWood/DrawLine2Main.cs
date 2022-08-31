@@ -11,7 +11,7 @@ public class DrawLine2Main : MonoBehaviour
     [SerializeField] private UILineRenderer finishedLine;
     [SerializeField] private UILineRenderer previewLine;
     [SerializeField] private GameObject pointOnPath;
-    [SerializeField] private RectTransform wood301Trans;
+    [SerializeField] private RectTransform[] woodTrans;
     private Vector2[] targetPoints;
     private List<Vector2> finishedPoints;
     private Vector2[] previewPoints;
@@ -25,19 +25,23 @@ public class DrawLine2Main : MonoBehaviour
     private int nextIndex;
     private int nextValue;  //計算下一個點是往前還是往後
 
+
+
     private void Start()
     {
-        targetPoints = new Vector2[8]
-        {
-            new Vector2(360,360),
-            new Vector2(250,360),
-            new Vector2(140,360),
-            new Vector2(140,250),
-            new Vector2(140,140),
-            new Vector2(250,140),
-            new Vector2(360,140),
-            new Vector2(360,250) 
-        };
+        //targetPoints = new Vector2[8]
+        //{
+        //    new Vector2(1260,810),
+        //    new Vector2(1150,810),
+        //    new Vector2(1040,810),
+        //    new Vector2(1040,700),
+        //    new Vector2(1040,590),
+        //    new Vector2(1150,590),
+        //    new Vector2(1260,590),
+        //    new Vector2(1260,700)
+        //};
+
+        
 
         finishedPoints = new List<Vector2>();
         previewPoints = new Vector2[2];
@@ -49,16 +53,16 @@ public class DrawLine2Main : MonoBehaviour
         operateRange.AddOnDragListener(OnOperateRangeDrag);
         operateRange.AddBeginDragListener(OnOperateRangeBeginDrag);
         operateRange.AddEndDragListener(OnOperateRangeEndDrag);
-
-        CreatePointOnPath();
     }
 
-    private void CreatePointOnPath()
+    public void CreatePointOnPath()
     {
-        for(int i = 0; i < targetPoints.Length; i++)
+        targetPoints = TargetPoint.GetDict(CutWoodManager.Instance.GetNowWoodID());
+
+        for (int i = 0; i < targetPoints.Length; i++)
         {
-            Vector3 nowPos = new Vector3 (targetPoints[i].x+900, targetPoints[i].y+450, 0);
-            Instantiate(pointOnPath, nowPos,Quaternion.identity,wood301Trans);
+            Vector3 nowPos = new Vector3(targetPoints[i].x, targetPoints[i].y, 0);
+            Instantiate(pointOnPath, nowPos, Quaternion.identity, woodTrans[CutWoodManager.Instance.GetWoodIndex()]);
         }
     }
 
@@ -69,7 +73,7 @@ public class DrawLine2Main : MonoBehaviour
         bool isTouch = false;
         for (int i = 0; i < targetPoints.Length; i++)
         {
-            Vector2 myPoint = new Vector2(targetPoints[i].x + 900, targetPoints[i].y + 450);
+            Vector2 myPoint = new Vector2(targetPoints[i].x, targetPoints[i].y);
             if (IsTouch(eventData.position, myPoint, mouseFollowerSize))
             {
                 startIndex = i;
@@ -187,20 +191,53 @@ public class DrawLine2Main : MonoBehaviour
 
 }
 
-public class targetPoints{
+public static class TargetPoint2
+{
 
-    private Vector2[] pointWood301 = new Vector2[8]
+    private static Vector2[] pointWood301 = new Vector2[8]
     {
-        new Vector2(360,360),
-        new Vector2(250,360),
-        new Vector2(140,360),
-        new Vector2(140,250),
-        new Vector2(140,140),
-        new Vector2(250,140),
-        new Vector2(360,140),
-        new Vector2(360,250)
-
+        new Vector2(1260,810),
+        new Vector2(1150,810),
+        new Vector2(1040,810),
+        new Vector2(1040,700),
+        new Vector2(1040,590),
+        new Vector2(1150,590),
+        new Vector2(1260,590),
+        new Vector2(1260,700)
     };
+
+    private static Vector2[] pointWood302 = new Vector2[8]
+    {
+        new Vector2(785,795),
+        new Vector2(1015,795),
+        new Vector2(1245,795),
+        new Vector2(1245,565),
+        new Vector2(1245,335),
+        new Vector2(1015,335),
+        new Vector2(785,335),
+        new Vector2(785,565)
+    };
+
+
+    static Dictionary<int, Vector2[]> pointsDict = new Dictionary<int, Vector2[]>()
+    {
+        {301,pointWood301 },{302,pointWood302}
+    };
+
+    public static Vector2[] GetDict(int woodID)
+    {
+        foreach (var woodPoint in pointsDict)
+        {
+            if (woodPoint.Key == woodID)
+            {
+                return woodPoint.Value;
+            }
+        }
+        return null;
+    }
+
+
+
 }
 
 
