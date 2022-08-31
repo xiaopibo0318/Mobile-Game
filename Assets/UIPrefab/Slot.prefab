@@ -109,8 +109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalParent: {fileID: 0}
   myBag: {fileID: 11400000, guid: 19b78654e9597a940beb0afb9f368936, type: 2}
-  siginalContent: {fileID: 0}
-  siginalText: {fileID: 0}
 --- !u!114 &8605404345699941316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +208,7 @@ MonoBehaviour:
   m_Sprite: {fileID: -921808731085444398, guid: 0575e75038da7ab478960e1ce9619b3b,
     type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

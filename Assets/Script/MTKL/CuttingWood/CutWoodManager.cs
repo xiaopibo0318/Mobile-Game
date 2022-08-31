@@ -8,7 +8,6 @@ using UnityEngine.EventSystems;
 
 public class CutWoodManager : MonoBehaviour
 {
-    public GameObject mySelf;
 
     [Header("储存路径信息")]
     public List<GameObject> pathStorage;
@@ -17,6 +16,7 @@ public class CutWoodManager : MonoBehaviour
     public List<Item> woodList;
 
     [Header("分镜")]
+    [SerializeField] private GameObject cuttingWood;
     public GameObject woodChoose;
     public GameObject cutWood;
 
@@ -52,7 +52,7 @@ public class CutWoodManager : MonoBehaviour
     [Header("事件")]
     private UnityAction<PointerEventData> onPointerDown;
     public static CutWoodManager Instance;
-    DrawLine2Main drawLine2Main;
+
     
     [Header("拉線系統")]
     [SerializeField] private DragItem operateRange;
@@ -77,7 +77,6 @@ public class CutWoodManager : MonoBehaviour
 
     public void Awake()
     {
-        drawLine2Main = GetComponent<DrawLine2Main>();
         Instance = this;
         Init();
         InitDragLineSystem();
@@ -182,20 +181,18 @@ public class CutWoodManager : MonoBehaviour
 
     private void Init()
     {
-        mySelf.SetActive(true);
-        woodChoose.SetActive(true);
-        cutWood.SetActive(true);
-        siginal.SetActive(true);
-        buttonCutWoodYes = GameObject.Find("CutWoodYes").GetComponent<Button>();
+        buttonCutWoodYes = transform.Find("cuttingWood/WoodChoose/Simple/Signal/Interective/CutWoodYes").GetComponent<Button>();
         buttonCutWoodYes.onClick.AddListener(CutWood);
-        buttonCutWoodNo = GameObject.Find("CutWoodNo").GetComponent<Button>();
+        buttonCutWoodNo = transform.Find("cuttingWood/WoodChoose/Simple/Signal/Interective/CutWoodNo").GetComponent<Button>();
         buttonCutWoodNo.onClick.AddListener(CloseAllWoodSimple);
-        buttonGoBack = GameObject.Find("GoBack").GetComponent<Button>();
+        buttonGoBack = transform.Find("cuttingWood/Cut/GoBack").GetComponent<Button>();
         buttonGoBack.onClick.AddListener(GoBackPage);
+        //GameObject myObject = transform.Find("cuttingWood").gameObject;
+        //Debug.Log(myObject.name);
         woodChoose.SetActive(false);
         cutWood.SetActive(false);
         siginal.SetActive(false);
-        mySelf.SetActive(false);
+        cuttingWood.SetActive(false);
     }
 
 
@@ -207,10 +204,10 @@ public class CutWoodManager : MonoBehaviour
         siginal.SetActive(false);
     }
 
-    public void CutSucced()
+    public void CutSucceed()
     {
         siginalUI.SiginalText("切割成功，木頭已放入背包");
-        StopCoroutine(Countdown());
+        StopCoroutine(timeCoroutine);
         foreach (var myWood in woodList)
         {
             Debug.Log("現在的ID:"+nowWoodID);
@@ -221,6 +218,7 @@ public class CutWoodManager : MonoBehaviour
                 break;
             }
         }
+        ClearLine();
         ResetWoodUI();
         //DrawWoodLine.Insatnce.ClearLine();
     }
@@ -231,6 +229,7 @@ public class CutWoodManager : MonoBehaviour
         needSec = 0;
         timerText.text = string.Format("{0}", needSec.ToString("f2")).Replace(".", ":");
         siginalUI.SiginalText("切割失敗");
+        ClearLine();
         ResetWoodUI();
     }
 
@@ -369,7 +368,7 @@ public class CutWoodManager : MonoBehaviour
         if (currentIndex == startIndex)
         {
             Debug.Log("is finish.");
-            CutSucced();
+            CutSucceed();
             isFinished = true;
         }
 
@@ -414,7 +413,11 @@ public class CutWoodManager : MonoBehaviour
 
     private void ClearLine()
     {
-
+        previewPoints[0] = new Vector2(0, 0);
+        previewPoints[1] = new Vector2(0, 0);
+        previewLine.SetAllDirty();
+        finishedPoints.Clear();
+        finishedLine.SetAllDirty();
     }
 }
 
@@ -446,10 +449,21 @@ public static class TargetPoint
         new Vector2(785,565)
     };
 
+    private static Vector2[] pointWood303 = new Vector2[8]
+    {
+        new Vector2(1255,800),
+        new Vector2(1255,440),
+        new Vector2(1255,80),
+        new Vector2(890,80),
+        new Vector2(535,80),
+        new Vector2(535,440),
+        new Vector2(535,800),
+        new Vector2(890,800)
+    };
 
     static Dictionary<int, Vector2[]> pointsDict = new Dictionary<int, Vector2[]>()
     {
-        {301,pointWood301 },{302,pointWood302}
+        {301,pointWood301 },{302,pointWood302},{303,pointWood303}
     };
 
     public static Vector2[] GetDict(int woodID)

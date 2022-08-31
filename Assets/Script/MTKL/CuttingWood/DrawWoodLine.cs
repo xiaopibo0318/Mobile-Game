@@ -106,7 +106,7 @@ public class DrawWoodLine : MonoBehaviour
             {
                 Debug.Log("成功繞圈");
                 isCircle = true;
-                cutWoodManager.CutSucced();
+                cutWoodManager.CutSucceed();
             }
         }
 
@@ -247,7 +247,7 @@ public class DrawWoodLine : MonoBehaviour
             {
                 Debug.Log("成功繞圈");
                 isCircle = true;
-                cutWoodManager.CutSucced();
+                cutWoodManager.CutSucceed();
                 ClearLine();
             }
         }
