@@ -49,5 +49,9 @@ public class AudioManager : MonoBehaviour
         walkOnGrass.volume = 0.1f;
     }
 
+    public void ChangeBgmVolume( float volumeSize)
+    {
+        bgmMTKL.volume = volumeSize;
+    }
 
 }

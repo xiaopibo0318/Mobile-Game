@@ -77,6 +77,11 @@ public class ballGameManager : MonoBehaviour
             {
 
                 InventoryManager.Instance.SubItem(GetNowBall(nowType));
+                if(ballType[nowType - 1] == null)
+                {
+                    cacheVisable.Instance.siginalSomething("還沒選擇球球喔");
+                    return;
+                }
                 ballType[nowType-1].SetActive(true);
                 ResetPosition();
                 ballType[nowType-1].GetComponent<Rigidbody2D>().gravityScale = 20;

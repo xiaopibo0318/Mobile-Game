@@ -461,9 +461,111 @@ public static class TargetPoint
         new Vector2(890,800)
     };
 
+    private static Vector2[] pointWood311 = new Vector2[8]
+    {
+        new Vector2(1230,325),
+        new Vector2(110,325),
+        new Vector2(970,325),
+        new Vector2(970,540),
+        new Vector2(970,790),
+        new Vector2(1110,790),
+        new Vector2(1230,790),
+        new Vector2(1230,540)
+    };
+
+    private static Vector2[] pointWood321 = new Vector2[8]
+    {
+        new Vector2(1230,80),
+        new Vector2(1230,440),
+        new Vector2(1230,800),
+        new Vector2(1092,800),
+        new Vector2(955,800),
+        new Vector2(955,440),
+        new Vector2(955,80),
+        new Vector2(1092,80)
+    };
+
+    private static Vector2[] pointWood331 = new Vector2[8]
+    {
+        new Vector2(990,345),
+        new Vector2(785,345),
+        new Vector2(785,85),
+        new Vector2(990,85),
+        new Vector2(1245,85),
+        new Vector2(1245,345),
+        new Vector2(1245,545),
+        new Vector2(990,545)
+    };
+
+    private static Vector2[] pointWood341 = new Vector2[12]
+    {
+        new Vector2(1245,795),
+        new Vector2(975,795),
+        new Vector2(755,795),
+        new Vector2(540,795),
+        new Vector2(540,520),
+        new Vector2(755,520),
+        new Vector2(755,305),
+        new Vector2(975,305),
+        new Vector2(975,90),
+        new Vector2(1245,90),
+        new Vector2(1245,305),
+        new Vector2(1245,520)
+    };
+
+    private static Vector2[] pointWood351 = new Vector2[10]
+    {
+        new Vector2(1030,95),
+        new Vector2(750,95),
+        new Vector2(750,515),
+        new Vector2(535,515),
+        new Vector2(535,790),
+        new Vector2(1030,790),
+        new Vector2(1030,580),
+        new Vector2(1240,580),
+        new Vector2(1240,305),
+        new Vector2(1030,305)
+    };
+
+    private static Vector2[] pointWood361 = new Vector2[7]
+    {
+        new Vector2(785,575),
+        new Vector2(785,80),
+        new Vector2(985,80),
+        new Vector2(1245,80),
+        new Vector2(1245,575),
+        new Vector2(1245,790),
+        new Vector2(985,790),
+    };
+
+    private static Vector2[] pointWood371 = new Vector2[8]
+    {
+        new Vector2(1240,790),
+        new Vector2(980,790),
+        new Vector2(785,790),
+        new Vector2(785,515),
+        new Vector2(980,515),
+        new Vector2(980,85),
+        new Vector2(1240,85),
+        new Vector2(1240,515),
+    };
+    
+    private static Vector2[] pointWood601 = new Vector2[] //圓的可能還會再改
+    {
+        new Vector2(880,120),
+        
+        new Vector2(570,435),
+        
+        new Vector2(880,770),
+
+        new Vector2(1220,435)
+
+    };
+
     static Dictionary<int, Vector2[]> pointsDict = new Dictionary<int, Vector2[]>()
     {
-        {301,pointWood301 },{302,pointWood302},{303,pointWood303}
+        {301,pointWood301 },{302,pointWood302},{303,pointWood303},{311,pointWood311},{321,pointWood321},
+        {331,pointWood331 },{341,pointWood341},{351,pointWood351},{361,pointWood361},{371,pointWood371},{601,pointWood601}
     };
 
     public static Vector2[] GetDict(int woodID)
