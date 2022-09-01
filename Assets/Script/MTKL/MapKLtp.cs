@@ -32,7 +32,7 @@ public class MapKLtp : MonoBehaviour
 
         //}
         Camerafollowww.Instance.changeMyPos();
-        
+        ParticleManager.Instance.DisplayTeleport();
     }
 
     

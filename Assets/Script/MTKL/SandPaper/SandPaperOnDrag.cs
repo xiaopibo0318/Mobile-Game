@@ -32,6 +32,7 @@ public class SandPaperOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             stayTime += 0.1f;
         }
         Debug.Log(stayTime);
+        ParticleManager.Instance.DisplayWoodParticle(eventData.position);
     }
 
     public void OnEndDrag(PointerEventData eventData)

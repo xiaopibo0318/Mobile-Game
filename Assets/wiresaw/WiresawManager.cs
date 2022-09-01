@@ -238,9 +238,9 @@ public class WiresawManager : MonoBehaviour
             timerText.text = string.Format("{0}", thisTime.ToString("f2")).Replace(".", ":");
             var index = Random.Range(0, myRange.Count);
             var myTIme = myRange[index];
-            yield return null;
+            yield return null; //延遲 一秒
             myStressSlider.value -= Time.deltaTime * myTIme;
-            thisTime -= Time.deltaTime;
+            thisTime -= Time.deltaTime; //扣掉一楨的的秒數
             if (topButtonOpen == false || underButtonOpen == false)
             {
                 addKnifeSuccess = true;
@@ -262,6 +262,7 @@ public class WiresawManager : MonoBehaviour
             SiginalUI.Instance.SiginalText("組裝失敗，請繼續加油");
             ResetWireSaw();
             StopCoroutine(rotateCoroutine);
+            rotateCoroutine = null;
         }
     }
 
