@@ -63547,8 +63547,7 @@ MonoBehaviour:
   - {fileID: 7729495257564450554}
   - {fileID: 4400205997203502428}
   - {fileID: 4788174075847046490}
-  teleportParticle:
-  - {fileID: 4339046865964886566}
+  teleportParticle: {fileID: 4339046865964886566}
 --- !u!4 &1402024372
 Transform:
   m_ObjectHideFlags: 0
