@@ -79,11 +79,15 @@ public class Camerafollowww : MonoBehaviour
         {
             myPos = 2;
             Player.Instance.myRigid.position = new Vector2(-50,0);
-        }else if (myPos == 2)
+           
+        }
+        else if (myPos == 2)
         {
             myPos = 1;
             Player.Instance.myRigid.position = new Vector2(0,0);
+            
         }
+        
     }
 
 

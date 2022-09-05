@@ -31,14 +31,28 @@ public class MapKLtp : MonoBehaviour
         //    nowPos = 1;
 
         //}
-        Camerafollowww.Instance.changeMyPos();
-        ParticleManager.Instance.DisplayTeleport();
+        ParticleManager.Instance.addSpeedTeleport();
+        StartCoroutine(teleport());
+        //Camerafollowww.Instance.changeMyPos();
+        
+        
+
+
     }
 
     
     public int GetNowPos()
     {
         return nowPos;
+    }
+
+    IEnumerator teleport()
+    {
+        yield return new WaitForSeconds(5);
+        Camerafollowww.Instance.changeMyPos();
+        
+        yield return null;
+
     }
 
 }
