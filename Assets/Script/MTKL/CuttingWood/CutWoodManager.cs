@@ -256,7 +256,7 @@ public class CutWoodManager : MonoBehaviour
             if (needSec < 0)
             {
                 needSec = 0;
-                Debug.Log("結束");
+                Debug.Log("結束"); 
                 CutFail();
                 timeFinished = true;
             }
