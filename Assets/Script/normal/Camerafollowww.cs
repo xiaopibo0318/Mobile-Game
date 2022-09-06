@@ -17,8 +17,7 @@ public class Camerafollowww : MonoBehaviour
     {
         myPos = 1;
         Instance = this;
-        
-        
+            
     }
 
     // Start is called before the first frame update
@@ -72,22 +71,23 @@ public class Camerafollowww : MonoBehaviour
         }
 
     }
-
+    public int GetMyPos()
+    {
+        return myPos;
+    }
     public void changeMyPos()
     {
         if(myPos == 1)
         {
             myPos = 2;
             Player.Instance.myRigid.position = new Vector2(-50,0);
-           
         }
         else if (myPos == 2)
         {
             myPos = 1;
-            Player.Instance.myRigid.position = new Vector2(0,0);
-            
+            Player.Instance.myRigid.position = new Vector2(0,0); 
         }
-        
+                
     }
 
 
