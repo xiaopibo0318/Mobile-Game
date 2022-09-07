@@ -87,12 +87,10 @@ public class myLoveTag : MonoBehaviour
         }
         else
         {
-            Debug.Log("A");
             InventoryManager.Instance.AddNewItem(love);
             InterectiveManager.Instance.closeAllIcon();
             mySelf.SetActive(false);
         }
-        Debug.Log("B");
     }
 
 

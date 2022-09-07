@@ -57,4 +57,24 @@ public class CanvasManager : MonoBehaviour
         canvas.Close();
     }
 
+    public void closeCanvas(string canvasName)
+    {
+        for (int i = 0; i < _canvas.Length; i++)
+        {
+            if(canvasName == _canvas[i].name)
+            {
+                CloseCanvas(_canvas[i]);
+                break;
+            }
+        }
+    }
+
+    public void CloseAllCanvas()
+    {
+        for (int i = 0; i < _canvas.Length; i++)
+        {
+             CloseCanvas(_canvas[i]);
+        }
+    }
+
 }

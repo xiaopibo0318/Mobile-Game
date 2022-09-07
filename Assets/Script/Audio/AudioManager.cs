@@ -8,23 +8,41 @@ public class AudioManager : MonoBehaviour
     private AudioResource audioResource;
 
     [Header("崑崙山音效")]
-    private AudioSource bgmMTKL;
     private AudioClip rainAudio;
     private AudioSource walkOnGrass;
+
+    [Header("BGM")]
+    private AudioSource nowBGM;
 
 
     public static AudioManager Instance;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+        InitAuudio();
         InitMTKL();
         StartMTKLAudio();
     }
 
+
+    private void InitAuudio()
+    {
+        audioResource = GetComponent<AudioResource>();
+
+        nowBGM = gameObject.AddComponent<AudioSource>();
+
+    }
     public void StartMTKLAudio()
     {
-        bgmMTKL.Play();
+        nowBGM.Play();
     }
 
     public void Walk(bool isWalk = false)
@@ -36,12 +54,9 @@ public class AudioManager : MonoBehaviour
 
     private void InitMTKL()
     {
-        audioResource = GetComponent<AudioResource>();
-
-        bgmMTKL = gameObject.AddComponent<AudioSource>();
-        bgmMTKL.clip = audioResource.bgmMTKL;
-        bgmMTKL.loop = true;
-        bgmMTKL.volume = 0.05f;
+        nowBGM.clip = audioResource.bgmMTKL;
+        nowBGM.loop = true;
+        nowBGM.volume = 0.05f;
 
         walkOnGrass = gameObject.AddComponent<AudioSource>();
         walkOnGrass.clip = audioResource.walkOnGrass;
@@ -51,7 +66,7 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeBgmVolume( float volumeSize)
     {
-        bgmMTKL.volume = volumeSize;
+        nowBGM.volume = volumeSize;
     }
 
 }

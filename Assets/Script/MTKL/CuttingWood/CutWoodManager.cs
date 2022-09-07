@@ -562,7 +562,7 @@ public static class TargetPoint
 
     };
 
-    static Dictionary<int, Vector2[]> pointsDict = new Dictionary<int, Vector2[]>()
+    private static Dictionary<int, Vector2[]> pointsDict = new Dictionary<int, Vector2[]>()
     {
         {301,pointWood301 },{302,pointWood302},{303,pointWood303},{311,pointWood311},{321,pointWood321},
         {331,pointWood331 },{341,pointWood341},{351,pointWood351},{361,pointWood361},{371,pointWood371},{601,pointWood601}

@@ -16,6 +16,7 @@ public class MapKLtp : MonoBehaviour
         Instance = this;
     }
 
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("AAA");
@@ -44,7 +45,7 @@ public class MapKLtp : MonoBehaviour
         {
             ParticleManager.Instance.addSpeedTeleport(1);
         }
-        StartCoroutine(teleport());
+        //StartCoroutine(teleport());
 
 
         //Camerafollowww.Instance.changeMyPos();
@@ -55,7 +56,7 @@ public class MapKLtp : MonoBehaviour
 
     public void onTriggerExit2D(Collider2D collision)
     {
-        StopCoroutine(teleport());
+        ParticleManager.Instance.StopTeleport();
     }
 
 

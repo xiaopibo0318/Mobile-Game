@@ -18,18 +18,23 @@ public class SettingManager : MonoBehaviour
     [Header("其他功能")]
     [SerializeField] private Button goBack;
 
+    public static SettingManager Instance;
 
 
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else Destroy(this);
+
         musicSlider.value = 0.05f;
         musicSlider.onValueChanged.AddListener(OnChangeValue);
         goBack.onClick.AddListener(CloseSetting);
-        
+
     }
 
 
-    private void OpenSetting()
+    public void OpenSetting()
     {
         settingObject.SetActive(true);
     }
@@ -44,7 +49,7 @@ public class SettingManager : MonoBehaviour
     {
         settingObject.SetActive(false);
         CanvasManager.Instance.openCanvas("original");
-        
+
     }
 
 

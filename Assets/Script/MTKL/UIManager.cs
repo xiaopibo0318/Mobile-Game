@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
 
     public static UIManager Instance;
     bool book_open;
+
+    [SerializeField] private Button settingButton;
+
     private void Awake()
     {
         if (Instance == null)
@@ -20,6 +23,8 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        settingButton.onClick.AddListener(OpenSetting);
 
         if (Book_2.activeInHierarchy == true)
         {
@@ -53,4 +58,9 @@ public class UIManager : MonoBehaviour
         book_open = _open;
     }
 
+    private void OpenSetting()
+    {
+        SettingManager.Instance.OpenSetting();
+        CanvasManager.Instance.CloseAllCanvas();
+    }
 }

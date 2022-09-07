@@ -11,12 +11,17 @@ public class ParticleManager : MonoBehaviour
     /*[SerializeField] private ParticleSystem teleportParticle ;
     [Header("房間二傳送陣粒子效果")]
     [SerializeField] private ParticleSystem teleportParticle2;*/
+    [Header("協程")]
 
+    Coroutine nowCoroutine;
+
+    [Header("Singleton")]
     //整個場景只有一個腳本掛在物件上
     public static ParticleManager Instance;
 
     private void Awake()
     {
+        nowCoroutine = null;
         Instance = this;
         displayTeleport();
     }
@@ -30,12 +35,20 @@ public class ParticleManager : MonoBehaviour
         }
         
     }
-    [System.Obsolete]
+
     public void addSpeedTeleport(int i)
     {
         //粒子特效加速
-        StartCoroutine(teleportAddspeed(i));
+        nowCoroutine =  StartCoroutine(teleportAddspeed(i));
     }
+
+    public void StopTeleport()
+    {
+        StopCoroutine(nowCoroutine);
+        nowCoroutine = null;
+    }
+
+
     IEnumerator teleportAddspeed(int i)
     {
         var emission = teleportParticle[i].emission;
@@ -45,7 +58,8 @@ public class ParticleManager : MonoBehaviour
             teleportParticle[i].startSpeed += 1f;
             emission.rateOverTime = a*10;
         }
-        
+
+        Camerafollowww.Instance.changeMyPos();
         //傳送完畢後回到初始狀態
         teleportParticle[i].startSpeed = 0.2f;
         emission.rateOverTime = 1;
