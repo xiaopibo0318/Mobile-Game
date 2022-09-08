@@ -39,7 +39,7 @@ public class ParticleManager : MonoBehaviour
     public void addSpeedTeleport(int i)
     {
         //粒子特效加速
-        nowCoroutine =  StartCoroutine(teleportAddspeed(i));
+        nowCoroutine =  StartCoroutine(TeleportAddSpeed(i));
     }
 
     public void StopTeleport()
@@ -49,7 +49,7 @@ public class ParticleManager : MonoBehaviour
     }
 
 
-    IEnumerator teleportAddspeed(int i)
+    IEnumerator TeleportAddSpeed(int i)
     {
         var emission = teleportParticle[i].emission;
         for (int a = 0; a < 10; a++)
@@ -67,12 +67,38 @@ public class ParticleManager : MonoBehaviour
     }
 
 
+    IEnumerator TeleportCancel(int i)
+    {
+        float particleSpeed = teleportParticle[i].startSpeed;
+        while(particleSpeed > 0)
+        {
+            yield return null;
+            particleSpeed -= Time.deltaTime;
+        }
+    }
+
+
+
+    public void WoodParticleEnable()
+    {
+        for (int i = 0; i < woodParticle.Count; i++)
+        {
+            woodParticle[i].gameObject.SetActive(true);
+        }
+    }
 
     public void DisplayWoodParticle(Vector3 nowPos)
     {
         for(int i = 0; i < woodParticle.Count; i++)
         {
             woodParticle[i].transform.position = nowPos;
+        }
+    }
+    public void WoodParticleDisable()
+    {
+        for (int i = 0; i < woodParticle.Count; i++)
+        {
+            woodParticle[i].gameObject.SetActive(false);
         }
     }
 

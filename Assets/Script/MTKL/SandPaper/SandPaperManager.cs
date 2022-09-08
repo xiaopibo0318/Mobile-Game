@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class SandPaperManager : MonoBehaviour
 {
-    [Header("砂紙類型")]
-    public GameObject paper_150;
-
 
     [Header("背包是否有此物品")]
     public Inventory myBag;

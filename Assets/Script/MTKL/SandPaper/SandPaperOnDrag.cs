@@ -11,7 +11,7 @@ public class SandPaperOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     float stayTime;
 
-
+    bool isParticle = false;
     public void OnBeginDrag(PointerEventData eventData)
     {
         originalParent = transform.parent;
@@ -27,12 +27,24 @@ public class SandPaperOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         transform.position = eventData.position;
         //Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
+        if (!isParticle)
+        {
+            ParticleManager.Instance.WoodParticleEnable();
+        }
+
         if (eventData.pointerCurrentRaycast.gameObject.name == "Circle")
         {
             stayTime += 0.1f;
+            ParticleManager.Instance.DisplayWoodParticle(eventData.position);
+            isParticle = true;
+        }
+        else
+        {
+            ParticleManager.Instance.WoodParticleDisable();
+            isParticle = false;
         }
         Debug.Log(stayTime);
-        ParticleManager.Instance.DisplayWoodParticle(eventData.position);
+        
     }
 
     public void OnEndDrag(PointerEventData eventData)

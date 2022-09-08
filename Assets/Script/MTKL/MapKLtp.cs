@@ -54,10 +54,12 @@ public class MapKLtp : MonoBehaviour
 
     }
 
-    public void onTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         ParticleManager.Instance.StopTeleport();
+        Debug.Log("取消傳送");
     }
+
 
 
     public int GetNowPos()
