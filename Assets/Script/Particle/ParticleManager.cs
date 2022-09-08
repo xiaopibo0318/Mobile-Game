@@ -26,26 +26,26 @@ public class ParticleManager : MonoBehaviour
         displayTeleport();
     }
 
-    
-    public void displayTeleport () //傳送陣初始狀態
+
+    public void displayTeleport() //傳送陣初始狀態
     {
         for (int i = 0; i < teleportParticle.Count; i++)
         {
             teleportParticle[i].gameObject.SetActive(true);
         }
-        
+
     }
 
     public void addSpeedTeleport(int i)
     {
         //粒子特效加速
-        nowCoroutine =  StartCoroutine(TeleportAddSpeed(i));
+        nowCoroutine = StartCoroutine(TeleportAddSpeed(i));
     }
 
-    public void StopTeleport()
+    public void StopTeleport(int i)
     {
         StopCoroutine(nowCoroutine);
-        nowCoroutine = null;
+        nowCoroutine = StartCoroutine(TeleportCancel(i));
     }
 
 
@@ -56,7 +56,7 @@ public class ParticleManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             teleportParticle[i].startSpeed += 1f;
-            emission.rateOverTime = a*10;
+            emission.rateOverTime = a * 10;
         }
 
         Camerafollowww.Instance.changeMyPos();
@@ -69,13 +69,23 @@ public class ParticleManager : MonoBehaviour
 
     IEnumerator TeleportCancel(int i)
     {
-        float particleSpeed = teleportParticle[i].startSpeed;
-        while(particleSpeed > 0)
+        var emission = teleportParticle[i].emission;
+        int num = (int)(teleportParticle[i].startSpeed-0.2f);
+        for (int a = num; a>=0; a--)
         {
-            yield return null;
-            particleSpeed -= Time.deltaTime;
+            yield return new WaitForSeconds(0.5f);
+            if (teleportParticle[i].startSpeed > 0.2f)
+            {
+                teleportParticle[i].startSpeed -= 1f;
+                emission.rateOverTime = a * 10;
+            }   
         }
+        teleportParticle[i].startSpeed = 0.2f;
+        emission.rateOverTime = 1;
+        yield return null;
     }
+
+
 
 
 
@@ -89,7 +99,7 @@ public class ParticleManager : MonoBehaviour
 
     public void DisplayWoodParticle(Vector3 nowPos)
     {
-        for(int i = 0; i < woodParticle.Count; i++)
+        for (int i = 0; i < woodParticle.Count; i++)
         {
             woodParticle[i].transform.position = nowPos;
         }

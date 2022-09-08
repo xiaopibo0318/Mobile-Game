@@ -56,7 +56,17 @@ public class MapKLtp : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        ParticleManager.Instance.StopTeleport();
+        nowPos = Camerafollowww.Instance.GetMyPos();
+        Debug.Log(nowPos);
+        if(nowPos == 1)
+        {
+            ParticleManager.Instance.StopTeleport(0);
+        }
+        else
+        {
+            ParticleManager.Instance.StopTeleport(1);
+        }
+        
         Debug.Log("取消傳送");
     }
 
