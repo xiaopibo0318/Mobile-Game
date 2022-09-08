@@ -65,7 +65,7 @@ public class CutWoodManager : MonoBehaviour
     private List<Vector2> finishedPoints;
     private Vector2[] previewPoints;
 
-    private int mouseFollowerSize = 10;
+    private int mouseFollowerSize = 20;
 
     private bool isOperate = false;
     private bool isFinished = false;
@@ -307,6 +307,7 @@ public class CutWoodManager : MonoBehaviour
         if (!isTouch)
             return;
 
+
         Debug.Log("pointer down is touch.");
         isOperate = true;
         currentIndex = startIndex;
@@ -416,7 +417,8 @@ public class CutWoodManager : MonoBehaviour
         previewPoints[0] = new Vector2(0, 0);
         previewPoints[1] = new Vector2(0, 0);
         previewLine.SetAllDirty();
-        finishedPoints.Clear();
+        finishedPoints.Clear();      
+        finishedLine.Points = finishedPoints.ToArray();
         finishedLine.SetAllDirty();
     }
 }
