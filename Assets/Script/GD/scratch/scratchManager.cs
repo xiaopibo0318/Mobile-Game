@@ -76,3 +76,32 @@ public class scratchManager : MonoBehaviour
     }
 
 }
+
+
+public static class DirectPoint
+{
+    private static Vector2 upPos = new Vector2(0, 60);
+    private static Vector2 downPos = new Vector2(0, -60);
+    private static Vector2 leftPos = new Vector2(-60, 0);
+    private static Vector2 rightPos = new Vector2(60, 0);
+
+    private static Dictionary<string, Vector2> arrowDict = new Dictionary<string, Vector2>()
+    {
+        {"Top",upPos }, {"Down",downPos},{"Left",leftPos},{"Right",rightPos}
+    };
+
+
+
+    public static Vector2 GetArrowPos(string myDirect)
+    {
+        foreach (var everyArrow in arrowDict)
+        {
+            if(everyArrow.Key == myDirect)
+            {
+                return everyArrow.Value;
+            }
+        }
+
+        return new Vector2(0,0);
+    }
+} 
