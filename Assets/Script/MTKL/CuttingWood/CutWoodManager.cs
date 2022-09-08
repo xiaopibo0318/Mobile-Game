@@ -305,7 +305,11 @@ public class CutWoodManager : MonoBehaviour
         }
 
         if (!isTouch)
+        {
+            isOperate = false;
             return;
+        }
+            
 
 
         Debug.Log("pointer down is touch.");
