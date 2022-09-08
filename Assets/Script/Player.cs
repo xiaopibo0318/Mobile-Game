@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour , ISaveable
 {
     public float myspeed;
     public static Player Instance;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject[] PlayerStyle;
 
     public playerStatus myStatus;
+    
 
 
     public void Awake()
@@ -132,16 +134,40 @@ public class Player : MonoBehaviour
         cache_time = 2;
     }
 
-    
+    //存檔系統
+    public object SaveState()
+    {
+        return new SaveData()
+        {
+            gameStatus = myStatus.gameStatus
+        };
+    }
+
+    public void LoadState(object state)
+    {
+        var saveData = (SaveData)state;
+        myStatus.gameStatus = saveData.gameStatus;
+    }
+
+
+
+
+    [Serializable]
+    private struct SaveData
+    {
+        public int gameStatus;
+    }
+
 
 }
 
 
-public class playerStatus {
+public class playerStatus 
+{
 
-    string name;
-    int gameStatus;
-    int time;
+    public string name;
+    public int gameStatus;
+    public int time;
 
     public playerStatus(int gameStatus)
     {
@@ -158,5 +184,7 @@ public class playerStatus {
         return gameStatus;
     }
 
+
+   
 
 }

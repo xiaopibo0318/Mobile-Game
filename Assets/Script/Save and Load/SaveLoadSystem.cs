@@ -22,6 +22,7 @@ public class SaveLoadSystem : MonoBehaviour
     {
         var state = LoadFile();
         LoadState(state);
+        KLMTmanager.Instance.KLMTinitial();
     }
 
     public void SaveFile(object state)
