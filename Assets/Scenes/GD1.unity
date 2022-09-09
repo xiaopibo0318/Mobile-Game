@@ -5704,7 +5704,7 @@ MonoBehaviour:
   target: {fileID: 587575838}
   direct: {fileID: 1466060503}
   startButton: {fileID: 873323464}
-  ClearButton: {fileID: 2022236479}
+  clearButton: {fileID: 2022236479}
   goAheadStep: {fileID: 0}
 --- !u!1 &645574689
 GameObject:
@@ -14603,18 +14603,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2022236480}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 635897388}
-        m_MethodName: ResetBlock
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2022236480
 MonoBehaviour:
   m_ObjectHideFlags: 0

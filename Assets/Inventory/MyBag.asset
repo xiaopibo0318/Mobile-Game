@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: MyBag
   m_EditorClassIdentifier: 
   itemList:
-  - {fileID: 11400000, guid: b06657a277591964faa495f39d305fca, type: 2}
-  - {fileID: 11400000, guid: dc4333373e30f134dad3a0c3863988d3, type: 2}
-  - {fileID: 11400000, guid: 36c591ce69ec12e459beac872087872f, type: 2}
-  - {fileID: 11400000, guid: 288d85c594256c640bb7fa71a8414080, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 11400000, guid: fcd2aa6468e031948b2a74252399ec18, type: 2}
   - {fileID: 11400000, guid: 17f249cc3d4c84a4eb1952963f4ee0f1, type: 2}
   - {fileID: 0}

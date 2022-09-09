@@ -20,13 +20,14 @@ public class scratchManager : MonoBehaviour
 
     [Header("UI組件")]
     [SerializeField] private Button startButton;
-    [SerializeField] private Button ClearButton;
+    [SerializeField] private Button clearButton;
     [SerializeField] private InputField goAheadStep;
 
 
     private void Awake()
     {
         startButton.onClick.AddListener(StartGame);
+        clearButton.onClick.AddListener(ResetBlock);
     }
 
     // Start is called before the first frame update
@@ -38,6 +39,7 @@ public class scratchManager : MonoBehaviour
 
     public void setUpBlockSlot()
     {
+        blocks.Clear();
         for (int i = 0; i < 7; i++)
         {
             blocks.Add(Instantiate(emptyBlockSlot));
@@ -106,18 +108,18 @@ public class scratchManager : MonoBehaviour
                 target.transform.position = new Vector3(target.transform.position.x + 100 * moveStep, target.transform.position.y, target.transform.position.z);
                 break;
             default:
+                
                 break;
-
-
         }
     }
 
     public void ResetBlock()
     {
+        exeLists.exeList.Clear();
         for (int i = 0; i < blockGrid.transform.childCount; i++)
         {
             GameObject go = blockGrid.transform.GetChild(i).gameObject;
-            Destroy(go);
+            Destroy(go);            
         }
 
         setUpBlockSlot();
