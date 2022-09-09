@@ -85,8 +85,6 @@ public class scratchManager : MonoBehaviour
                     break;
                 default:
                     break;
-
-
             }
         }
     }

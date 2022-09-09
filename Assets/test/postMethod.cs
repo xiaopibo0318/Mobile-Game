@@ -48,8 +48,8 @@ public class postMethod : MonoBehaviour
             }
             Debug.Log(request.error);
             Debug.Log(request.downloadHandler);
-            
         }
+     
     }
 
 }
