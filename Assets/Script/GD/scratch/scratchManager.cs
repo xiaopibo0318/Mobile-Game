@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class scratchManager : MonoBehaviour
 {
@@ -9,10 +10,24 @@ public class scratchManager : MonoBehaviour
     public GameObject blockGrid;
     public GameObject emptyBlockSlot;
 
+    [Header("執行列表")]
     public blockList exeLists;
 
+    [Header("主角、方向")]
     public GameObject target;
     public GameObject direct;
+    private int nowDirect;
+
+    [Header("UI組件")]
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button ClearButton;
+    [SerializeField] private InputField goAheadStep;
+
+
+    private void Awake()
+    {
+        startButton.onClick.AddListener(StartGame);
+    }
 
     // Start is called before the first frame update
     public void OnEnable()
@@ -29,21 +44,21 @@ public class scratchManager : MonoBehaviour
             emptyBlockSlot.name = "blockSlot";
             blocks[i].transform.SetParent(blockGrid.transform);
 
-            blocks[i].GetComponent<blockSlot>().slotID= i;
-            
+            blocks[i].GetComponent<blockSlot>().slotID = i;
+
         }
     }
 
 
-    public void startGame()
+    public void StartGame()
     {
-        StartCoroutine(StartGame());
+        StartCoroutine(GoStartGame());
     }
 
-    IEnumerator StartGame()
+    IEnumerator GoStartGame()
     {
- 
-        for(int i = 0; i < exeLists.exeList.Count; i++)
+        ResetObject();
+        for (int i = 0; i < exeLists.exeList.Count; i++)
         {
             yield return new WaitForSeconds(0.5f);
             switch (exeLists.exeList[i])
@@ -51,16 +66,49 @@ public class scratchManager : MonoBehaviour
                 case 0:
                     break;
                 case 1:
-                    target.transform.position = new Vector3(target.transform.position.x + 100, target.transform.position.y, target.transform.position.z);
+                    GoAhead(nowDirect);
                     break;
                 case 11:
+                    nowDirect += 5; //等於+1
+                    nowDirect %= 4;
+                    direct.transform.position = DirectPoint.GetArrowPos(nowDirect, target.transform.position);
+                    direct.transform.rotation = Quaternion.Euler(0, 0, DirectPoint.GetArrowRotate(nowDirect));
                     break;
                 case 12:
-                    direct.transform.position = new Vector3(target.transform.position.x, target.transform.position.y - 35, direct.transform.position.z);
-                    direct.transform.rotation = Quaternion.Euler(0, 0, direct.transform.rotation.z -900);
+                    nowDirect += 3; //等於-1
+                    nowDirect %= 4;
+                    direct.transform.position = DirectPoint.GetArrowPos(nowDirect, target.transform.position);
+                    direct.transform.rotation = Quaternion.Euler(0, 0, DirectPoint.GetArrowRotate(nowDirect));
+
                     break;
-                    
+                default:
+                    break;
+
+
             }
+        }
+    }
+
+    private void GoAhead(int _nowDirect, int moveStep = 1)
+    {
+        switch (_nowDirect)
+        {
+            case 0:
+                target.transform.position = new Vector3(target.transform.position.x, target.transform.position.y + 100 * moveStep, target.transform.position.z);
+                break;
+            case 1:
+                target.transform.position = new Vector3(target.transform.position.x - 100 * moveStep, target.transform.position.y, target.transform.position.z);
+                break;
+            case 2:
+                target.transform.position = new Vector3(target.transform.position.x, target.transform.position.y - 100 * moveStep, target.transform.position.z);
+                break;
+            case 3:
+                target.transform.position = new Vector3(target.transform.position.x + 100 * moveStep, target.transform.position.y, target.transform.position.z);
+                break;
+            default:
+                break;
+
+
         }
     }
 
@@ -75,33 +123,67 @@ public class scratchManager : MonoBehaviour
         setUpBlockSlot();
     }
 
+    private void ResetObject()
+    {
+        target.transform.position = new Vector3(1150, 170, 0);
+        nowDirect = 3;
+        direct.transform.position = DirectPoint.GetArrowPos(nowDirect, target.transform.position);
+
+    }
+
+
 }
 
 
 public static class DirectPoint
 {
-    private static Vector2 upPos = new Vector2(0, 60);
-    private static Vector2 downPos = new Vector2(0, -60);
-    private static Vector2 leftPos = new Vector2(-60, 0);
-    private static Vector2 rightPos = new Vector2(60, 0);
+    /// <summary>
+    /// 方向對照表。
+    /// 上 0  0
+    /// 左 1  90
+    /// 下 2  180
+    /// 右 3  270
+    /// </summary>
+    private static Vector3 topPos = new Vector3(0, 60);
+    private static Vector3 downPos = new Vector3(0, -60);
+    private static Vector3 leftPos = new Vector3(-60, 0);
+    private static Vector3 rightPos = new Vector3(60, 0);
 
-    private static Dictionary<string, Vector2> arrowDict = new Dictionary<string, Vector2>()
+    private static Dictionary<int, Vector3> arrowDict = new Dictionary<int, Vector3>()
     {
-        {"Top",upPos }, {"Down",downPos},{"Left",leftPos},{"Right",rightPos}
+        {0,topPos }, {1,leftPos},{2,downPos},{3,rightPos}
     };
 
+    private static Dictionary<int, float> arrowRotate = new Dictionary<int, float>()
+    {
+        {0,0 },{1,90},{2,180},{3,270}
+    };
 
-
-    public static Vector2 GetArrowPos(string myDirect)
+    public static Vector3 GetArrowPos(int myDirect, Vector3 targetPos)
     {
         foreach (var everyArrow in arrowDict)
         {
-            if(everyArrow.Key == myDirect)
+            if (everyArrow.Key == myDirect)
             {
-                return everyArrow.Value;
+                return everyArrow.Value + targetPos;
             }
         }
-
-        return new Vector2(0,0);
+        return new Vector3(0, 0, 0);
     }
-} 
+
+    public static float GetArrowRotate(int nowDirect)
+    {
+        Debug.Log("%360後的數字為" + nowDirect);
+        foreach (var nowDegree in arrowRotate)
+        {
+            if (nowDegree.Key == nowDirect)
+            {
+                return nowDegree.Value;
+            }
+        }
+        return 0;
+    }
+
+
+
+}
