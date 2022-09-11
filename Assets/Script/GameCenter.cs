@@ -5,19 +5,16 @@ using Photon.Pun;
 using UnityEngine.SceneManagement;
 
 
-public class Launcher : MonoBehaviourPunCallbacks
+public class GameCenter : MonoBehaviourPunCallbacks
 {
-    public static Launcher Instance;
+    public static GameCenter Instance;
 
-    [SerializeField] Transform roomlistContent;
-    [SerializeField] GameObject roomlistitemPrefab;
-    [SerializeField] Transform playerlistContent;
-    [SerializeField] GameObject playserlistitemPrefab;
     [SerializeField] GameObject startGameButton;
 
     void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(this);
     }
 
     /// <summary>
@@ -28,17 +25,19 @@ public class Launcher : MonoBehaviourPunCallbacks
         SceneManager.LoadScene(1);
     }
 
-
-
-
-
-
     public void EnteringRoomList()
     {
         MenuManager.Instance.OpenMenu("roomlist");
     }
 
-    
+    /// <summary>
+    /// 結算畫面
+    /// </summary>
+    public void EndGame()
+    {
+        SceneManager.LoadScene(3);
+
+    }
 
 
     

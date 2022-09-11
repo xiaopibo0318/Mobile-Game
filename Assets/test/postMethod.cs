@@ -9,23 +9,35 @@ public class postMethod : MonoBehaviour
 
     InputField outPutArea;
 
+    [Header("數據儲存")]
+    private string playerName;
+    private string playerEmail;
+    private int lastMin;
+    private int lastSec;
+
     private void Awake()
     {
         outPutArea = GameObject.Find("OutPutArea").GetComponent<InputField>();
         outPutArea.text = "";
         GameObject.Find("PostButton").GetComponent<Button>().onClick.AddListener(postData);
-        
+
     }
 
 
-    void postData()=> StartCoroutine(PostData_Coroutine());
+    void postData() => StartCoroutine(PostData_Coroutine());
+
+
+    private void Settlement()
+    {
+        lastMin = Player.Instance.myStatus.timeMin;
+        lastSec = Player.Instance.myStatus.timeSec;
+        outPutArea.text = "剩下時間：" + lastMin.ToString() + ":" + lastSec.ToString();
+    }
 
 
     IEnumerator PostData_Coroutine()
     {
-       // List<IMultipartFormSection> wwwForm = new List<IMultipartFormSection>();
         string url = "http://140.122.91.142:3000/xxx@emai";
-        //wwwForm.Add(new MultipartFormDataSection("name", "xiaopibo"));
         WWWForm form = new WWWForm();
         form.AddField("Name", "xiaopibo");
         form.AddField("Time", 50);
@@ -37,7 +49,8 @@ public class postMethod : MonoBehaviour
             {
                 Debug.Log(1);
                 outPutArea.text = request.error;
-            }else if (request.isHttpError)
+            }
+            else if (request.isHttpError)
             {
                 Debug.Log(2);
                 outPutArea.text = request.error;
@@ -49,7 +62,7 @@ public class postMethod : MonoBehaviour
             Debug.Log(request.error);
             Debug.Log(request.downloadHandler);
         }
-     
+
     }
 
 }

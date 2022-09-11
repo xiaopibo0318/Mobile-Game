@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MtKL2.unity
     guid: 2b711619bb56f5b4e848d67422925fe9
+  - enabled: 1
+    path: Assets/Scenes/FinalPost.unity
+    guid: 68a6161aa2147d0439b7168f5a976ebc
   m_configObjects: {}
