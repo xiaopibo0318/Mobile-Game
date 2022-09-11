@@ -16,16 +16,26 @@ public class TimeCounter : MonoBehaviour
 
     bool isStart = false;
 
+    public static TimeCounter Instance;
+
+    Coroutine nowCoroutine;
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(this);
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
         if (!isStart)
         {
-            StartCoroutine(Countdown());
+            nowCoroutine = StartCoroutine(Countdown());
             isStart = true;
         }
-        
+
     }
 
     IEnumerator Countdown()
@@ -41,15 +51,37 @@ public class TimeCounter : MonoBehaviour
             total_seconds -= 1;
             needSec -= 1;
 
-            if(needSec < 0 && needMin > 0)
+            if (needSec < 0 && needMin > 0)
             {
                 needMin -= 1;
                 needSec = 59;
-            }else if (needSec <0 && needMin == 0)
+            }
+            else if (needSec < 0 && needMin == 0)
             {
                 needSec = 0;
             }
             timerText.text = string.Format("{0}:{1}", needMin.ToString("00"), needSec.ToString("00"));
         }
     }
+
+    public int GetNowTimeMin()
+    {
+        return needMin;
+    }
+
+    public int GetNowTimeSec()
+    {
+        return needSec;
+    }
+
+
+    public void UpdateNowTime()
+    {
+        StopCoroutine(nowCoroutine);
+        nowCoroutine = null;
+        needMin = Player.Instance.myStatus.timeMin;
+        needSec = Player.Instance.myStatus.timeSec;
+        nowCoroutine = StartCoroutine(Countdown());
+    }
+
 }

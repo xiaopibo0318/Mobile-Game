@@ -167,7 +167,10 @@ public class playerStatus
 
     public string name;
     public int gameStatus;
-    public int time;
+    public int totalTime;
+
+    public int timeMin;
+    public int timeSec;
 
     public playerStatus(int gameStatus)
     {
@@ -185,6 +188,12 @@ public class playerStatus
     }
 
 
-   
+    public void GetNowTime()
+    {
+        timeMin = TimeCounter.Instance.GetNowTimeMin();
+        timeSec = TimeCounter.Instance.GetNowTimeSec();
+    }
+
+
 
 }
