@@ -10,7 +10,7 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public Inventory myBag;
     private int currentSlotID;
 
-    
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -76,33 +76,40 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
                 return;
             }
+
+            ///<summary>
+            ///考慮拉到其他東西。
+            /// </summary>
+            DeleteItem();
+
         }
         else
         {
-            //丟棄系統 還沒寫好
-            if (myBag.itemList[currentSlotID] != null)
-            {
-                //不可丟棄道具，如西王母的愛
-                if (myBag.itemList[currentSlotID].missioable)
-                {
-                    InventoryManager.Instance.CouldNotCrash();
-                    transform.position = originalParent.position;
-                    transform.SetParent(originalParent);
-                    GetComponent<CanvasGroup>().blocksRaycasts = true;
-
-                    return;
-                }
-                InventoryManager.Instance.SiginalText(myBag.itemList[currentSlotID]);
-            }
-            
-            
-            
-            transform.position = originalParent.position;
-            transform.SetParent(originalParent);
-            GetComponent<CanvasGroup>().blocksRaycasts = true;
-
-            return;
+            DeleteItem();
         }
-        
+
     }
+
+    private void DeleteItem()
+    {
+        //丟棄系統 還沒寫好
+        if (myBag.itemList[currentSlotID] != null)
+        {
+            //不可丟棄道具，如西王母的愛
+            if (myBag.itemList[currentSlotID].missioable)
+            {
+                InventoryManager.Instance.CouldNotCrash();
+                transform.position = originalParent.position;
+                transform.SetParent(originalParent);
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+                return;
+            }
+            InventoryManager.Instance.SiginalText(myBag.itemList[currentSlotID]);
+        }
+        transform.position = originalParent.position;
+        transform.SetParent(originalParent);
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
 }

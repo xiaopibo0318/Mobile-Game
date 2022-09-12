@@ -14,12 +14,21 @@ public class postMethod : MonoBehaviour
     private string playerEmail;
     private int lastMin;
     private int lastSec;
+    private int totalSeconds;
+
+    public static postMethod Instance;
+
+    [SerializeField] private Button getDataButton;
+
 
     private void Awake()
     {
         outPutArea = GameObject.Find("OutPutArea").GetComponent<InputField>();
         outPutArea.text = "";
         GameObject.Find("PostButton").GetComponent<Button>().onClick.AddListener(postData);
+        getDataButton.onClick.AddListener(Settlement);
+        if (Instance == null) Instance = this;
+        else Destroy(this);
 
     }
 
@@ -27,10 +36,12 @@ public class postMethod : MonoBehaviour
     void postData() => StartCoroutine(PostData_Coroutine());
 
 
-    private void Settlement()
+    public void Settlement()
     {
+        Player.Instance.myStatus.UpdateNowTime();
         lastMin = Player.Instance.myStatus.timeMin;
         lastSec = Player.Instance.myStatus.timeSec;
+        totalSeconds = 4500 - (lastMin * 60 + lastSec);
         outPutArea.text = "剩下時間：" + lastMin.ToString() + ":" + lastSec.ToString();
     }
 
@@ -40,7 +51,7 @@ public class postMethod : MonoBehaviour
         string url = "http://140.122.91.142:3000/xxx@emai";
         WWWForm form = new WWWForm();
         form.AddField("Name", "xiaopibo");
-        form.AddField("Time", 50);
+        form.AddField("Time", totalSeconds);
         form.AddField("Email", "xxxxx@gmail.com");
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {

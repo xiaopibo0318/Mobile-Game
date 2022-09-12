@@ -164,10 +164,11 @@ public class Player : MonoBehaviour , ISaveable
 
 public class playerStatus 
 {
-
+    public string emailAddress;
     public string name;
     public int gameStatus;
     public int totalTime;
+    
 
     public int timeMin;
     public int timeSec;
@@ -188,7 +189,10 @@ public class playerStatus
     }
 
 
-    public void GetNowTime()
+    /// <summary>
+    /// 從計時器那邊Copy數據過來。
+    /// </summary>
+    public void UpdateNowTime()
     {
         timeMin = TimeCounter.Instance.GetNowTimeMin();
         timeSec = TimeCounter.Instance.GetNowTimeSec();

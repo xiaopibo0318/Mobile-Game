@@ -36,7 +36,7 @@ public class GameCenter : MonoBehaviour
     public void EndGame()
     {
         SceneManager.LoadScene(3);
-
+        //postMethod.Instance.Settlement();
     }
 
 

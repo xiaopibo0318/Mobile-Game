@@ -12,8 +12,10 @@ public class SettingManager : MonoBehaviour
     [SerializeField] private Slider musicSlider;
 
     [Header("存檔")]
-    [SerializeField] private Button dataStorageButton;
+    [SerializeField] private Button dataStorageButton; //記得+onClick
 
+    [Header("讀檔")]
+    [SerializeField] private Button dataLoadButton;    //記得+onClick
 
     [Header("其他功能")]
     [SerializeField] private Button goBack;
@@ -33,6 +35,8 @@ public class SettingManager : MonoBehaviour
         musicSlider.value = 0.05f;
         musicSlider.onValueChanged.AddListener(OnChangeValue);
         goBack.onClick.AddListener(CloseSetting);
+        
+        //openSettingOnTitle.onClick.AddListener(OpenSetting);
 
     }
 
