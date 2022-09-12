@@ -139,6 +139,9 @@ public class InterectiveManager : MonoBehaviour
             case "sandInterective400":
                 nextWay = 213;
                 break;
+            case "treasureBoxInterective":
+                nextWay = 221;
+                break;
 
             case "interectiveLove":
                 nextWay = 11;
@@ -231,6 +234,10 @@ public class InterectiveManager : MonoBehaviour
                 break;
             case 213:
                 InventoryManager.Instance.AddNewItem(myItemList[5]);
+                break;
+            case 221:
+                SiginalUI.Instance.SiginalText("你發現了靈果以及西王母的財產");
+                GameCenter.Instance.EndGame();
                 break;
 
             case 11:

@@ -1,20 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
-public class GameCenter : MonoBehaviourPunCallbacks
+public class GameCenter : MonoBehaviour
 {
     public static GameCenter Instance;
 
-    [SerializeField] GameObject startGameButton;
+    [SerializeField] Button startGameButton;
 
     void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(this);
+        startGameButton.onClick.AddListener(StartMTKL);
     }
 
     /// <summary>
