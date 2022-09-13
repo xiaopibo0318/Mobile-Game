@@ -41,8 +41,11 @@ public class postMethod : MonoBehaviour
         Player.Instance.myStatus.UpdateNowTime();
         lastMin = Player.Instance.myStatus.timeMin;
         lastSec = Player.Instance.myStatus.timeSec;
+        playerName = Player.Instance.myStatus.name;
+        playerEmail = Player.Instance.myStatus.emailAddress;
         totalSeconds = 4500 - (lastMin * 60 + lastSec);
         outPutArea.text = "剩下時間：" + lastMin.ToString() + ":" + lastSec.ToString();
+        outPutArea.text += "總花秒數" + totalSeconds.ToString();
     }
 
 
@@ -50,9 +53,9 @@ public class postMethod : MonoBehaviour
     {
         string url = "http://140.122.91.142:3000/xxx@emai";
         WWWForm form = new WWWForm();
-        form.AddField("Name", "xiaopibo");
+        form.AddField("Name", playerName);
         form.AddField("Time", totalSeconds);
-        form.AddField("Email", "xxxxx@gmail.com");
+        form.AddField("Email", playerEmail);
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
