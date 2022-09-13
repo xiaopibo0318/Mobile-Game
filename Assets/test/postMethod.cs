@@ -51,11 +51,12 @@ public class postMethod : MonoBehaviour
 
     IEnumerator PostData_Coroutine()
     {
-        string url = "http://140.122.91.142:3000/xxx@emai";
+        string url = "http://140.122.91.142:3000/";
         WWWForm form = new WWWForm();
-        form.AddField("Name", playerName);
-        form.AddField("Time", totalSeconds);
-        form.AddField("Email", playerEmail);
+        form.AddField("username", playerName);
+        form.AddField("email", playerEmail);
+        form.AddField("second", totalSeconds);
+        
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
