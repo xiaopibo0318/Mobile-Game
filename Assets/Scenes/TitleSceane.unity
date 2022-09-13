@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -14227,6 +14227,8 @@ MonoBehaviour:
   iflogin: 0
   MessagePanel: {fileID: 563016066}
   messageText: {fileID: 1276229207}
+  GetUserName: 
+  GetUserEmail: 
 --- !u!4 &7595021745097127689
 Transform:
   m_ObjectHideFlags: 0

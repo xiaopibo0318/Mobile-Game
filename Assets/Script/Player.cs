@@ -139,7 +139,10 @@ public class Player : MonoBehaviour , ISaveable
     {
         return new SaveData()
         {
-            gameStatus = myStatus.gameStatus
+            gameStatus = myStatus.gameStatus,
+            totalTime = myStatus.totalTime,
+            emailAddress = myStatus.emailAddress,
+            name = myStatus.name
         };
     }
 
@@ -147,6 +150,9 @@ public class Player : MonoBehaviour , ISaveable
     {
         var saveData = (SaveData)state;
         myStatus.gameStatus = saveData.gameStatus;
+        myStatus.totalTime = saveData.totalTime;
+        myStatus.emailAddress = saveData.emailAddress;
+        myStatus.name = saveData.name;
     }
 
 
@@ -156,6 +162,9 @@ public class Player : MonoBehaviour , ISaveable
     private struct SaveData
     {
         public int gameStatus;
+        public int totalTime;
+        public string emailAddress;
+        public string name;
     }
 
 
@@ -164,8 +173,8 @@ public class Player : MonoBehaviour , ISaveable
 
 public class playerStatus 
 {
-    public string emailAddress;
-    public string name;
+    public string emailAddress = Main.Instance.Web.GetUserEmail;
+    public string name = Main.Instance.Web.GetUserName;
     public int gameStatus;
     public int totalTime;
     
@@ -197,6 +206,15 @@ public class playerStatus
         timeMin = TimeCounter.Instance.GetNowTimeMin();
         timeSec = TimeCounter.Instance.GetNowTimeSec();
     }
+
+    /*public void PlayerInformation()
+    {
+        name = Main.Instance.Web.GetUserName;
+        emailAddress = Main.Instance.Web.GetUserEmail;
+        Debug.Log(name);
+        Debug.Log(emailAddress);
+
+    }*/
 
 
 

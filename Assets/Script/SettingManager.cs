@@ -35,11 +35,26 @@ public class SettingManager : MonoBehaviour
         musicSlider.value = 0.05f;
         musicSlider.onValueChanged.AddListener(OnChangeValue);
         goBack.onClick.AddListener(CloseSetting);
-        
+
         //openSettingOnTitle.onClick.AddListener(OpenSetting);
+        dataStorageButton.onClick.AddListener(() =>
+        {
+            SaveLoadSystem.Instance.Save();
+        });
 
+        dataLoadButton.onClick.AddListener(() =>
+        {
+            SaveLoadSystem.Instance.Load();
+        });
     }
-
+    /*private void DataSave()
+    {
+       
+    }
+    private void DataLoad()
+    {
+       
+    }*/
 
     public void OpenSetting()
     {
@@ -58,14 +73,6 @@ public class SettingManager : MonoBehaviour
         CanvasManager.Instance.openCanvas("original");
 
     }
-
-
-
-
-
-
-
-
 
 
 }

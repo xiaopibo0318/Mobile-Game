@@ -7,23 +7,36 @@ using UnityEngine;
 
 public class SaveLoadSystem : MonoBehaviour
 {
+    public static SaveLoadSystem Instance;
+    void Start()
+    {
+        Instance = this;
+    }
+
+
     public string SavePath => $"{Application.persistentDataPath}/save.txt";
 
-    [ContextMenu("Save")]
-    void Save()
+    //[ContextMenu("Save")]
+    public void Save()
     {
         var state = LoadFile();
         SaveState(state);
         SaveFile(state);
+        Debug.Log("存檔成功");
     }
 
-    [ContextMenu("Load")]
-    void Load()
+    //[ContextMenu("Load")]
+    public void Load()
     {
         var state = LoadFile();
         LoadState(state);
         KLMTmanager.Instance.KLMTinitial();
+        Debug.Log(Player.Instance.myStatus.name);
+        Debug.Log(Player.Instance.myStatus.emailAddress);
+        Debug.Log(Player.Instance.myStatus.totalTime);
+        Debug.Log(Player.Instance.myStatus.gameStatus);
     }
+
 
     public void SaveFile(object state)
     {
