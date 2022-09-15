@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class scratchManager : MonoBehaviour
+public class ScratchManager : MonoBehaviour
 {
 
     public List<GameObject> blocks = new List<GameObject>();
@@ -12,6 +12,7 @@ public class scratchManager : MonoBehaviour
 
     [Header("執行列表")]
     public blockList exeLists;
+    private List<int> tempMoveList = new List<int>();
 
     [Header("主角、方向")]
     public GameObject target;
@@ -23,9 +24,14 @@ public class scratchManager : MonoBehaviour
     [SerializeField] private Button clearButton;
     [SerializeField] private InputField goAheadStep;
 
+    public static ScratchManager Instance;
+
 
     private void Awake()
     {
+        if (Instance == null) Instance = this;
+        else Destroy(this);
+
         startButton.onClick.AddListener(StartGame);
         clearButton.onClick.AddListener(ResetBlock);
     }
@@ -51,6 +57,16 @@ public class scratchManager : MonoBehaviour
         }
     }
 
+    public void AddMoveStepToList(int moveStep)
+    {
+        tempMoveList.Add(moveStep);
+    }
+
+    private void ClearTempList()
+    {
+        
+        tempMoveList.Clear();
+    }
 
     public void StartGame()
     {
@@ -60,7 +76,9 @@ public class scratchManager : MonoBehaviour
     IEnumerator GoStartGame()
     {
         ResetObject();
-        for (int i = 0; i < exeLists.exeList.Count; i++)
+        int nowTempListIndex = 0;
+        Debug.Log("現在有幾" + tempMoveList.Count.ToString() + "個暫時格子");
+        for (int i = 0; i < exeLists.exeList.Length; i++)
         {
             yield return new WaitForSeconds(0.5f);
             switch (exeLists.exeList[i])
@@ -68,7 +86,8 @@ public class scratchManager : MonoBehaviour
                 case 0:
                     break;
                 case 1:
-                    GoAhead(nowDirect);
+                    GoAhead(nowDirect, nowTempListIndex);
+                    nowTempListIndex++;
                     break;
                 case 11:
                     nowDirect += 5; //等於+1
@@ -87,6 +106,7 @@ public class scratchManager : MonoBehaviour
                     break;
             }
         }
+        ClearTempList();
     }
 
     private void GoAhead(int _nowDirect, int moveStep = 1)
@@ -106,21 +126,26 @@ public class scratchManager : MonoBehaviour
                 target.transform.position = new Vector3(target.transform.position.x + 100 * moveStep, target.transform.position.y, target.transform.position.z);
                 break;
             default:
-                
+
                 break;
         }
     }
 
     public void ResetBlock()
     {
-        exeLists.exeList.Clear();
+        for (int i = 0; i < exeLists.exeList.Length; i++)
+        {
+            exeLists.exeList[i] = -99;
+        }
         for (int i = 0; i < blockGrid.transform.childCount; i++)
         {
             GameObject go = blockGrid.transform.GetChild(i).gameObject;
-            Destroy(go);            
+            Destroy(go);
         }
 
         setUpBlockSlot();
+        ResetObject();
+        ClearTempList();
     }
 
     private void ResetObject()

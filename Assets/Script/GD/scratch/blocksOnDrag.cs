@@ -8,6 +8,7 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 {
     public Transform originalParent;
     public blockList exeList;
+    private InputField walkStep;
 
     int nowBlock;
 
@@ -36,6 +37,21 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
             transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);
             transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
             exeList.exeList[eventData.pointerCurrentRaycast.gameObject.GetComponent<blockSlot>().slotID] = nowBlock;
+            if(nowBlock == 1)
+            {
+                int temp;
+                walkStep = this.GetComponentInChildren<InputField>();
+                if (int.TryParse(walkStep.text, out temp) == true)
+                {
+
+                    int.TryParse(walkStep.text, out temp);
+                    ScratchManager.Instance.AddMoveStepToList(temp);
+                }
+                else { 
+                    Debug.Log("不是數字");
+                }
+                    
+            }
         }
         else
         {
