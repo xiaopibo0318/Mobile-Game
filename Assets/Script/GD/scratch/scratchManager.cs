@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class ScratchManager : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class ScratchManager : MonoBehaviour
     public void OnEnable()
     {
         setUpBlockSlot();
+        ResetBlock();
+        ResetObject();
     }
 
 
@@ -59,12 +62,13 @@ public class ScratchManager : MonoBehaviour
 
     public void AddMoveStepToList(int moveStep)
     {
+        Debug.Log("增加數字" + moveStep);
         tempMoveList.Add(moveStep);
     }
 
     private void ClearTempList()
     {
-        
+
         tempMoveList.Clear();
     }
 
@@ -86,7 +90,7 @@ public class ScratchManager : MonoBehaviour
                 case 0:
                     break;
                 case 1:
-                    GoAhead(nowDirect, nowTempListIndex);
+                    GoAhead(nowDirect, tempMoveList[nowTempListIndex]);
                     nowTempListIndex++;
                     break;
                 case 11:
@@ -109,8 +113,9 @@ public class ScratchManager : MonoBehaviour
         ClearTempList();
     }
 
-    private void GoAhead(int _nowDirect, int moveStep = 1)
+    private void GoAhead(int _nowDirect, int moveStep = 1, UnityAction IsBorder = null)
     {
+        Debug.Log("前進幾格" + moveStep);
         switch (_nowDirect)
         {
             case 0:
@@ -129,7 +134,20 @@ public class ScratchManager : MonoBehaviour
 
                 break;
         }
+
+        IsBorder?.Invoke();
     }
+
+    /// <summary>
+    /// 先採取寫死的方式，座標定位
+    /// 判斷x,與y的座標是否在地圖內
+    /// 再來判斷是否為終點
+    /// </summary>
+    private void IsGoal()
+    {
+
+    }
+
 
     public void ResetBlock()
     {

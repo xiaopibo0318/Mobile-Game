@@ -23,7 +23,7 @@ public class CutWoodManager : MonoBehaviour
     [Header("选择要切的木头")]
     public List<GameObject> woodSelectStorage;
     public List<GameObject> woodSimpleStorage;
-    List<int> woodIDList = new List<int> {301,302,303,311,321,331,341,351,361,371,601 };
+    List<int> woodIDList = new List<int> { 301, 302, 303, 311, 321, 331, 341, 351, 361, 371, 601 };
     Button buttonCutWoodYes;
     Button buttonCutWoodNo;
     public GameObject siginal;
@@ -53,7 +53,7 @@ public class CutWoodManager : MonoBehaviour
     private UnityAction<PointerEventData> onPointerDown;
     public static CutWoodManager Instance;
 
-    
+
     [Header("拉線系統")]
     [SerializeField] private DragItem operateRange;
     [SerializeField] private RectTransform mouseFollower;
@@ -111,7 +111,7 @@ public class CutWoodManager : MonoBehaviour
     private void GiveWoodID()
     {
         var i = 0;
-        foreach(var myWood in woodSelectStorage)
+        foreach (var myWood in woodSelectStorage)
         {
             myWood.GetComponent<WoodWantToCut>().woodID = woodIDList[i];
             myWood.GetComponent<WoodWantToCut>().slotID = i;
@@ -132,15 +132,15 @@ public class CutWoodManager : MonoBehaviour
         siginal.SetActive(true);
         for (int i = 0; i < woodSimpleStorage.Count; i++)
         {
-            if(openID == i)
+            if (openID == i)
             {
                 woodSimpleStorage[i].SetActive(true);
-                
+
             }
             else
             {
                 woodSimpleStorage[i].SetActive(false);
-            }   
+            }
         }
         nowWoodID = woodSelectStorage[openID].GetComponent<WoodWantToCut>().getWoodID();
         nowWoodSlotID = openID;
@@ -187,12 +187,16 @@ public class CutWoodManager : MonoBehaviour
         buttonCutWoodNo.onClick.AddListener(CloseAllWoodSimple);
         buttonGoBack = transform.Find("cuttingWood/Cut/GoBack").GetComponent<Button>();
         buttonGoBack.onClick.AddListener(GoBackPage);
+
+        TargetPoint.GoUpdatePoints();
         //GameObject myObject = transform.Find("cuttingWood").gameObject;
         //Debug.Log(myObject.name);
         woodChoose.SetActive(false);
         cutWood.SetActive(false);
         siginal.SetActive(false);
         cuttingWood.SetActive(false);
+
+
     }
 
 
@@ -210,9 +214,9 @@ public class CutWoodManager : MonoBehaviour
         StopCoroutine(timeCoroutine);
         foreach (var myWood in woodList)
         {
-            Debug.Log("現在的ID:"+nowWoodID);
-            Debug.Log("切的木頭ID"+myWood.itemID);
-            if(myWood.itemID == nowWoodID)
+            Debug.Log("現在的ID:" + nowWoodID);
+            Debug.Log("切的木頭ID" + myWood.itemID);
+            if (myWood.itemID == nowWoodID)
             {
                 InventoryManager.Instance.AddNewItem(myWood);
                 break;
@@ -243,7 +247,7 @@ public class CutWoodManager : MonoBehaviour
     {
         //var temp = string.Format("{0}", needSec.ToString("f2")).Replace(".",":");
         timerText.text = string.Format("{0}", needSec.ToString("f2")).Replace(".", ":");
-        totalTime =  needSec;
+        totalTime = needSec;
         timeFinished = false;
         while (totalTime > 0)
         {
@@ -256,7 +260,7 @@ public class CutWoodManager : MonoBehaviour
             if (needSec < 0)
             {
                 needSec = 0;
-                Debug.Log("結束"); 
+                Debug.Log("結束");
                 CutFail();
                 timeFinished = true;
             }
@@ -266,7 +270,8 @@ public class CutWoodManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.N)){
+        if (Input.GetKeyDown(KeyCode.N))
+        {
             StartCutWood();
         }
     }
@@ -309,7 +314,7 @@ public class CutWoodManager : MonoBehaviour
             isOperate = false;
             return;
         }
-            
+
 
 
         Debug.Log("pointer down is touch.");
@@ -421,15 +426,21 @@ public class CutWoodManager : MonoBehaviour
         previewPoints[0] = new Vector2(0, 0);
         previewPoints[1] = new Vector2(0, 0);
         previewLine.SetAllDirty();
-        finishedPoints.Clear();      
+        finishedPoints.Clear();
         finishedLine.Points = finishedPoints.ToArray();
         finishedLine.SetAllDirty();
     }
+
+
+
 }
 
 
 public static class TargetPoint
 {
+    private static float w = Screen.width;
+    private static float h = Screen.height;
+
 
     private static Vector2[] pointWood301 = new Vector2[8]
     {
@@ -555,13 +566,13 @@ public static class TargetPoint
         new Vector2(1240,85),
         new Vector2(1240,515),
     };
-    
+
     private static Vector2[] pointWood601 = new Vector2[] //圓的可能還會再改
     {
         new Vector2(880,120),
-        
+
         new Vector2(570,435),
-        
+
         new Vector2(880,770),
 
         new Vector2(1220,435)
@@ -580,10 +591,41 @@ public static class TargetPoint
         {
             if (woodPoint.Key == woodID)
             {
+                //UpdatePointPos(w, h, woodPoint.Value);
                 return woodPoint.Value;
             }
         }
         return null;
+    }
+
+
+    public static void GoUpdatePoints() => UpdateAllPointPos(w, h);
+
+    private static void UpdateAllPointPos(float width, float height)
+    {
+        ///算他實際位移量
+        float _x = width / 1800 * 900;
+        float _y = height / 900 * 450;
+
+        Vector2 resetVector = new Vector2(-900, -450);
+        Vector2 newOffsetVector = new Vector2(_x, _y);
+
+        float changeScale_x = width / 1800;
+        float changeScale_y = height / 900;
+
+
+        foreach (var myValue in pointsDict.Values)
+        {
+            ///先重製、改變大小、加上修改後偏移量
+            for (int i = 0; i < myValue.Length; i++)
+            {
+                myValue[i] += resetVector;
+                myValue[i].x *= changeScale_x;
+                myValue[i].y *= changeScale_y;
+                myValue[i] += newOffsetVector;
+            }
+        }
+
     }
 
 

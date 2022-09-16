@@ -173,8 +173,8 @@ public class Player : MonoBehaviour , ISaveable
 
 public class playerStatus 
 {
-    public string emailAddress = Main.Instance.Web.GetUserEmail;
-    public string name = Main.Instance.Web.GetUserName;
+    public string emailAddress = "1"; // Main.Instance.Web.GetUserEmail;
+    public string name = "2"; //Main.Instance.Web.GetUserName;
     public int gameStatus;
     public int totalTime;
     

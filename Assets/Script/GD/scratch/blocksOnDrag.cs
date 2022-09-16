@@ -25,7 +25,6 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = eventData.position;
-        Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -33,7 +32,6 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
         if (eventData.pointerCurrentRaycast.gameObject.name == "blockSlot(Clone)")
         {
-            Debug.Log(1);
             transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);
             transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
             exeList.exeList[eventData.pointerCurrentRaycast.gameObject.GetComponent<blockSlot>().slotID] = nowBlock;
@@ -63,8 +61,6 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
     public int getBlockID(string name)
     {
-        Debug.Log(name);
-        Debug.Log(name.Length);
         if (name.Contains("goStraight"))
         {
             return 1;
