@@ -65,7 +65,7 @@ public class CutWoodManager : MonoBehaviour
     private List<Vector2> finishedPoints;
     private Vector2[] previewPoints;
 
-    private int mouseFollowerSize = 20;
+    private int mouseFollowerSize = 30;
 
     private bool isOperate = false;
     private bool isFinished = false;
@@ -104,7 +104,7 @@ public class CutWoodManager : MonoBehaviour
         for (int i = 0; i < targetPoints.Length; i++)
         {
             Vector3 nowPos = new Vector3(targetPoints[i].x, targetPoints[i].y, 0);
-            Instantiate(pointOnPath, nowPos, Quaternion.identity, woodTrans[nowWoodSlotID]);
+            Instantiate(pointOnPath, nowPos, Quaternion.Euler(0,0,0), woodTrans[nowWoodSlotID]);
         }
     }
 
@@ -240,6 +240,7 @@ public class CutWoodManager : MonoBehaviour
     public void StartCutWood()
     {
         needSec = 10;
+        ClearLine();
         timeCoroutine = StartCoroutine(Countdown());
     }
 
@@ -268,13 +269,6 @@ public class CutWoodManager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            StartCutWood();
-        }
-    }
 
     public bool GetTimeStatus()
     {
@@ -330,6 +324,7 @@ public class CutWoodManager : MonoBehaviour
             return;
         StartCutWood();
         Vector2 point = targetPoints[currentIndex];
+        
         finishedPoints.Add(point);
         finishedLine.Points = finishedPoints.ToArray();
         finishedLine.gameObject.SetActive(true);
