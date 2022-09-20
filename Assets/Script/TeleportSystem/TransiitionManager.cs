@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TransiitionManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class TransiitionManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(this);
+
+        fadeCanvasGroup.blocksRaycasts = false;
     }
 
 
@@ -48,6 +51,18 @@ public class TransiitionManager : MonoBehaviour
         fadeCanvasGroup.blocksRaycasts = false;
         isFade = false;
 
+    }
+
+
+    public void GoToMTKL() => StartCoroutine(EnterMTKL());
+    private IEnumerator EnterMTKL()
+    {
+        yield return Fade(1);
+
+        SceneManager.LoadScene(2);
+        player.transform.position = new Vector3(0, 0, 0);
+
+        yield return Fade(0);
     }
 
 }

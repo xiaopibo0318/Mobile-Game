@@ -90,7 +90,7 @@ public class PlayerCreater : MonoBehaviour
         k = a % 3;
         Debug.Log(k);
         PlayerPrefs.SetInt("myStyle", k);
-        GameCenter.Instance.EnteringRoomList();
+        TitleManager.Instance.EnteringRoomList();
     }
 
 }
