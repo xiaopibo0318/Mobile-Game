@@ -67,7 +67,7 @@ public class TitleManager : MonoBehaviour
 
     private void StartGD()
     {
-        SceneManager.LoadScene(3);
+        TransiitionManager.Instance.GoToGD();
     }
 
     public void EnteringRoomList()

@@ -323,8 +323,8 @@ public class CutWoodManager : MonoBehaviour
         if (!isOperate)
             return;
         StartCutWood();
-        Vector2 point = targetPoints[currentIndex];
-
+        Vector2 point = TargetPoint.GetOriginPos(targetPoints[currentIndex]);
+        
         finishedPoints.Add(point);
         finishedLine.Points = finishedPoints.ToArray();
         Debug.Log("targetpoint位置為：" + targetPoints[currentIndex]);
@@ -346,7 +346,7 @@ public class CutWoodManager : MonoBehaviour
 
         //設置mouseFollower的位置
         mouseFollower.position = eventData.position;
-        previewPoints[1] = eventData.position;
+        previewPoints[1] = TargetPoint.GetOriginPos(eventData.position);
         previewLine.SetAllDirty();
 
         //若已完成，則return
@@ -380,7 +380,7 @@ public class CutWoodManager : MonoBehaviour
             isFinished = true;
         }
 
-        Vector2 point = targetPoints[currentIndex];
+        Vector2 point = TargetPoint.GetOriginPos(targetPoints[currentIndex]);
         finishedPoints.Add(point);
         previewPoints[0] = point;
         finishedLine.Points = finishedPoints.ToArray();
@@ -627,5 +627,16 @@ public static class TargetPoint
     }
 
 
+    /// <summary>
+    /// 不知道為何，線的座標會維持在1800*900，猜測是UI LineRenderer會把範圍固定在我們所設置的Canvas大小，也就是1800*900
+    /// </summary>
+    public static Vector2 GetOriginPos(Vector2 nowPoint)
+    {
+        float changeScale_x = w / 1800;
+        float changeScale_y = h / 900;
+
+        Vector2 afterResetPos = new Vector2(nowPoint.x /= changeScale_x, nowPoint.y /= changeScale_y);
+        return afterResetPos;
+    }
 
 }
