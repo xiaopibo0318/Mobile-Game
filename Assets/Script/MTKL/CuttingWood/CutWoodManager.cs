@@ -104,7 +104,7 @@ public class CutWoodManager : MonoBehaviour
         for (int i = 0; i < targetPoints.Length; i++)
         {
             Vector3 nowPos = new Vector3(targetPoints[i].x, targetPoints[i].y, 0);
-            Instantiate(pointOnPath, nowPos, Quaternion.Euler(0,0,0), woodTrans[nowWoodSlotID]);
+            Instantiate(pointOnPath, nowPos, Quaternion.Euler(0, 0, 0), woodTrans[nowWoodSlotID]);
         }
     }
 
@@ -324,9 +324,12 @@ public class CutWoodManager : MonoBehaviour
             return;
         StartCutWood();
         Vector2 point = targetPoints[currentIndex];
-        
+
         finishedPoints.Add(point);
         finishedLine.Points = finishedPoints.ToArray();
+        Debug.Log("targetpoint位置為：" + targetPoints[currentIndex]);
+        Debug.Log("現在的點位置為：" + point);
+        Debug.Log("線的位置為：" + finishedLine.Points);
         finishedLine.gameObject.SetActive(true);
         previewPoints[0] = point;
         previewPoints[1] = point;

@@ -65,4 +65,17 @@ public class TransiitionManager : MonoBehaviour
         yield return Fade(0);
     }
 
+
+
+    public void GoToGD() => StartCoroutine(EnterGD());
+    private IEnumerator EnterGD()
+    {
+        yield return Fade(1);
+
+        SceneManager.LoadScene(3);
+        player.transform.position = new Vector3(0, 0, 0);
+
+        yield return Fade(0);
+    }
+
 }
