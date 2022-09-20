@@ -237,7 +237,7 @@ public class InterectiveManager : MonoBehaviour
                 break;
             case 221:
                 SiginalUI.Instance.SiginalText("你發現了靈果以及西王母的財產");
-                TitleManager.Instance.EndGame();
+                GameCenter.Instance.EndGame();
                 break;
 
             case 11:

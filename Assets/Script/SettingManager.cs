@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SettingManager : MonoBehaviour
 {
@@ -19,9 +20,6 @@ public class SettingManager : MonoBehaviour
 
     [Header("其他功能")]
     [SerializeField] private Button goBack;
-
-    [Header("開啟設定的按鈕")]
-    [SerializeField] private Button openSettingOnTitle;
 
     public static SettingManager Instance;
 
@@ -70,7 +68,11 @@ public class SettingManager : MonoBehaviour
     private void CloseSetting()
     {
         settingObject.SetActive(false);
-        CanvasManager.Instance.openCanvas("original");
+        
+        if(SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            CanvasManager.Instance.openCanvas("original");
+        }
 
     }
 

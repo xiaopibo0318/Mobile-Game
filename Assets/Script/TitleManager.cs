@@ -9,12 +9,14 @@ public class TitleManager : MonoBehaviour
 {
     public static TitleManager Instance;
 
+    [Header("分房列表")]
     [SerializeField] List<Button> roomListButton;
-
     [SerializeField] Button startGameButton;
     [SerializeField] GameObject intoRoom;
-
     [SerializeField] Text confirmText;
+
+    [Header("標題介面")]
+    [SerializeField] Button settingBegin;
 
     void Awake()
     {
@@ -26,6 +28,8 @@ public class TitleManager : MonoBehaviour
 
     private void Init()
     {
+        settingBegin.onClick.AddListener(() => SettingManager.Instance.OpenSetting() );
+
         for (int i = 0; i < roomListButton.Count; i++)
         {
             var nowIndex = i;
@@ -73,15 +77,6 @@ public class TitleManager : MonoBehaviour
     public void EnteringRoomList()
     {
         MenuManager.Instance.OpenMenu("roomlist");
-    }
-
-    /// <summary>
-    /// 結算畫面
-    /// </summary>
-    public void EndGame()
-    {
-        SceneManager.LoadScene(5);
-        //postMethod.Instance.Settlement();
     }
 
 
