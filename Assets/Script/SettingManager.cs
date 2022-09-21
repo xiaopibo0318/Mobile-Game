@@ -18,6 +18,9 @@ public class SettingManager : MonoBehaviour
     [Header("讀檔")]
     [SerializeField] private Button dataLoadButton;    //記得+onClick
 
+    [Header("退出遊戲")]
+    [SerializeField] private Button leaveGameButton;
+
     [Header("其他功能")]
     [SerializeField] private Button goBack;
 
@@ -34,7 +37,9 @@ public class SettingManager : MonoBehaviour
         musicSlider.onValueChanged.AddListener(OnChangeValue);
         goBack.onClick.AddListener(CloseSetting);
 
-        //openSettingOnTitle.onClick.AddListener(OpenSetting);
+        leaveGameButton.onClick.AddListener(QuitGame);
+
+
         dataStorageButton.onClick.AddListener(() =>
         {
             SaveLoadSystem.Instance.Save();
@@ -45,14 +50,7 @@ public class SettingManager : MonoBehaviour
             SaveLoadSystem.Instance.Load();
         });
     }
-    /*private void DataSave()
-    {
-       
-    }
-    private void DataLoad()
-    {
-       
-    }*/
+
 
     public void OpenSetting()
     {
@@ -75,6 +73,14 @@ public class SettingManager : MonoBehaviour
         }
 
     }
+
+    private void QuitGame()
+    {
+        GameCenter.Instance.QuitGame();
+    }
+
+
+
 
 
 }

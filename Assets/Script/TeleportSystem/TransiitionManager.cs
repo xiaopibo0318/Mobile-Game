@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TransiitionManager : MonoBehaviour
+/// <summary>
+/// 繼承原本 Monobehavior且在Awake中使用Singleton
+/// </summary>
+public class TransiitionManager : Singleton<TransiitionManager>
 {
 
     [SerializeField] private CanvasGroup fadeCanvasGroup;
@@ -12,15 +15,9 @@ public class TransiitionManager : MonoBehaviour
 
     [SerializeField] private GameObject player;
 
-    public static TransiitionManager Instance;
+    //public static TransiitionManager Instance;
 
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(this);
 
-        fadeCanvasGroup.blocksRaycasts = false;
-    }
 
 
     public void TPGD2() => StartCoroutine(TeleportToGD2());

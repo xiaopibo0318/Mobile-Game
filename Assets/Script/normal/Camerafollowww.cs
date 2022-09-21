@@ -3,22 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Camerafollowww : MonoBehaviour
+public class Camerafollowww : Singleton<Camerafollowww>
 {
    
-    Transform target;
+    private Transform target;
     public float smoothing;
 
-    public int myPos;
+    public int myPos = 1;
 
-    public static Camerafollowww Instance;
+    private int nowSceneIndex;
 
-    private void Awake()
-    {
-        myPos = 1;
-        Instance = this;
-            
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +21,26 @@ public class Camerafollowww : MonoBehaviour
         
         
     }
-   
+
+
+
 
     private void LateUpdate()
     {
-        if( target.position.x > -25)
+        switch (nowSceneIndex)
+        {
+            case 1:
+                CameraInMTKL();
+                break;
+            
+        }
+
+    }
+
+
+    private void CameraInMTKL()
+    {
+        if (target.position.x > -25)
         {
             if (target.position.x >= -9.367892 && target.position.x <= 9.01498)
             {
@@ -56,10 +65,11 @@ public class Camerafollowww : MonoBehaviour
             {
                 return;
             }
-        }else  if (target.position.x < 35)
+        }
+        else if (target.position.x < 35)
         {
-     
-            if (target.position.y <7.5f && target.position.y > -7.5f)
+
+            if (target.position.y < 7.5f && target.position.y > -7.5f)
             {
                 transform.position = new Vector3(-50, target.position.y, target.position.z);
             }
@@ -69,8 +79,9 @@ public class Camerafollowww : MonoBehaviour
         {
             Debug.Log("找不到人");
         }
-
     }
+
+
     public int GetMyPos()
     {
         return myPos;
@@ -90,6 +101,10 @@ public class Camerafollowww : MonoBehaviour
                 
     }
 
+    private void UpdateNowSceneBuildIndex()
+    {
+        nowSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    }
 
     
 }

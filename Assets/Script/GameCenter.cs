@@ -19,7 +19,6 @@ public class GameCenter : MonoBehaviour
     public void EndGame()
     {
         SceneManager.LoadScene(5);
-        //postMethod.Instance.Settlement();
     }
 
 

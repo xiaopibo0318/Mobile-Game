@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class postMethod : MonoBehaviour
+public class PostMethod : MonoBehaviour
 {
 
     InputField outPutArea;
@@ -16,9 +16,7 @@ public class postMethod : MonoBehaviour
     private int lastSec;
     private int totalSeconds;
 
-    public static postMethod Instance;
-
-    [SerializeField] private Button getDataButton;
+    public static PostMethod Instance;
 
 
     private void Awake()
@@ -26,12 +24,17 @@ public class postMethod : MonoBehaviour
         outPutArea = GameObject.Find("OutPutArea").GetComponent<InputField>();
         outPutArea.text = "";
         GameObject.Find("PostButton").GetComponent<Button>().onClick.AddListener(postData);
-        getDataButton.onClick.AddListener(Settlement);
         if (Instance == null) Instance = this;
         else Destroy(this);
 
     }
 
+
+
+    private void OnEnable()
+    {
+        Settlement();
+    }
 
     void postData() => StartCoroutine(PostData_Coroutine());
 
