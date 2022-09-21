@@ -19,6 +19,7 @@ public class GameCenter : MonoBehaviour
     public void EndGame()
     {
         SceneManager.LoadScene(5);
+        
     }
 
 
@@ -27,5 +28,7 @@ public class GameCenter : MonoBehaviour
         Application.Quit();
     }
 
+
+    
 
 }

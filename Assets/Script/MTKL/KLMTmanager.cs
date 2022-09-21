@@ -47,6 +47,11 @@ public class KLMTmanager : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        Camerafollowww.Instance.UpdateNowSceneBuildIndex();
+    }
+
     private void Update()
     {
         

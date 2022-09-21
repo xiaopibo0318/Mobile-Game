@@ -5,10 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour , ISaveable
+public class Player : Singleton<Player> , ISaveable
 {
     public float myspeed;
-    public static Player Instance;
     
     Animator myAnime;
     public Rigidbody2D myRigid;
@@ -23,22 +22,13 @@ public class Player : MonoBehaviour , ISaveable
     
 
 
-    public void Awake()
+    public void Start()
     {
         playerMove = GetComponent<PlayerInput>().currentActionMap["Move"];
         //這邊先確保
         myAnime = PlayerStyle[1].GetComponent<Animator>();
         myRigid = GetComponent<Rigidbody2D>();
         //this.enabled = false;
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else if (this != Instance)
-        {
-            Destroy(gameObject);
-        }
         cache_time = 2;
         myStatus = new playerStatus(SceneManager.GetActiveScene().buildIndex);
     }
@@ -203,8 +193,8 @@ public class playerStatus
     /// </summary>
     public void UpdateNowTime()
     {
-        timeMin = TimeCounter.Instance.GetNowTimeMin();
-        timeSec = TimeCounter.Instance.GetNowTimeSec();
+        timeMin = 30;// TimeCounter.Instance.GetNowTimeMin();
+        timeSec = 45;// TimeCounter.Instance.GetNowTimeSec();
     }
 
     /*public void PlayerInformation()

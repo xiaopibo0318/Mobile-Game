@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Camerafollowww : Singleton<Camerafollowww>
 {
-   
+
     private Transform target;
     public float smoothing;
 
@@ -18,8 +18,9 @@ public class Camerafollowww : Singleton<Camerafollowww>
     void Start()
     {
         target = Player.Instance.transform;
-        
-        
+
+        nowSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log(nowSceneIndex + "AAAA");
     }
 
 
@@ -29,10 +30,11 @@ public class Camerafollowww : Singleton<Camerafollowww>
     {
         switch (nowSceneIndex)
         {
-            case 1:
+            case 2:
+                Debug.Log("I'mhere");
                 CameraInMTKL();
                 break;
-            
+
         }
 
     }
@@ -88,23 +90,23 @@ public class Camerafollowww : Singleton<Camerafollowww>
     }
     public void changeMyPos()
     {
-        if(myPos == 1)
+        if (myPos == 1)
         {
             myPos = 2;
-            Player.Instance.myRigid.position = new Vector2(-50,0);
+            Player.Instance.myRigid.position = new Vector2(-50, 0);
         }
         else if (myPos == 2)
         {
             myPos = 1;
-            Player.Instance.myRigid.position = new Vector2(0,0); 
+            Player.Instance.myRigid.position = new Vector2(0, 0);
         }
-                
+
     }
 
-    private void UpdateNowSceneBuildIndex()
+    public void UpdateNowSceneBuildIndex()
     {
         nowSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
-    
+
 }

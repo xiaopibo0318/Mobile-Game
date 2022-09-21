@@ -41,7 +41,7 @@ public class BookContentManager : MonoBehaviour
         for (int i = 0; i < myKnowledge.Count; i++)
         {
             myKnowledge[i].SetActive(false);
-            allKnwledge[i].SetActive(false);   
+            allKnwledge[i].SetActive(false);
         }
         Instance = this;
 
@@ -50,13 +50,13 @@ public class BookContentManager : MonoBehaviour
 
     public void Onclick(string name)
     {
-        for (int i = 0; i< myKnowledge.Count; i++)
+        for (int i = 0; i < myKnowledge.Count; i++)
         {
-            if(name == myKnowledge[i].name)
+            if (name == myKnowledge[i].name)
             {
                 myKnowledge[i].SetActive(true);
                 nowKnowledge = myKnowledge[i].name;
-                
+
             }
             else
             {
@@ -69,7 +69,7 @@ public class BookContentManager : MonoBehaviour
     public void ActivateKnowledge(int i)
     {
         allKnwledge[i].SetActive(true);
- 
+
     }
 
     public void GoNextPage()
@@ -89,7 +89,7 @@ public class BookContentManager : MonoBehaviour
                 currentID += 2;
                 nextPageFirst = true;
             }
-            if(currentID <0 || currentID > SandPaperKnowledge.Length-1)
+            if (currentID < 0 || currentID > SandPaperKnowledge.Length - 1)
             {
                 currentID = 0;
                 ImgLeft.color = new Color(255, 255, 255, 0f);
@@ -97,9 +97,10 @@ public class BookContentManager : MonoBehaviour
                 nextPageFirst = false;
 
                 menu.SetActive(true);
-                
+
             }
-        }else if (nowKnowledge.Contains("wiresaw"))
+        }
+        else if (nowKnowledge.Contains("wiresaw"))
         {
             if (currentID < WireSawKnowledge.Length - 1)
             {
@@ -136,7 +137,7 @@ public class BookContentManager : MonoBehaviour
 
         if (nowKnowledge.Contains("sandpaper"))
         {
-            if (currentID >-1)
+            if (currentID > -1)
             {
                 ImgLeft.sprite = SandPaperKnowledge[currentID];
                 ImgRight.sprite = SandPaperKnowledge[currentID + 1];
@@ -156,7 +157,7 @@ public class BookContentManager : MonoBehaviour
         }
         else if (nowKnowledge.Contains("wiresaw"))
         {
-            if (currentID >-1)
+            if (currentID > -1)
             {
                 ImgLeft.sprite = WireSawKnowledge[currentID];
                 ImgRight.sprite = WireSawKnowledge[currentID + 1];

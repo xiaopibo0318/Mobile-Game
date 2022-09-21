@@ -36,6 +36,7 @@ public class CutWoodManager : MonoBehaviour
     Button buttonGoBack;
     float cutTime;
     bool readyToCut;
+    
 
     [Header("時間倒數")]
     public Text timerText;

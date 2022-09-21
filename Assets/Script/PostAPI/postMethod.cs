@@ -21,11 +21,16 @@ public class PostMethod : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null) Instance = this;
+        else Destroy(this);
+
+
         outPutArea = GameObject.Find("OutPutArea").GetComponent<InputField>();
         outPutArea.text = "";
         GameObject.Find("PostButton").GetComponent<Button>().onClick.AddListener(postData);
-        if (Instance == null) Instance = this;
-        else Destroy(this);
+        
+
+        MySceneManager.Instance.OnLoadNewScene();
 
     }
 
