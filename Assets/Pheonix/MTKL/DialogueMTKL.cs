@@ -4,16 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using Ink.Runtime;
 
-public class DialogueMTKL : MonoBehaviour
+public class DialogueMTKL : Singleton<DialogueMTKL>
 {
     public Text mainText;
     public Button[] options;
     public TextAsset inkAsset;
     Story story = null;
 
-    public static DialogueMTKL Instance;
 
-    private void Awake()
+    private void Start()
     {
         for (int i = 0; i < options.Length; i++)
         {
@@ -23,7 +22,6 @@ public class DialogueMTKL : MonoBehaviour
         //options[0].onClick.AddListener(delegate () { MakeChoice(0); });
         //options[1].onClick.AddListener(delegate () { MakeChoice(1); });
         //options[2].onClick.AddListener(delegate () { MakeChoice(2); });
-        Instance = this;
         StartDialogue();
     }
 

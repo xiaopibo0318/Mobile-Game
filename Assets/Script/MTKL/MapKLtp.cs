@@ -9,7 +9,7 @@ public class MapKLtp : MonoBehaviour
 
 
     public static MapKLtp Instance;
-    public void wake()
+    public void Awake()
     {
         Debug.Log("cc");
         Debug.Log(nowPos);

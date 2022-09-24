@@ -31,7 +31,6 @@ public class Camerafollowww : Singleton<Camerafollowww>
         switch (nowSceneIndex)
         {
             case 2:
-                Debug.Log("I'mhere");
                 CameraInMTKL();
                 break;
 

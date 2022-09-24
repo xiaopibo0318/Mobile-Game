@@ -13,8 +13,12 @@ public class GameCenter : MonoBehaviour
         else Destroy(this);
     }
 
+    private void OnEnable()
+    {
+        SceneManager.LoadScene(1);
+    }
 
-    
+
 
     public void EndGame()
     {
