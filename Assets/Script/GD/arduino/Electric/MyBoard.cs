@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class MyBoard 
 {
-    private static int row = 12; // 10+2
-    private static int col = 8;  // 6+2
+    public static int row = 10; 
+    public static int col = 6;  
 
+    
     /*
     設計概念：
     建立布林表偵測是否有物件。
 
     再每一個電子元件中 設立 point1 與 point2
-    當
+    並把每個hole插入電裡 1= 正極 0 = 負極 -99 =不通電
+
+    電子元件固定在麵包版上
+    僅接線
+
      */
     private bool[,] isObjectInBoard = new bool[row,col];
-    private bool[,] isElectric = new bool[row, col];
+    public int[,] isElectric = new int[row, col];
 
-    private void Init()
+    public void Init()
     {
         for (int i = 0; i < row; i++)
         {
@@ -31,9 +36,18 @@ public class MyBoard
         {
             for (int j = 0; j < col; j++)
             {
-                isElectric[i, j] = false;
+                isElectric[i, j] = -99;
             }
         }
     }
 
+    public int GetBoardRow()
+    {
+        return row;
+    }
+
+    public int GetBoardCol()
+    {
+        return col;
+    }
 }
