@@ -29,24 +29,24 @@ public class ShapeStorage : MonoBehaviour
                 case 2:
                     shape.shapeClass = 303;
                     break;
+                case 3:
                 case 4:
-                case 5:
                     shape.shapeClass = 311;
                     break;
+                case 5:
                 case 6:
-                case 7:
                     shape.shapeClass = 321;
                     break;
                 case 8:
                 case 9:
                 case 10:
-                case 11:
+                case 7:
                     shape.shapeClass = 331;
                     break;
                 case 12:
                 case 13:
                 case 14:
-                case 15:
+                case 11:
                     shape.shapeClass = 341;
                     break;
                 case 16:
@@ -56,7 +56,7 @@ public class ShapeStorage : MonoBehaviour
                 case 20:
                 case 21:
                 case 22:
-                case 23:
+                case 15:
                     shape.shapeClass = 351;
                     break;
                 case 24:
@@ -66,7 +66,7 @@ public class ShapeStorage : MonoBehaviour
                 case 28:
                 case 29:
                 case 30:
-                case 31:
+                case 23:
                     shape.shapeClass = 361;
                     break;
                 case 32:
@@ -76,7 +76,7 @@ public class ShapeStorage : MonoBehaviour
                 case 36:
                 case 37:
                 case 38:
-                case 39:
+                case 31:
                     shape.shapeClass = 371;
                     break;
                 default:

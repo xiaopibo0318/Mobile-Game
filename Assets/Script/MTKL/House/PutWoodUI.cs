@@ -17,13 +17,14 @@ public class PutWoodUI : MonoBehaviour
 
     public bool CheckWoodInBag(int nowWoodID)
     {
+        Debug.Log("現在選擇的類型是：" + nowWoodID);
         foreach (var wood in woodListInBag)
         {
             //如果沒東西就跳過，
             if (!myBag.itemList.Contains(wood)) continue;
 
             //有的話 去回傳值給Shape去做判斷
-            if(nowWoodID == wood.itemID)
+            if (nowWoodID == wood.itemID)
             {
                 return true;
             }
