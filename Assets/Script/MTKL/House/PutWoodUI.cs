@@ -17,7 +17,7 @@ public class PutWoodUI : MonoBehaviour
 
     public bool CheckWoodInBag(int nowWoodID)
     {
-        Debug.Log("現在選擇的類型是：" + nowWoodID);
+        //Debug.Log("現在選擇的類型是：" + nowWoodID);
         foreach (var wood in woodListInBag)
         {
             //如果沒東西就跳過，

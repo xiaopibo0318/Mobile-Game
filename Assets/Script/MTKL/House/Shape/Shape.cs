@@ -302,6 +302,7 @@ public class Shape : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDra
         //Vector2 pos;
         //RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas.transform as RectTransform,
         //    eventData.position, Camera.main, out pos);
+        //_transform.anchoredPosition = pos;
         _transform.localPosition = eventData.position - offset;
     }
 
