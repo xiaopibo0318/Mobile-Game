@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -422,8 +423,7 @@ public class CutWoodManager : MonoBehaviour
 
     private void ClearLine()
     {
-        previewPoints[0] = new Vector2(0, 0);
-        previewPoints[1] = new Vector2(0, 0);
+        Array.Clear(previewPoints, 0, previewPoints.Length);
         previewLine.SetAllDirty();
         finishedPoints.Clear();
         finishedLine.Points = finishedPoints.ToArray();

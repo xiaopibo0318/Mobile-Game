@@ -50,4 +50,14 @@ public class MyBoard
     {
         return col;
     }
+
+    public void ChangeObjectInBoard(int _row, int _col)
+    {
+        isObjectInBoard[_row, _col] = true;
+    }
+
+    private void ResetAll()
+    {
+        Init();
+    }
 }

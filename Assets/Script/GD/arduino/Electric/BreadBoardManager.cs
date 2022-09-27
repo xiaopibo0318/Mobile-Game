@@ -23,7 +23,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     [Header("線")]
     private UILineRenderer nowLine;
-
+    private bool isOperate = false;
     private void Start()
     {
         myboard = new MyBoard();
@@ -37,6 +37,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         operateRange.AddPointerDownListener(OnOperateRangePointerDown);
         operateRange.AddOnDragListener(OnOperateRangeOnDrag);
         operateRange.AddBeginDragListener(OnOperateRangeBeginDrag);
+        operateRange.AddEndDragListener(OnOperateRangeEndDrag);
 
         for (int i = 0; i < myboard.GetBoardRow(); i++)
         {
@@ -74,13 +75,14 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         else
         {
             //將上排的值的給弄一弄
-            if(now_x >=2 && now_x <= 4)
+            if (now_x >= 2 && now_x <= 4)
             {
                 for (int i = 2; i < 5; i++)
                 {
                     myboard.isElectric[i, now_y] = electricType;
                 }
-            }else if(now_x >= 5 && now_x <= 7)
+            }
+            else if (now_x >= 5 && now_x <= 7)
             {
                 for (int i = 5; i < 8; i++)
                 {
@@ -118,15 +120,17 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void OnOperateRangePointerDown(PointerEventData eventData)
     {
-        if(eventData.pointerCurrentRaycast.gameObject != null)
+        if (eventData.pointerCurrentRaycast.gameObject != null)
         {
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Normal"))
             {
-                
+
                 Vector2 point = eventData.position;
-                AddPointToLine(point);
+                
                 nowLine = Instantiate(myLine, lineParent).GetComponent<UILineRenderer>();
-                nowLine.Points = tempPointList.ToArray();
+                nowLine.LineThickness = 10;
+                AddPointToLine(point);
+                isOperate = true;
             }
         }
     }
@@ -138,6 +142,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void OnOperateRangeOnDrag(PointerEventData eventData)
     {
+        if (!isOperate) return;
         nowLine.Points[1] = eventData.position;
     }
 
@@ -148,14 +153,21 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Normal"))
             {
                 nowLine.Points[1] = eventData.position;
+                ElectricSlot nowSlot = eventData.pointerCurrentRaycast.gameObject.GetComponent<ElectricSlot>();
+                Debug.Log("格子的row"+nowSlot);
+                //nowSlot有 但是nowSlot.row沒有
+                myboard.ChangeObjectInBoard(nowSlot.row, nowSlot.col);
+                isOperate = false;
+                nowLine = null;
                 return;
             }
         }
+        nowLine = null;
+
     }
 
     private void AddPointToLine(Vector2 point)
     {
-        nowLine.SetAllDirty();
         // 前提是使用 using System的情況下使用，將陣列清0
         Array.Clear(nowLine.Points, 0, nowLine.Points.Length);
         tempPointList.Clear();

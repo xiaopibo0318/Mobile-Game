@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricSlot
+public class ElectricSlot : MonoBehaviour
 {
-    private int row;
-    private int col;
+    public int row { get; set; }
+    public int col { get; set; }
 
     /// <summary>
     /// 1 = 正電拍拍 0 = 負電拍拍 -99 = 不通電
@@ -23,4 +23,6 @@ public class ElectricSlot
     {
         this.electricMode = electricType;
     }
+
+    
 }
