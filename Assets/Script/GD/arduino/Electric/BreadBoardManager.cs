@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,12 +14,15 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     [Header("板子上的素材")]
     [SerializeField] private DragItem operateRange;
-    [SerializeField] private GameObject slot;
+    [SerializeField] private List<GameObject> slotSet;
     [SerializeField] private Transform slotParent;
     [SerializeField] private GameObject myLine;
     [SerializeField] private Transform lineParent;
 
 
+
+    [Header("線")]
+    private UILineRenderer nowLine;
 
     private void Start()
     {
@@ -33,7 +37,14 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         operateRange.AddPointerDownListener(OnOperateRangePointerDown);
         operateRange.AddOnDragListener(OnOperateRangeOnDrag);
         operateRange.AddBeginDragListener(OnOperateRangeBeginDrag);
-        operateRange.AddEndDragListener(OnOperateRangeEndDrag);
+
+        for (int i = 0; i < myboard.GetBoardRow(); i++)
+        {
+            for (int j = 0; j < myboard.GetBoardCol(); j++)
+            {
+                slotSet[i].GetComponent<ElectricSlot>().Init(i, j);
+            }
+        }
     }
 
     /// <summary>
@@ -92,20 +103,32 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     }
 
+    private void ClearAllLine()
+    {
+        foreach (var myLine in lineParent.GetComponentsInChildren<GameObject>())
+        {
+            Destroy(myLine.gameObject);
+        }
+    }
+
+    private void ClearNowLine(UILineRenderer uILineRenderer)
+    {
+        Destroy(uILineRenderer.gameObject);
+    }
+
     private void OnOperateRangePointerDown(PointerEventData eventData)
     {
         if(eventData.pointerCurrentRaycast.gameObject != null)
         {
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Normal"))
             {
+                
                 Vector2 point = eventData.position;
-                tempPointList.Add(point);
-                GameObject nowLine = Instantiate(myLine, lineParent);
-
-                nowLine.GetComponent<UILineRenderer>().Points = tempPointList.ToArray();
+                AddPointToLine(point);
+                nowLine = Instantiate(myLine, lineParent).GetComponent<UILineRenderer>();
+                nowLine.Points = tempPointList.ToArray();
             }
         }
-        Debug.Log("嗚嗚");
     }
 
     private void OnOperateRangeBeginDrag(PointerEventData eventData)
@@ -115,12 +138,29 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void OnOperateRangeOnDrag(PointerEventData eventData)
     {
-
+        nowLine.Points[1] = eventData.position;
     }
 
     private void OnOperateRangeEndDrag(PointerEventData eventData)
     {
-
+        if (eventData.pointerCurrentRaycast.gameObject != null)
+        {
+            if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Normal"))
+            {
+                nowLine.Points[1] = eventData.position;
+                return;
+            }
+        }
     }
 
+    private void AddPointToLine(Vector2 point)
+    {
+        nowLine.SetAllDirty();
+        // 前提是使用 using System的情況下使用，將陣列清0
+        Array.Clear(nowLine.Points, 0, nowLine.Points.Length);
+        tempPointList.Clear();
+        tempPointList.Add(point);
+        tempPointList.Add(point);
+
+    }
 }
