@@ -109,6 +109,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     {
         foreach (var myLine in lineParent.GetComponentsInChildren<GameObject>())
         {
+
             Destroy(myLine.gameObject);
         }
     }
@@ -126,9 +127,10 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             {
 
                 Vector2 point = eventData.position;
-                
+                Debug.Log("点的位置是" + point);
                 nowLine = Instantiate(myLine, lineParent).GetComponent<UILineRenderer>();
                 nowLine.LineThickness = 10;
+                //nowLine.rectTransform.anchoredPosition = new Vector2(0, 0);
                 AddPointToLine(point);
                 isOperate = true;
             }
@@ -153,8 +155,10 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Normal"))
             {
                 nowLine.Points[1] = eventData.position;
-                ElectricSlot nowSlot = eventData.pointerCurrentRaycast.gameObject.GetComponent<ElectricSlot>();
-                Debug.Log("格子的row"+nowSlot);
+                ElectricSlot nowSlot = eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<ElectricSlot>();
+
+                Debug.Log("格子的row" + nowSlot);
+                Debug.Log("現在的位置是：" + eventData.position);
                 //nowSlot有 但是nowSlot.row沒有
                 myboard.ChangeObjectInBoard(nowSlot.row, nowSlot.col);
                 isOperate = false;
@@ -173,6 +177,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         tempPointList.Clear();
         tempPointList.Add(point);
         tempPointList.Add(point);
+        nowLine.Points = tempPointList.ToArray();
 
     }
 }
