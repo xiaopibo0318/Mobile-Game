@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyBoard 
+public class MyBoard
 {
-    public static int row = 10; 
-    public static int col = 6;  
+    public const int row = 10;
+    public const int col = 6;
+    public bool[,] isObjectInBoard;
+    public int[,] isElectric;
+    public MyBoard()
+    {
+        isObjectInBoard = new bool[row, col];
+        isElectric = new int[row, col];
+    }
 
-    
     /*
     設計概念：
     建立布林表偵測是否有物件。
@@ -19,8 +25,7 @@ public class MyBoard
     僅接線
 
      */
-    public bool[,] isObjectInBoard = new bool[row,col];
-    public int[,] isElectric = new int[row, col];
+
 
     public void Init()
     {

@@ -7,6 +7,9 @@ public class ElectricSlot : MonoBehaviour
     public int row { get; set; }
     public int col { get; set; }
 
+    [SerializeField] GameObject normal;
+    [SerializeField] GameObject hoover;
+    [SerializeField] GameObject active;
     /// <summary>
     /// 1 = 正電拍拍 0 = 負電拍拍 -99 = 不通電
     /// </summary>
@@ -24,5 +27,21 @@ public class ElectricSlot : MonoBehaviour
         this.electricMode = electricType;
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        normal.SetActive(false);
+        hoover.SetActive(true);
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        normal.SetActive(true);
+        hoover.SetActive(false);
+    }
+
+    public void ChangeToActive()
+    {
+        hoover.SetActive(false);
+        active.SetActive(true);
+    }
+
 }
