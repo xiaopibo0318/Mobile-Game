@@ -19,7 +19,7 @@ public class MyBoard
     僅接線
 
      */
-    private bool[,] isObjectInBoard = new bool[row,col];
+    public bool[,] isObjectInBoard = new bool[row,col];
     public int[,] isElectric = new int[row, col];
 
     public void Init()

@@ -61,6 +61,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         if (myboard.isElectric[now_x, now_y] != electricType ||
             myboard.isElectric[now_x, now_y] != -99)
         {
+            
             //短路?
         }
 
@@ -102,7 +103,10 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void StartDetect()
     {
-
+        foreach (var item in myboard.isObjectInBoard)
+        {
+            
+        }
     }
 
     private void ClearAllLine()
@@ -163,6 +167,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 myboard.ChangeObjectInBoard(nowSlot.row, nowSlot.col);
                 isOperate = false;
                 nowLine = null;
+                
                 return;
             }
         }
