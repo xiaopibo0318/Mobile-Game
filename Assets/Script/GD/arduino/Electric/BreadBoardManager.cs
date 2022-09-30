@@ -14,7 +14,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     [Header("板子上的素材")]
     [SerializeField] private DragItem operateRange;
-    [SerializeField] private List<GameObject> slotSet;
+    [SerializeField] private List<ElectricSlot> slotSet;
     [SerializeField] private Transform slotParent;
     [SerializeField] private GameObject myLine;
     [SerializeField] private Transform lineParent;
@@ -33,14 +33,15 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     private float colorB;
     private float colorF = 255f;
 
+    [Header("UI介面")]
+    [SerializeField] private Button clearAllLineButton;
     private void Start()
     {
         myboard = new MyBoard();
         myboard.Init();
         InitSlot();
-        ColorButtonInit();
+        ButtonInit();
     }
-
 
     private void InitSlot()
     {
@@ -53,18 +54,19 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         {
             for (int j = 0; j < myboard.GetBoardCol(); j++)
             {
-                slotSet[i].GetComponent<ElectricSlot>().Init(i, j);
+                slotSet[i * myboard.GetBoardCol() + j].Init(i, j);
             }
         }
     }
 
-    private void ColorButtonInit()
+    private void ButtonInit()
     {
         for (int i = 0; i < colorList.Count; i++)
         {
             var index = i;
             colorList[i].onClick.AddListener(delegate { SelectColor(index); });
         }
+        clearAllLineButton.onClick.AddListener(ClearAllLine);
     }
 
     /// <summary>
@@ -146,10 +148,25 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void ClearAllLine()
     {
-        foreach (var myLine in lineParent.GetComponentsInChildren<GameObject>())
+        for (int i = 0; i < lineParent.childCount; i++)
         {
+            Destroy(lineParent.GetChild(i).gameObject.GetComponent<UILineRenderer>());
+            Destroy(lineParent.GetChild(i).gameObject);
+        }
 
-            Destroy(myLine.gameObject);
+        ResetAll();
+    }
+
+    private void ResetAll()
+    {
+        tempPointList.Clear();
+        linePointList.Clear();
+        nowLine = null;
+        isOperate = false;
+        myboard.ResetAll();
+        for (int i = 0; i < slotSet.Count; i++)
+        {
+            slotSet[i].ResetSlot();
         }
     }
 
@@ -197,6 +214,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void OnOperateRangeEndDrag(PointerEventData eventData)
     {
+        if (!isOperate) return;
         if (eventData.pointerCurrentRaycast.gameObject != null)
         {
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Hoover"))
@@ -219,12 +237,17 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 myboard.ChangeObjectInBoard(nowSlot.row, nowSlot.col);
                 isOperate = false;
                 nowLine = null;
-
+                Vector2 slot1 = new Vector2(firstSlot.row, firstSlot.col);
+                Vector2 slot2 = new Vector2(nowSlot.row, nowSlot.col);
+                linePointList.Add(slot1, slot2);
                 return;
             }
         }
+
         firstSlot = null;
+        Destroy(nowLine.gameObject);
         nowLine = null;
+
 
     }
 
@@ -246,19 +269,21 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     /// <summary>
     /// 開始遞迴尋找 ，但還要考慮 上下左右的分開尋找(尚未處理)
+    /// 考慮是否要 增加參數 int diret來判斷 +1還是-1
     /// </summary>
     /// <param name="nowPos"></param>
     private void FindNextPoint(Vector2 nowPos, Vector2 end)
     {
         int now_row = (int)nowPos.x;
         int now_col = (int)nowPos.y;
-        //先找尋
+        //先判斷他的屬性為何
         if (CheckIsHorizontalOrVertical(now_row))
         {
             if (!myboard.isObjectInBoard[now_row, now_col])
             {
                 Vector2 nextPos = new Vector2(now_row, now_col + 1);
                 if (now_col > myboard.GetBoardCol())
+                    //大的判斷完之後，要判斷小的，尚未處理
                     ElectricFail();
                 else
                     FindNextPoint(nextPos, end);
@@ -280,7 +305,6 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private Vector2 GetLineAnotherPoint(Vector2 nowPos)
     {
-
         foreach (var nowLine in linePointList)
         {
             if (nowLine.Key == nowPos) return nowLine.Value;

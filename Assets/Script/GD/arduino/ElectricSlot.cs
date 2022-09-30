@@ -44,4 +44,11 @@ public class ElectricSlot : MonoBehaviour
         active.SetActive(true);
     }
 
+    public void ResetSlot()
+    {
+        normal.SetActive(true);
+        hoover.SetActive(false);
+        active.SetActive(false);
+    }
+
 }

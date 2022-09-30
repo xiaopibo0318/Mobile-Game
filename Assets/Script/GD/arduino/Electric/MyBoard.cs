@@ -61,7 +61,7 @@ public class MyBoard
         isObjectInBoard[_row, _col] = true;
     }
 
-    private void ResetAll()
+    public void ResetAll()
     {
         Init();
     }
