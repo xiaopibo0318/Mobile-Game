@@ -1604,7 +1604,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmMTKL: {fileID: 8300000, guid: 9b0c831155d09474181b4093c02f8bb8, type: 3}
   rain: {fileID: 0}
+  WaterDrop: {fileID: 8300000, guid: 80fd5a9796104604394e99ab11c13ad2, type: 3}
+  NightForest: {fileID: 8300000, guid: 23d55176281c1364380439ad0567bfe9, type: 3}
+  Forest: {fileID: 8300000, guid: 549674a89924c9d4e8d6b26908ef3667, type: 3}
+  ChangeState: {fileID: 8300000, guid: 3d4609a6a80ebc84dba47df9ced6b266, type: 3}
+  Salvage: {fileID: 8300000, guid: 21eedaa77efa24843a473fd0b30a2a01, type: 3}
+  Countdown1: {fileID: 8300000, guid: 3519c3b647b597e4faaf9c9eafc28bb5, type: 3}
+  Countdown2: {fileID: 8300000, guid: 7fd4a947930f5304a9fc8eaac4262127, type: 3}
+  OpenDoor: {fileID: 8300000, guid: d45ff872d02174947b51753e3dff4493, type: 3}
+  LotusButton: {fileID: 8300000, guid: 1b0f678a2aebcd347968d0a9c1029184, type: 3}
   walkOnGrass: {fileID: 8300000, guid: b43b436a022af1e439008ce708504c56, type: 3}
+  WalkIndoor: {fileID: 8300000, guid: 66fbcc0190e0ba04b80c4ce369148620, type: 3}
+  WalkOnWater: {fileID: 8300000, guid: 872c7ba4eff5fad46979e86c9c3108ef, type: 3}
+  GeneralButton: {fileID: 8300000, guid: a484da4272349df43a77d6ee6f865abb, type: 3}
+  ConfirmButton: {fileID: 8300000, guid: 380f244fb824d3146946318c942dc0e2, type: 3}
+  PopUp: {fileID: 8300000, guid: c174f9244c0226347b849b0c9382a11d, type: 3}
 --- !u!114 &791921993
 MonoBehaviour:
   m_ObjectHideFlags: 0
