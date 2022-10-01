@@ -37,7 +37,7 @@ public class CutWoodManager : MonoBehaviour
     Button buttonGoBack;
     float cutTime;
     bool readyToCut;
-    
+
 
     [Header("時間倒數")]
     public Text timerText;
@@ -326,7 +326,7 @@ public class CutWoodManager : MonoBehaviour
             return;
         StartCutWood();
         Vector2 point = TargetPoint.GetOriginPos(targetPoints[currentIndex]);
-        
+
         finishedPoints.Add(point);
         finishedLine.Points = finishedPoints.ToArray();
         Debug.Log("targetpoint位置為：" + targetPoints[currentIndex]);
@@ -424,10 +424,8 @@ public class CutWoodManager : MonoBehaviour
     private void ClearLine()
     {
         Array.Clear(previewPoints, 0, previewPoints.Length);
-        previewLine.SetAllDirty();
         finishedPoints.Clear();
         finishedLine.Points = finishedPoints.ToArray();
-        finishedLine.SetAllDirty();
     }
 
 

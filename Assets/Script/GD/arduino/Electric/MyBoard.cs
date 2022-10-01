@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class MyBoard
 {
+    /// <summary>
+    /// 0,0          0,5
+    /// 1,0          1,5
+    /// 
+    /// 2.0          2,5
+    /// 4,0
+    /// 
+    /// 5,0
+    /// 7,0
+    /// 
+    /// 8,0
+    /// 9,0          9,5
+    /// </summary>
+
     public const int row = 10;
     public const int col = 6;
     public bool[,] isObjectInBoard;

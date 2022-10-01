@@ -43,6 +43,9 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         ButtonInit();
     }
 
+    [Header("電路查找")]
+    Stack<Node> nodeList;
+
     private void InitSlot()
     {
         operateRange.AddPointerDownListener(OnOperateRangePointerDown);
@@ -274,27 +277,28 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     /// <param name="nowPos"></param>
     private void FindNextPoint(Vector2 nowPos, Vector2 end)
     {
+        Node parentNode = new Node(nowPos);
         int now_row = (int)nowPos.x;
         int now_col = (int)nowPos.y;
         //先判斷他的屬性為何
         if (CheckIsHorizontalOrVertical(now_row))
         {
-            if (!myboard.isObjectInBoard[now_row, now_col])
+            now_col = 0;
+            for (int i = 0; i < myboard.GetBoardCol(); i++)
             {
-                Vector2 nextPos = new Vector2(now_row, now_col + 1);
-                if (now_col > myboard.GetBoardCol())
-                    //大的判斷完之後，要判斷小的，尚未處理
-                    ElectricFail();
-                else
-                    FindNextPoint(nextPos, end);
-            }
-            else //找尋該點的下一個節點為何
-            {
-                Vector2 nextPos = GetLineAnotherPoint(nowPos);
-                if (nextPos == end)
-                    ElectricSuccess();
-                else
-                    FindNextPoint(GetLineAnotherPoint(nextPos), end);
+                if (myboard.isObjectInBoard[now_row, now_col])
+                {
+                    Vector2 nodePos = new Vector2(now_row, now_col);
+                    Node nowNode = new Node(nodePos);
+                    nowNode.parent = parentNode;
+                    nodeList.Push(nowNode);
+                }
+                now_col++;
+                if (now_col >= myboard.GetBoardCol())
+                {
+                    break;
+                }
+                
             }
         }
         else
@@ -302,6 +306,21 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
         }
     }
+
+    /*         
+     *          Vector2 nextPos = new Vector2(now_row, now_col + 1);
+                if (now_col > myboard.GetBoardCol())
+                    //大的判斷完之後，要判斷小的，尚未處理
+                    ElectricFail();
+                else
+                    FindNextPoint(nextPos, end);
+     *         
+     *         Vector2 nextPos = GetLineAnotherPoint(nowPos);
+                if (nextPos == end)
+                    ElectricSuccess();
+                else
+                    FindNextPoint(GetLineAnotherPoint(nextPos), end);
+     * */
 
     private Vector2 GetLineAnotherPoint(Vector2 nowPos)
     {

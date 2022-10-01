@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    public Vector2 position;
+    public Vector2 position; //(row,col)
     public Node parent;
     public bool isObstacle;
 
