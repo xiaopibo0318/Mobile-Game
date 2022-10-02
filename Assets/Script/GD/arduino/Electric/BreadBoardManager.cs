@@ -44,8 +44,11 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     }
 
     [Header("電路查找")]
-    Stack<Node> nodeList;
-
+    [SerializeField] Button startFindButton;
+    List<Node> nodeList;
+    Queue<Vector2> pointAddList = new Queue<Vector2>();
+    Vector2 myStart = new Vector2(1, 0);
+    Vector2 myEnd = new Vector2(0, 0);
     private void InitSlot()
     {
         operateRange.AddPointerDownListener(OnOperateRangePointerDown);
@@ -70,6 +73,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             colorList[i].onClick.AddListener(delegate { SelectColor(index); });
         }
         clearAllLineButton.onClick.AddListener(ClearAllLine);
+        startFindButton.onClick.AddListener(delegate { StartFind(myStart, myEnd); });
     }
 
     /// <summary>
@@ -238,6 +242,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 Debug.Log("現在的位置是：" + eventData.position);
                 //nowSlot有 但是nowSlot.row沒有
                 myboard.ChangeObjectInBoard(nowSlot.row, nowSlot.col);
+                Debug.Log("現在的位置是" + nowSlot.row + "OOOO" + nowSlot.col);
                 isOperate = false;
                 nowLine = null;
                 Vector2 slot1 = new Vector2(firstSlot.row, firstSlot.col);
@@ -267,44 +272,128 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void StartFind(Vector2 start, Vector2 end)
     {
-        FindNextPoint(start, end);
+        pointAddList.Enqueue(start);
+        FindPointAndAddNode(start, end);
     }
 
     /// <summary>
     /// 開始遞迴尋找 ，但還要考慮 上下左右的分開尋找(尚未處理)
     /// 考慮是否要 增加參數 int diret來判斷 +1還是-1
+    /// ----
+    /// 改為先建立節點
     /// </summary>
     /// <param name="nowPos"></param>
-    private void FindNextPoint(Vector2 nowPos, Vector2 end)
+    private void FindPointAndAddNode(Vector2 nowPos, Vector2 end)
     {
+        Debug.Log("我開找囉");
         Node parentNode = new Node(nowPos);
         int now_row = (int)nowPos.x;
         int now_col = (int)nowPos.y;
-        //先判斷他的屬性為何
+        Vector2 errorVector = new Vector2(-99, -99);
+        if (GetLineAnotherPoint(nowPos) != errorVector)
+        {
+            pointAddList.Enqueue(GetLineAnotherPoint(nowPos));
+        }
+        //先判斷他的屬性為何、並找尋同一層之所有siblings
         if (CheckIsHorizontalOrVertical(now_row))
         {
             now_col = 0;
             for (int i = 0; i < myboard.GetBoardCol(); i++)
             {
+                Debug.Log(now_row + "," + now_col);
                 if (myboard.isObjectInBoard[now_row, now_col])
                 {
+                    Debug.Log(33333);
                     Vector2 nodePos = new Vector2(now_row, now_col);
-                    Node nowNode = new Node(nodePos);
-                    nowNode.parent = parentNode;
-                    nodeList.Push(nowNode);
+                    if (nowPos == nodePos)
+                    { //排除自己的情況
+                        now_col++;
+                        return;
+                    }
+                    //Node nowNode = new Node(nodePos);
+                    //nowNode.parent = parentNode;
+                    //nodeList.Add(nowNode);
+                    pointAddList.Enqueue(nodePos);
+                    if (GetLineAnotherPoint(nodePos) != errorVector)
+                    {
+                        pointAddList.Enqueue(GetLineAnotherPoint(nodePos));
+                    }
                 }
                 now_col++;
                 if (now_col >= myboard.GetBoardCol())
                 {
                     break;
                 }
-                
+
             }
         }
-        else
+        else //麵包版中間的屬性取直的
         {
+            if (now_row >= 2 && now_row <= 4)
+            {
+                now_row = 2;
+                for (int i = 0; i < 3; i++)
+                {
+                    if (myboard.isObjectInBoard[now_row, now_col])
+                    {
+                        Vector2 nodePos = new Vector2(now_row, now_col);
+                        if (nowPos == nodePos)
+                        { //排除自己的情況
+                            now_row++;
+                            return;
+                        }
+                        //Node nowNode = new Node(nodePos);
+                        //nowNode.parent = parentNode;
+                        //nodeList.Add(nowNode);
+                        pointAddList.Enqueue(nodePos);
+                        if (GetLineAnotherPoint(nodePos) != errorVector)
+                        {
+                            pointAddList.Enqueue(GetLineAnotherPoint(nodePos));
+                        }
+                    }
+                    now_row++;
+                    if (now_row >= 5)
+                    {
+                        break;
+                    }
+                }
 
+            }
+            else
+            {
+                now_row = 5;
+                for (int i = 0; i < 3; i++)
+                {
+                    if (myboard.isObjectInBoard[now_row, now_col])
+                    {
+                        Vector2 nodePos = new Vector2(now_row, now_col);
+                        if (nowPos == nodePos)
+                        { //排除自己的情況
+                            now_row++;
+                            return;
+                        }
+                        //Node nowNode = new Node(nodePos);
+                        //nowNode.parent = parentNode;
+                        //nodeList.Add(nowNode);
+                        pointAddList.Enqueue(nodePos);
+                        if (GetLineAnotherPoint(nodePos) != errorVector)
+                        {
+                            pointAddList.Enqueue(GetLineAnotherPoint(nodePos));
+                        }
+                    }
+                    now_row++;
+                    if (now_row >= 5)
+                    {
+                        break;
+                    }
+                }
+            }
         }
+        //移除Queue最上層。 找下一個點。
+        Debug.Log("當前最頂的元素是：" + pointAddList.Peek());
+        pointAddList.Dequeue();
+
+        FindPointAndAddNode(pointAddList.Peek(), end);
     }
 
     /*         
