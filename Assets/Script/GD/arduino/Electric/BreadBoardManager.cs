@@ -49,6 +49,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     Queue<Vector2> pointAddList = new Queue<Vector2>();
     Vector2 myStart = new Vector2(1, 0);
     Vector2 myEnd = new Vector2(0, 0);
+    Queue<Vector2> trashNodeList = new Queue<Vector2>();
     private void InitSlot()
     {
         operateRange.AddPointerDownListener(OnOperateRangePointerDown);
@@ -241,8 +242,11 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 Debug.Log("格子的row" + nowSlot);
                 Debug.Log("現在的位置是：" + eventData.position);
                 //nowSlot有 但是nowSlot.row沒有
+                myboard.ChangeObjectInBoard(firstSlot.row, firstSlot.col);
                 myboard.ChangeObjectInBoard(nowSlot.row, nowSlot.col);
+                Debug.Log("之前的位置是" + firstSlot.row + "OOOO" + firstSlot.col);
                 Debug.Log("現在的位置是" + nowSlot.row + "OOOO" + nowSlot.col);
+
                 isOperate = false;
                 nowLine = null;
                 Vector2 slot1 = new Vector2(firstSlot.row, firstSlot.col);
@@ -272,7 +276,9 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void StartFind(Vector2 start, Vector2 end)
     {
-        pointAddList.Enqueue(start);
+        pointAddList.Clear();
+        trashNodeList.Clear();
+        //intAddList.Enqueue(start);
         FindPointAndAddNode(start, end);
     }
 
@@ -285,16 +291,25 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     /// <param name="nowPos"></param>
     private void FindPointAndAddNode(Vector2 nowPos, Vector2 end)
     {
+        return; //先暫停這個無窮迴圈城市
+
+        if (trashNodeList.Contains(nowPos)) FindNextNodeInQueue(end);
+        else pointAddList.Enqueue(nowPos);
         Debug.Log("我開找囉");
-        Node parentNode = new Node(nowPos);
+        //Node parentNode = new Node(nowPos);
         int now_row = (int)nowPos.x;
         int now_col = (int)nowPos.y;
         Vector2 errorVector = new Vector2(-99, -99);
         if (GetLineAnotherPoint(nowPos) != errorVector)
         {
             pointAddList.Enqueue(GetLineAnotherPoint(nowPos));
+            Debug.Log("成功新增節點");
         }
-        //先判斷他的屬性為何、並找尋同一層之所有siblings
+        //if (GetLineAnotherPoint(nowPos) != errorVector)
+        //{
+        //    pointAddList.Enqueue(GetLineAnotherPoint(nowPos));
+        //}
+        ////先判斷他的屬性為何、並找尋同一層之所有siblings
         if (CheckIsHorizontalOrVertical(now_row))
         {
             now_col = 0;
@@ -303,21 +318,12 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 Debug.Log(now_row + "," + now_col);
                 if (myboard.isObjectInBoard[now_row, now_col])
                 {
-                    Debug.Log(33333);
+                    Debug.Log("偵測點為：" + now_row.ToString() + now_col.ToString());
                     Vector2 nodePos = new Vector2(now_row, now_col);
-                    if (nowPos == nodePos)
-                    { //排除自己的情況
-                        now_col++;
-                        return;
-                    }
                     //Node nowNode = new Node(nodePos);
                     //nowNode.parent = parentNode;
                     //nodeList.Add(nowNode);
                     pointAddList.Enqueue(nodePos);
-                    if (GetLineAnotherPoint(nodePos) != errorVector)
-                    {
-                        pointAddList.Enqueue(GetLineAnotherPoint(nodePos));
-                    }
                 }
                 now_col++;
                 if (now_col >= myboard.GetBoardCol())
@@ -329,6 +335,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         }
         else //麵包版中間的屬性取直的
         {
+            Debug.Log("偵測直點為：" + now_row.ToString() + now_col.ToString());
             if (now_row >= 2 && now_row <= 4)
             {
                 now_row = 2;
@@ -337,19 +344,10 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                     if (myboard.isObjectInBoard[now_row, now_col])
                     {
                         Vector2 nodePos = new Vector2(now_row, now_col);
-                        if (nowPos == nodePos)
-                        { //排除自己的情況
-                            now_row++;
-                            return;
-                        }
                         //Node nowNode = new Node(nodePos);
                         //nowNode.parent = parentNode;
                         //nodeList.Add(nowNode);
                         pointAddList.Enqueue(nodePos);
-                        if (GetLineAnotherPoint(nodePos) != errorVector)
-                        {
-                            pointAddList.Enqueue(GetLineAnotherPoint(nodePos));
-                        }
                     }
                     now_row++;
                     if (now_row >= 5)
@@ -367,19 +365,10 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                     if (myboard.isObjectInBoard[now_row, now_col])
                     {
                         Vector2 nodePos = new Vector2(now_row, now_col);
-                        if (nowPos == nodePos)
-                        { //排除自己的情況
-                            now_row++;
-                            return;
-                        }
                         //Node nowNode = new Node(nodePos);
                         //nowNode.parent = parentNode;
                         //nodeList.Add(nowNode);
                         pointAddList.Enqueue(nodePos);
-                        if (GetLineAnotherPoint(nodePos) != errorVector)
-                        {
-                            pointAddList.Enqueue(GetLineAnotherPoint(nodePos));
-                        }
                     }
                     now_row++;
                     if (now_row >= 5)
@@ -391,9 +380,26 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         }
         //移除Queue最上層。 找下一個點。
         Debug.Log("當前最頂的元素是：" + pointAddList.Peek());
-        pointAddList.Dequeue();
+        FindNextNodeInQueue(end);
 
-        FindPointAndAddNode(pointAddList.Peek(), end);
+
+    }
+
+    private void FindNextNodeInQueue(Vector2 end)
+    {
+        if (pointAddList.Count == 0)
+        {
+            Debug.Log("走訪結束");
+            return;
+        }
+        else
+        {
+            var tempPoint = pointAddList.Peek();
+            trashNodeList.Enqueue(tempPoint);
+            pointAddList.Dequeue();
+            FindPointAndAddNode(tempPoint, end);
+        }
+
     }
 
     /*         
@@ -415,8 +421,19 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     {
         foreach (var nowLine in linePointList)
         {
-            if (nowLine.Key == nowPos) return nowLine.Value;
-            else if (nowLine.Value == nowPos) return nowLine.Key;
+            Debug.Log("字典key:" + nowLine.Key + "，字典Value" + nowLine.Value);
+            Debug.Log("找點的另外一位置" + nowPos);
+            if (nowLine.Key == nowPos)
+            {
+                Debug.Log("EEE");
+                return nowLine.Value;
+            }
+            else if (nowLine.Value == nowPos)
+            {
+                Debug.Log("FFF");
+                return nowLine.Key;
+            }
+
         }
         Vector2 vector2 = new Vector2(-99, -99);
         return vector2;
