@@ -9,7 +9,7 @@ public class Camerafollowww : Singleton<Camerafollowww>
     private Transform target;
     public float smoothing;
 
-    public int myPos = 1;
+    public int myPos;
 
     private int nowSceneIndex;
 
@@ -21,6 +21,7 @@ public class Camerafollowww : Singleton<Camerafollowww>
 
         nowSceneIndex = SceneManager.GetActiveScene().buildIndex;
         Debug.Log(nowSceneIndex + "AAAA");
+        myPos = 1;
     }
 
 

@@ -16,7 +16,7 @@ public class MapKLtp : MonoBehaviour
         Instance = this;
     }
 
-
+    [System.Obsolete]
     public void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("AAA");
@@ -35,9 +35,10 @@ public class MapKLtp : MonoBehaviour
 
         //}
         Debug.Log("即將傳送");
-        Debug.Log(nowPos);
+        
         nowPos = Camerafollowww.Instance.GetMyPos();
-        if (nowPos == 1)
+        Debug.Log(nowPos);
+        if (nowPos == 1) 
         {
             ParticleManager.Instance.addSpeedTeleport(0);
         }
@@ -54,6 +55,7 @@ public class MapKLtp : MonoBehaviour
 
     }
 
+    [System.Obsolete]
     private void OnTriggerExit2D(Collider2D collision)
     {
         nowPos = Camerafollowww.Instance.GetMyPos();

@@ -36,19 +36,21 @@ public class ParticleManager : MonoBehaviour
 
     }
 
+    [System.Obsolete]
     public void addSpeedTeleport(int i)
     {
         //粒子特效加速
         nowCoroutine = StartCoroutine(TeleportAddSpeed(i));
     }
 
+    [System.Obsolete]
     public void StopTeleport(int i)
     {
         StopCoroutine(nowCoroutine);
         nowCoroutine = StartCoroutine(TeleportCancel(i));
     }
 
-
+    [System.Obsolete]
     IEnumerator TeleportAddSpeed(int i)
     {
         var emission = teleportParticle[i].emission;
@@ -66,7 +68,7 @@ public class ParticleManager : MonoBehaviour
         yield return null;
     }
 
-
+    [System.Obsolete]
     IEnumerator TeleportCancel(int i)
     {
         var emission = teleportParticle[i].emission;
