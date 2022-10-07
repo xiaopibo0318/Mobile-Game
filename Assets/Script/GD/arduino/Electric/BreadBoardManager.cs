@@ -50,6 +50,10 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     Vector2 myStart = new Vector2(1, 0);
     Vector2 myEnd = new Vector2(0, 0);
     Queue<Vector2> trashNodeList = new Queue<Vector2>();
+    public AStarNode[,] nodes;
+    List<AStarNode> closeList = new List<AStarNode>();
+    List<AStarNode> openList = new List<AStarNode>();
+
     private void InitSlot()
     {
         operateRange.AddPointerDownListener(OnOperateRangePointerDown);
@@ -57,11 +61,15 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         operateRange.AddBeginDragListener(OnOperateRangeBeginDrag);
         operateRange.AddEndDragListener(OnOperateRangeEndDrag);
 
+        nodes = new AStarNode[8, 10];
+
         for (int i = 0; i < myboard.GetBoardRow(); i++)
         {
             for (int j = 0; j < myboard.GetBoardCol(); j++)
             {
                 slotSet[i * myboard.GetBoardCol() + j].Init(i, j);
+                AStarNode node = new AStarNode(i, j, Node_Type.Stop);
+                nodes[i, j] = node;
             }
         }
     }
@@ -279,6 +287,20 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         pointAddList.Clear();
         trashNodeList.Clear();
         //intAddList.Enqueue(start);
+
+        AStarNode startNode = nodes[(int)start.x, (int)start.y];
+        AStarNode endNode = nodes[(int)end.x, (int)end.y];
+
+        closeList.Clear();
+        openList.Clear();
+
+        //把開始點放入CloseList裡面
+        startNode.parent = null;
+        startNode.f = 0;
+        startNode.g = 0;
+        startNode.h = 0;
+        closeList.Add(startNode);
+
         FindPointAndAddNode(start, end);
     }
 
@@ -292,6 +314,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     private void FindPointAndAddNode(Vector2 nowPos, Vector2 end)
     {
         Node nowNode = new Node(nowPos);
+        AStarNode myNode = nodes[(int)nowPos.x, (int)nowPos.y];
         if (trashNodeList.Contains(nowPos))
         {
             FindNextNodeInQueue(end);
@@ -409,7 +432,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             //Debug.Log("找點的另外一位置" + nowPos);
             if (nowLine.Key == nowPos)
             {
-               // Debug.Log("EEE");
+                // Debug.Log("EEE");
                 return nowLine.Value;
             }
             else if (nowLine.Value == nowPos)
