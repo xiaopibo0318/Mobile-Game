@@ -383,6 +383,9 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     }
 
+
+
+
     private void FindNextNodeInQueue(Vector2 end)
     {
         if (pointAddList.Count == 0)
