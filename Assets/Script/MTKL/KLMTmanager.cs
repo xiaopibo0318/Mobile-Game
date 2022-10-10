@@ -10,10 +10,10 @@ public class KLMTmanager : MonoBehaviour
     */
 
 
-    
+
     public static KLMTmanager Instance;
 
-    int gameStatus;  
+    int gameStatus;
 
     public void Awake()
     {
@@ -32,7 +32,7 @@ public class KLMTmanager : MonoBehaviour
         {
             switch (Player.Instance.myStatus.GetGameStatus())
             {
-                case  1:    //第一階段
+                case 2:    //第一階段
                     break;
                 case 12:    //第二階段
                     secondStepKL();
@@ -41,7 +41,7 @@ public class KLMTmanager : MonoBehaviour
                     thirdStepKL();
                     break;
             }
-                
+
 
         }
 
@@ -50,11 +50,12 @@ public class KLMTmanager : MonoBehaviour
     private void OnEnable()
     {
         Camerafollowww.Instance.UpdateNowSceneBuildIndex();
+        TimeCounter.Instance.StartCountDown();
     }
 
     private void Update()
     {
-        
+
     }
 
 

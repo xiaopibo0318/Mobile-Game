@@ -60,7 +60,11 @@ public class WiresawManager : MonoBehaviour
 
     }
 
-
+    private void OnEnable()
+    {
+        BookContentManager.Instance.ActivateKnowledge(0);
+        SiginalUI.Instance.SiginalText("手線鋸組裝知識\n已登入百科全書");
+    }
 
 
     public void topButtonMananger()
@@ -147,7 +151,7 @@ public class WiresawManager : MonoBehaviour
         {
             InventoryManager.Instance.AddNewItem(wiresaw);
             textFinished = true;
-            BookContentManager.Instance.ActivateKnowledge(0);
+
             isFinished = true;
             textLabel.text = "您以成功組裝手線鋸，可去背包查看，知識也同步進百科全書了。";
         }

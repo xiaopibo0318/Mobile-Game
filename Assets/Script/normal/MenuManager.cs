@@ -13,6 +13,11 @@ public class MenuManager : MonoBehaviour
         Instance = this;
     }
 
+    public void OnEnable()
+    {
+        OpenMenu("title");
+    }
+
     // Start is called before the first frame update
     public void OpenMenu(string menuName)
     {

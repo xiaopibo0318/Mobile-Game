@@ -27,15 +27,13 @@ public class TimeCounter : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
-    void Start()
+    public void StartCountDown()
     {
         if (!isStart)
         {
             nowCoroutine = StartCoroutine(Countdown());
             isStart = true;
         }
-
     }
 
     IEnumerator Countdown()
