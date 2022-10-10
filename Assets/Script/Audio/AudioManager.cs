@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    //音效素材宣告區--------------------------------------
     [Header("音樂素材庫")]
     private AudioResource audioResource;
 
     [Header("崑崙山音效")]
     private AudioClip rainAudio;
-    private AudioSource WalkOnGrass;
+    private AudioSource walkOnGrass;
 
     [Header("BGM")]
     private AudioSource nowBGM;
@@ -19,7 +20,10 @@ public class AudioManager : MonoBehaviour
 
 
     public static AudioManager Instance;
+    //音效素材宣告區--------------------------------------
 
+
+    //程式開始執行區--------------------------------------
     private void Awake()
     {
         if (Instance == null)
@@ -34,13 +38,13 @@ public class AudioManager : MonoBehaviour
         InitMTKL();
         StartMTKLAudio();
     }
+    //程式開始執行區--------------------------------------
 
-
+    //初始化函數編輯區------------------------------------
     private void InitAuudio()
     {
         audioResource = GetComponent<AudioResource>();
         nowBGM = gameObject.AddComponent<AudioSource>();
-
     }
     public void StartMTKLAudio()
     {
@@ -49,21 +53,20 @@ public class AudioManager : MonoBehaviour
 
     public void Walk(bool isWalk = false)
     {
-        if (isWalk) WalkOnGrass.Play();
-        else WalkOnGrass.Stop();
-
+        if (isWalk) walkOnGrass.Play();
+        else walkOnGrass.Stop();
     }
 
-    private void InitMTKL()        //
+    private void InitMTKL()        //走路(草地)音效初始化
     {
         nowBGM.clip = audioResource.bgmMTKL;
         nowBGM.loop = true;
         nowBGM.volume = 0.05f;
 
-        WalkOnGrass = gameObject.AddComponent<AudioSource>();
-        WalkOnGrass.clip = audioResource.walkOnGrass;
-        WalkOnGrass.loop = false;
-        WalkOnGrass.volume = 0.1f;
+        walkOnGrass = gameObject.AddComponent<AudioSource>();
+        walkOnGrass.clip = audioResource.walkOnGrass;
+        walkOnGrass.loop = false;
+        walkOnGrass.volume = 0.1f;
     }
 
     public void ChangeBgmVolume(float volumeSize)
@@ -79,7 +82,7 @@ public class AudioManager : MonoBehaviour
         environmentMusic.loop = true; //是否重複播放
         environmentMusic.volume = 0.1f;  //聲音初始值都設為0.1f
 
-       // ChangeEnviormentMusic(audioResource.Forest); //若要變更某環境音效(或其他音效)，則在該腳本呼叫改變的函數
+        // ChangeEnviormentMusic(audioResource.Forest); //若要變更某環境音效(或其他音效)，則在該腳本呼叫改變的函數
     }
     //已環境音效為例，若今天進入不同階段則要換背景音樂，那就在切換階段的那個腳本裡呼叫下面的ChangeEnviormentMusic函數
 
@@ -95,5 +98,5 @@ public class AudioManager : MonoBehaviour
     {
         Destroy(audioResource);
     }
-    
+
 }
