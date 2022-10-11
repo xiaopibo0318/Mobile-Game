@@ -21,6 +21,7 @@ public class AudioResource : MonoBehaviour
     public AudioClip LotusButton;         //蓮花按鍵音效
     public AudioClip ChangeState;         //階段切換音效
     public AudioClip WaterDrop;           //水滴音效(蓮花開花)
+    public AudioClip LotusFailed;         //蓮花失敗音效(金屬撞擊聲)
 
     [Header("玩家音效"), SerializeField]
     public AudioClip walkOnGrass;         //草地走路音效

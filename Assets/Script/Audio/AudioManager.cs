@@ -12,6 +12,9 @@ public class AudioManager : MonoBehaviour
     [Header("崑崙山音效")]
     private AudioClip rainAudio;
     private AudioSource walkOnGrass;
+    private AudioSource lotusButton;
+    private AudioSource waterDrop;
+    private AudioSource lotusFailed;
 
     [Header("BGM")]
     private AudioSource nowBGM;
@@ -19,9 +22,12 @@ public class AudioManager : MonoBehaviour
     [Header("環境音效")]
     private AudioSource environmentMusic;
 
-    [Header("按鍵音效")]
+    [Header("UI按鍵音效")]
     private AudioSource generalButton;
     private AudioSource confirmButton;
+    private AudioSource popUp;
+
+
 
 
 
@@ -74,11 +80,41 @@ public class AudioManager : MonoBehaviour
         walkOnGrass.clip = audioResource.walkOnGrass;
         walkOnGrass.loop = false;
         walkOnGrass.volume = 0.1f;
+
+        lotusButton = gameObject.AddComponent<AudioSource>();
+        lotusButton.clip = audioResource.LotusButton;
+        lotusButton.loop = false;
+        lotusButton.volume = 0.1f;
+
+        waterDrop = gameObject.AddComponent<AudioSource>();
+        waterDrop.clip = audioResource.WaterDrop;
+        waterDrop.loop = false;
+        waterDrop.volume = 0.1f;
+
+        lotusFailed = gameObject.AddComponent<AudioSource>();
+        lotusFailed.clip = audioResource.LotusFailed;
+        lotusFailed.loop = false;
+        lotusFailed.volume = 0.1f;
     }
 
-    public void ChangeBgmVolume(float volumeSize)
+    public void lotus(string buttonName)
     {
-        nowBGM.volume = volumeSize;
+        if (buttonName == "button")
+        {
+            lotusButton.Play();
+        }
+        else if (buttonName == "susscess")
+        {
+            waterDrop.Play();
+        }
+        else if (buttonName == "failed")
+        {
+            lotusFailed.Play();
+        }
+        else if (buttonName == "exit")
+        {
+            generalButton.Play();
+        }
     }
 
 
@@ -98,7 +134,7 @@ public class AudioManager : MonoBehaviour
         environmentMusic.clip = nowAudioClip;
     }
     //ChangeEnviormentMusic(audioResource.Forest);
-    private void ButtonEffect() //初始化登入系統按鍵音效
+    private void ButtonEffect() //初始化按鍵音效
     {
         generalButton = gameObject.AddComponent<AudioSource>();
         generalButton.clip = audioResource.GeneralButton;
@@ -109,6 +145,12 @@ public class AudioManager : MonoBehaviour
         confirmButton.clip = audioResource.ConfirmButton;
         confirmButton.loop = false;
         confirmButton.volume = 1.0f;
+
+        popUp = gameObject.AddComponent<AudioSource>();
+        popUp.clip = audioResource.PopUp;
+        popUp.loop = false;
+        popUp.volume = 0.1f;
+
     }
 
     public void clickButton(string buttonName)
@@ -124,10 +166,16 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    //若不需要這個音效了可以把它關掉
+
+    /*若不需要這個音效了可以把它關掉
     private void DestroyMusic(AudioSource audiosource)
     {
         Destroy(audioResource);
     }
+    */
 
+    public void ChangeBgmVolume(float volumeSize)
+    {
+        nowBGM.volume = volumeSize;
+    }
 }

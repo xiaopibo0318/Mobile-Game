@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonEffect : MonoBehaviour
+public class titleAudioEffect : MonoBehaviour
 {
     public Button startGameButton;
     public Button loginButton;

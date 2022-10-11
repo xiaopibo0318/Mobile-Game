@@ -60,6 +60,7 @@ public class FlowerManager : MonoBehaviour
 
         if (index == 8)
         {
+            AudioManager.Instance.lotus("susscess");
             firstStep = false;
             Debug.Log("第一道關卡以解決");
             flowerUnactivate.SetActive(false);
@@ -73,6 +74,7 @@ public class FlowerManager : MonoBehaviour
 
         }else
         {
+            AudioManager.Instance.lotus("failed");
             Debug.Log("失敗");
         }
         index = 0;
