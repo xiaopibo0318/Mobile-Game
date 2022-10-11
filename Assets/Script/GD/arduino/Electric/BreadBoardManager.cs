@@ -61,7 +61,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         operateRange.AddBeginDragListener(OnOperateRangeBeginDrag);
         operateRange.AddEndDragListener(OnOperateRangeEndDrag);
 
-        nodes = new AStarNode[8, 10];
+        nodes = new AStarNode[myboard.GetBoardRow(), myboard.GetBoardCol()];
 
         for (int i = 0; i < myboard.GetBoardRow(); i++)
         {
