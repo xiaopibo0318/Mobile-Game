@@ -37,6 +37,7 @@ public class WiresawManager : MonoBehaviour
     bool textFinished;
     bool delayFinished;
     public bool isFinished;
+    private bool isSignal = false;
 
     private Coroutine rotateCoroutine = null;
 
@@ -62,8 +63,13 @@ public class WiresawManager : MonoBehaviour
 
     private void OnEnable()
     {
-        BookContentManager.Instance.ActivateKnowledge(0);
-        SiginalUI.Instance.SiginalText("手線鋸組裝知識\n已登入百科全書");
+        if (!isSignal)
+        {
+            SiginalUI.Instance.SiginalText("手線鋸組裝知識\n已登入百科全書");
+            BookContentManager.Instance.ActivateKnowledge(0);
+            isSignal = true;
+        }
+
     }
 
 

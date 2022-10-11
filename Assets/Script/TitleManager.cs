@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using UnityEngine.Video;
 
 public class TitleManager : MonoBehaviour
 {
@@ -18,6 +18,10 @@ public class TitleManager : MonoBehaviour
     [Header("標題介面")]
     [SerializeField] Button settingBegin;
 
+    [Header("影片管理")]
+    [SerializeField] VideoPlayer videoPlayer;
+
+
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -26,9 +30,14 @@ public class TitleManager : MonoBehaviour
         Init();
     }
 
+    private void Start()
+    {
+
+    }
+
     private void Init()
     {
-        settingBegin.onClick.AddListener(() => SettingManager.Instance.OpenSetting() );
+        settingBegin.onClick.AddListener(() => SettingManager.Instance.OpenSetting());
 
         for (int i = 0; i < roomListButton.Count; i++)
         {
@@ -66,7 +75,7 @@ public class TitleManager : MonoBehaviour
     private void StartMTKL()
     {
         TransiitionManager.Instance.GoToMTKL();
-        
+
     }
 
     private void StartGD()

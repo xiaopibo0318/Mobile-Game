@@ -23,6 +23,7 @@ public class BookContentManager : MonoBehaviour
     int currentID;
     public GameObject menu;
     bool nextPageFirst;
+    private bool isChooseFromMenu = true;
 
     public static BookContentManager Instance;
 
@@ -82,12 +83,19 @@ public class BookContentManager : MonoBehaviour
 
         if (nowKnowledge.Contains("sandpaper"))
         {
+            currentID += 2;
             if (currentID < SandPaperKnowledge.Length - 1)
             {
+                if (isChooseFromMenu)
+                {
+                    currentID = 0;
+                    ImgLeft.sprite = SandPaperKnowledge[currentID];
+                    ImgRight.sprite = SandPaperKnowledge[currentID + 1];
+                    isChooseFromMenu = false;
+                    return;
+                }
                 ImgLeft.sprite = SandPaperKnowledge[currentID];
                 ImgRight.sprite = SandPaperKnowledge[currentID + 1];
-                currentID += 2;
-                nextPageFirst = true;
             }
             if (currentID < 0 || currentID > SandPaperKnowledge.Length - 1)
             {
@@ -95,28 +103,35 @@ public class BookContentManager : MonoBehaviour
                 ImgLeft.color = new Color(255, 255, 255, 0f);
                 ImgRight.color = new Color(255, 255, 255, 0f);
                 nextPageFirst = false;
-
                 menu.SetActive(true);
+                isChooseFromMenu = true;
 
             }
         }
         else if (nowKnowledge.Contains("wiresaw"))
         {
+            currentID += 2;
             if (currentID < WireSawKnowledge.Length - 1)
             {
+                if (isChooseFromMenu)
+                {
+                    currentID = 0;
+                    ImgLeft.sprite = WireSawKnowledge[currentID];
+                    ImgRight.sprite = WireSawKnowledge[currentID + 1];
+                    isChooseFromMenu = false;
+                    return;
+                }
+                
                 ImgLeft.sprite = WireSawKnowledge[currentID];
                 ImgRight.sprite = WireSawKnowledge[currentID + 1];
-                currentID += 2;
-                nextPageFirst = true;
             }
             if (currentID < 0 || currentID > WireSawKnowledge.Length - 1)
             {
                 currentID = 0;
                 ImgLeft.color = new Color(255, 255, 255, 0f);
                 ImgRight.color = new Color(255, 255, 255, 0f);
-                nextPageFirst = false;
-
                 menu.SetActive(true);
+                isChooseFromMenu = true;
 
             }
         }
@@ -137,14 +152,12 @@ public class BookContentManager : MonoBehaviour
 
         if (nowKnowledge.Contains("sandpaper"))
         {
+            currentID -= 2;
             if (currentID > -1)
             {
+                
                 ImgLeft.sprite = SandPaperKnowledge[currentID];
                 ImgRight.sprite = SandPaperKnowledge[currentID + 1];
-                if (nextPageFirst)
-                    currentID -= 4;
-                else
-                    currentID -= 2;
             }
             if (currentID < 0 || currentID > SandPaperKnowledge.Length - 1)
             {
@@ -152,19 +165,17 @@ public class BookContentManager : MonoBehaviour
                 ImgLeft.color = new Color(255, 255, 255, 0f);
                 ImgRight.color = new Color(255, 255, 255, 0f);
                 menu.SetActive(true);
-
+                isChooseFromMenu = true;
             }
         }
         else if (nowKnowledge.Contains("wiresaw"))
         {
+            currentID -= 2;
             if (currentID > -1)
             {
+                
                 ImgLeft.sprite = WireSawKnowledge[currentID];
                 ImgRight.sprite = WireSawKnowledge[currentID + 1];
-                if (nextPageFirst)
-                    currentID -= 4;
-                else
-                    currentID -= 2;
             }
             if (currentID < 0 || currentID > WireSawKnowledge.Length - 1)
             {
@@ -172,7 +183,7 @@ public class BookContentManager : MonoBehaviour
                 ImgLeft.color = new Color(255, 255, 255, 0f);
                 ImgRight.color = new Color(255, 255, 255, 0f);
                 menu.SetActive(true);
-
+                isChooseFromMenu = true;
             }
         }
         //用過一次返回記得退掉。
