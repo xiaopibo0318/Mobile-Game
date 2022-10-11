@@ -9,11 +9,13 @@ public class Login : MonoBehaviour
     public InputField PasswordInput;
     public Button LoginButton;
 
+
     [System.Obsolete]
     void Start()
     {
         LoginButton.onClick.AddListener(() =>
         {
+            //AudioManager.Instance.clickButton();
             StartCoroutine(Main.Instance.Web.Login(UsernameInput.text, PasswordInput.text));
         });
 

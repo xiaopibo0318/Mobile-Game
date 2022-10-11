@@ -74,13 +74,16 @@ public class TitleManager : MonoBehaviour
 
     private void StartMTKL()
     {
+        AudioManager.Instance.clickButton("c");
         TransiitionManager.Instance.GoToMTKL();
-
+        
     }
 
     private void StartGD()
     {
+        AudioManager.Instance.clickButton("c");
         TransiitionManager.Instance.GoToGD();
+       
     }
 
     public void EnteringRoomList()

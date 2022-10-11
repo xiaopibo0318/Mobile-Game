@@ -3700,7 +3700,7 @@ MonoBehaviour:
   LotusButton: {fileID: 8300000, guid: 1b0f678a2aebcd347968d0a9c1029184, type: 3}
   ChangeState: {fileID: 8300000, guid: 3d4609a6a80ebc84dba47df9ced6b266, type: 3}
   WaterDrop: {fileID: 8300000, guid: 80fd5a9796104604394e99ab11c13ad2, type: 3}
-  walkOnGrass: {fileID: 0}
+  walkOnGrass: {fileID: 8300000, guid: bccb8147cfa8884418c7c294e46b1243, type: 3}
   WalkIndoor: {fileID: 8300000, guid: 66fbcc0190e0ba04b80c4ce369148620, type: 3}
   WalkOnWater: {fileID: 8300000, guid: 872c7ba4eff5fad46979e86c9c3108ef, type: 3}
   GeneralButton: {fileID: 8300000, guid: a484da4272349df43a77d6ee6f865abb, type: 3}
