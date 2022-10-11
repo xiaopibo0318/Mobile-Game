@@ -18,11 +18,13 @@ public class setActiveForRegister : MonoBehaviour
 
         RegisterButton.onClick.AddListener(() =>
         {
+            //AudioManager.Instance.clickButton();
             LoginPanel.SetActive(false);
             RegisterPanel.SetActive(true);
         });
         BackToLoginButton.onClick.AddListener(() =>
         {
+            //AudioManager.Instance.clickButton();
             LoginPanel.SetActive(true);
             RegisterPanel.SetActive(false);
         });

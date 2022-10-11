@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class AudioManager : MonoBehaviour
 
     [Header("環境音效")]
     private AudioSource environmentMusic;
+
+    [Header("按鍵音效")]
+    private AudioSource generalButton;
+    private AudioSource confirmButton;
+
 
 
     public static AudioManager Instance;
@@ -37,6 +43,7 @@ public class AudioManager : MonoBehaviour
         InitAuudio();
         InitMTKL();
         StartMTKLAudio();
+        ButtonEffect();
     }
     //程式開始執行區--------------------------------------
 
@@ -91,6 +98,30 @@ public class AudioManager : MonoBehaviour
         environmentMusic.clip = nowAudioClip;
     }
     //ChangeEnviormentMusic(audioResource.Forest);
+    private void ButtonEffect() //初始化登入系統按鍵音效
+    {
+        generalButton = gameObject.AddComponent<AudioSource>();
+        generalButton.clip = audioResource.GeneralButton;
+        generalButton.loop = false;
+        generalButton.volume = 0.1f;
+
+        confirmButton = gameObject.AddComponent<AudioSource>();
+        confirmButton.clip = audioResource.ConfirmButton;
+        confirmButton.loop = false;
+        confirmButton.volume = 1.0f;
+    }
+
+    public void clickButton(string buttonName)
+    {
+        if (buttonName == "g")
+        {
+            generalButton.Play();
+        }
+        else if (buttonName == "c")
+        {
+            confirmButton.Play();
+        }
+    }
 
 
     //若不需要這個音效了可以把它關掉

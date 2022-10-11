@@ -15,6 +15,7 @@ public class Register : MonoBehaviour
     {
         SubmitButton.onClick.AddListener(() =>
         {
+            //AudioManager.Instance.clickButton();
             StartCoroutine(Main.Instance.Web.RegisterUser(UsernameInput.text, PasswordInput.text , EmailInput.text));
         });
     }
