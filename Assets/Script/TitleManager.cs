@@ -20,8 +20,7 @@ public class TitleManager : MonoBehaviour
 
     [Header("影片管理")]
     [SerializeField] VideoPlayer videoPlayer;
-
-
+    private static string storyVideoPath = Application.streamingAssetsPath + "Video/Westpath Initial";
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -32,6 +31,8 @@ public class TitleManager : MonoBehaviour
 
     private void Start()
     {
+        //videoPlayer.gameObject.SetActive(true);
+        //videoPlayer.url = storyVideoPath;
 
     }
 
