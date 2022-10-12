@@ -15,7 +15,7 @@ public class GameCenter : MonoBehaviour
 
     private void OnEnable()
     {
-        //SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1);
     }
 
 
@@ -23,7 +23,7 @@ public class GameCenter : MonoBehaviour
     public void EndGame()
     {
         SceneManager.LoadScene(5);
-        
+
     }
 
 
@@ -33,6 +33,6 @@ public class GameCenter : MonoBehaviour
     }
 
 
-    
+
 
 }

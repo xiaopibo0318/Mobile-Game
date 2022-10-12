@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.Events;
 
 public class TitleManager : Singleton<TitleManager>
 {
@@ -20,10 +21,12 @@ public class TitleManager : Singleton<TitleManager>
     [Header("影片管理")]
     [SerializeField] VideoPlayer videoPlayer;
     private static string storyVideoPath = Application.streamingAssetsPath + "/Video/Westpath Initial.mp4";
+    [SerializeField] private Button skipButton;
 
     [Header("介紹列表")]
     [SerializeField] private Button storyButton;
     [SerializeField] private Button introduceButton;
+    private bool introduceIsOpne;
 
     [Header("返回按鈕")]
     [SerializeField] private Button GoBackIntroduceButton;
@@ -37,6 +40,7 @@ public class TitleManager : Singleton<TitleManager>
 
     private void PlayStoryVideo()
     {
+        videoPlayer.gameObject.SetActive(true);
         videoPlayer.Play();
     }
     private void VideoEndEvent(VideoPlayer vp)
@@ -44,22 +48,26 @@ public class TitleManager : Singleton<TitleManager>
         videoPlayer.targetTexture.Release();
     }
 
-    private void OpenIntrodce()
+    private void SkipVideo()
     {
+        videoPlayer.Stop();
+        videoPlayer.targetTexture.Release();
+        videoPlayer.gameObject.SetActive(false);
 
     }
-
 
     private void IntroduceReset()
     {
         storyButton.onClick.AddListener(PlayStoryVideo);
-        introduceButton.onClick.AddListener(OpenIntrodce);
-        GoBackIntroduceButton.onClick.AddListener(() => MenuManager.Instance.OpenMenu("title"));
+        introduceButton.onClick.AddListener(OpenIntroduce);
+        GoBackIntroduceButton.onClick.AddListener(CloseIntroduce);
+        skipButton.onClick.AddListener(SkipVideo);
         videoPlayer.gameObject.SetActive(true);
         videoPlayer.targetTexture.Release();
         videoPlayer.url = storyVideoPath;
         videoPlayer.Prepare();
         videoPlayer.loopPointReached += VideoEndEvent;
+        videoPlayer.gameObject.SetActive(false);
     }
 
     private void Init()
@@ -73,8 +81,18 @@ public class TitleManager : Singleton<TitleManager>
         }
         intoRoom.SetActive(false);
         startGameButton.gameObject.SetActive(false);
-        openIntroduceButton.onClick.AddListener(() => MenuManager.Instance.OpenMenu("introduce"));
+        openIntroduceButton.onClick.AddListener(OpenIntroduce);
+    }
 
+    private void OpenIntroduce()
+    {
+        MenuManager.Instance.OpenMenu("introduce");
+    }
+
+    private void CloseIntroduce()
+    {
+        MenuManager.Instance.OpenMenu("title");
+        videoPlayer.gameObject.SetActive(false);
     }
 
 

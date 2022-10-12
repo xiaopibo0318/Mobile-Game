@@ -167,7 +167,7 @@ public class playerStatus
     public string name = "myName"; //Main.Instance.Web.GetUserName;
     public int gameStatus;
     public int totalTime;
-    
+    public int levelChose;
 
     public int timeMin;
     public int timeSec;

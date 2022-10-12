@@ -67,7 +67,7 @@ public class SettingManager : MonoBehaviour
     {
         settingObject.SetActive(false);
         
-        if(SceneManager.GetActiveScene().buildIndex != 0)
+        if(SceneManager.GetActiveScene().buildIndex != 1)
         {
             CanvasManager.Instance.openCanvas("original");
         }

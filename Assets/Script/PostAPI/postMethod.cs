@@ -14,7 +14,7 @@ public class PostMethod : MonoBehaviour
     private string playerEmail;
     private int lastMin;
     private int lastSec;
-    private int totalSeconds;
+    public int totalSeconds { get; set; }
 
     public static PostMethod Instance;
 
