@@ -5,10 +5,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public class TitleManager : MonoBehaviour
+public class TitleManager : Singleton<TitleManager>
 {
-    public static TitleManager Instance;
-
     [Header("分房列表")]
     [SerializeField] List<Button> roomListButton;
     [SerializeField] Button startGameButton;
@@ -17,23 +15,51 @@ public class TitleManager : MonoBehaviour
 
     [Header("標題介面")]
     [SerializeField] Button settingBegin;
+    [SerializeField] Button openIntroduceButton;
 
     [Header("影片管理")]
     [SerializeField] VideoPlayer videoPlayer;
-    private static string storyVideoPath = Application.streamingAssetsPath + "Video/Westpath Initial";
-    void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(this);
+    private static string storyVideoPath = Application.streamingAssetsPath + "/Video/Westpath Initial.mp4";
 
-        Init();
-    }
+    [Header("介紹列表")]
+    [SerializeField] private Button storyButton;
+    [SerializeField] private Button introduceButton;
+
+    [Header("返回按鈕")]
+    [SerializeField] private Button GoBackIntroduceButton;
+
 
     private void Start()
     {
-        //videoPlayer.gameObject.SetActive(true);
-        //videoPlayer.url = storyVideoPath;
+        Init();
+        IntroduceReset();
+    }
 
+    private void PlayStoryVideo()
+    {
+        videoPlayer.Play();
+    }
+    private void VideoEndEvent(VideoPlayer vp)
+    {
+        videoPlayer.targetTexture.Release();
+    }
+
+    private void OpenIntrodce()
+    {
+
+    }
+
+
+    private void IntroduceReset()
+    {
+        storyButton.onClick.AddListener(PlayStoryVideo);
+        introduceButton.onClick.AddListener(OpenIntrodce);
+        GoBackIntroduceButton.onClick.AddListener(() => MenuManager.Instance.OpenMenu("title"));
+        videoPlayer.gameObject.SetActive(true);
+        videoPlayer.targetTexture.Release();
+        videoPlayer.url = storyVideoPath;
+        videoPlayer.Prepare();
+        videoPlayer.loopPointReached += VideoEndEvent;
     }
 
     private void Init()
@@ -47,6 +73,8 @@ public class TitleManager : MonoBehaviour
         }
         intoRoom.SetActive(false);
         startGameButton.gameObject.SetActive(false);
+        openIntroduceButton.onClick.AddListener(() => MenuManager.Instance.OpenMenu("introduce"));
+
     }
 
 
@@ -77,14 +105,14 @@ public class TitleManager : MonoBehaviour
     {
         AudioManager.Instance.clickButton("c");
         TransiitionManager.Instance.GoToMTKL();
-        
+
     }
 
     private void StartGD()
     {
         AudioManager.Instance.clickButton("c");
         TransiitionManager.Instance.GoToGD();
-       
+
     }
 
     public void EnteringRoomList()
