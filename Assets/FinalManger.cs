@@ -44,6 +44,11 @@ public class FinalManger : Singleton<FinalManger>
         awardSignal.sprite = awardSprites[score];
     }
 
+    private void StartText()
+    {
+        coroutine = StartCoroutine(RollText());
+    }
+
     private void TextUpdate(string name = "xiaopibo", string score = "29:30", string location = "崑崙山")
     {
         //mainText.fontSize = 70;
@@ -54,12 +59,21 @@ public class FinalManger : Singleton<FinalManger>
         mainText.text += "恭喜您獲得以下獎章\n";
         mainText.text += "\n\n\n\n\n";
         mainText.fontSize = 50;
-        mainText.text += "《西境山海〉 Cast\n";
-        mainText.text += "程式設計： 333,444\n";
-        mainText.text += "美術設計： 111\n";
-        mainText.text += "音樂設計： 666\n";
-        mainText.text += "獎章系統： 777\n";
-        coroutine = StartCoroutine(RollText());
+        mainText.text += "《西境山海》 Cast\n";
+        mainText.text += "程式設計： 徐存昇、許皓陞\n";
+        mainText.text += "美術設計： 許聿銘\n";
+        mainText.text += "場景搭建： 張子濰\n";
+        mainText.text += "教材設計： 卓育霆\n";
+        
+        mainText.text += "\n\n\n\n\n";
+        mainText.text += "《特別感謝》\n";
+        mainText.text += "音樂設計： 廖于任\n";
+        mainText.text += "獎章系統： 劉威成\n";
+        mainText.text += "技術指導： 王厚竣\n\n";
+        mainText.text += "指導老師： 蕭顯勝\n";
+        mainText.text += "\n\n\n\n\n";
+        mainText.text += "《西境山海製作委員會》2022製作";
+        
     }
 
     IEnumerator RollText()
