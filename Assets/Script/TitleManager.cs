@@ -27,6 +27,11 @@ public class TitleManager : Singleton<TitleManager>
     [SerializeField] private Button storyButton;
     [SerializeField] private Button introduceButton;
     private bool introduceIsOpne;
+    private Sprite[] introduceSprites;
+    [SerializeField] private Image introduceImage;
+    private int introduceIndex;
+    [SerializeField] private Button nextPageButton;
+    [SerializeField] private Button backPageButton;
 
     [Header("返回按鈕")]
     [SerializeField] private Button GoBackIntroduceButton;
@@ -36,6 +41,50 @@ public class TitleManager : Singleton<TitleManager>
     {
         Init();
         IntroduceReset();
+        introduceSprites = Resources.LoadAll<Sprite>("Introduce");
+        introduceIndex = -1;
+        introduceImage.gameObject.SetActive(false);
+        nextPageButton.onClick.AddListener(NextPage);
+        backPageButton.onClick.AddListener(BackPage);
+        nextPageButton.gameObject.SetActive(false);
+        backPageButton.gameObject.SetActive(false);
+    }
+
+    private void OpenIntroduceImage()
+    {
+        introduceIndex = 0;
+        introduceImage.gameObject.SetActive(true);
+        introduceImage.sprite = introduceSprites[introduceIndex];
+        nextPageButton.gameObject.SetActive(true);
+        backPageButton.gameObject.SetActive(true);
+    }
+
+    private void NextPage()
+    {
+        introduceIndex += 1;
+        if (introduceIndex >= introduceSprites.Length)
+        {
+            introduceImage.gameObject.SetActive(false);
+            nextPageButton.gameObject.SetActive(false);
+            backPageButton.gameObject.SetActive(false);
+            introduceIndex = -1;
+            return;
+        }
+        introduceImage.sprite = introduceSprites[introduceIndex];
+    }
+
+    private void BackPage()
+    {
+        introduceIndex -= 1;
+        if (introduceIndex < 0)
+        {
+            introduceImage.gameObject.SetActive(false);
+            nextPageButton.gameObject.SetActive(false);
+            backPageButton.gameObject.SetActive(false);
+            introduceIndex = -1;
+            return;
+        }
+        introduceImage.sprite = introduceSprites[introduceIndex];
     }
 
     private void PlayStoryVideo()
@@ -59,7 +108,7 @@ public class TitleManager : Singleton<TitleManager>
     private void IntroduceReset()
     {
         storyButton.onClick.AddListener(PlayStoryVideo);
-        introduceButton.onClick.AddListener(OpenIntroduce);
+        introduceButton.onClick.AddListener(OpenIntroduceImage);
         GoBackIntroduceButton.onClick.AddListener(CloseIntroduce);
         skipButton.onClick.AddListener(SkipVideo);
         videoPlayer.gameObject.SetActive(true);
