@@ -14,7 +14,7 @@ public class PostMethod : MonoBehaviour
     private string playerEmail;
     private int lastMin;
     private int lastSec;
-    public int totalSeconds { get; set; }
+    public int totalSeconds { get; set ; }
 
     public static PostMethod Instance;
 
@@ -38,7 +38,8 @@ public class PostMethod : MonoBehaviour
 
     private void OnEnable()
     {
-        Settlement();
+        //Settlement();
+        totalSeconds = 1799;
     }
 
     void postData() => StartCoroutine(PostData_Coroutine());
