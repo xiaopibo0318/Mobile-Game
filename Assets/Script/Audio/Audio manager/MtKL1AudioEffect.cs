@@ -9,6 +9,9 @@ public class MtKL1AudioEffect : MonoBehaviour
     public Button backPackButton;
     public Button bookButton;
     public Button exitBook;
+    public Button cache;
+    public Button interective;
+    public Button net;
     
 
     [Header("蓮花")]
@@ -44,7 +47,19 @@ public class MtKL1AudioEffect : MonoBehaviour
         {
             AudioManager.Instance.clickButton("g");
         });
-       
+        cache.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.clickButton("g");
+        });
+        interective.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.clickButton("popUp");
+        });
+        net.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.clickButton("salvage");
+        });
+
         //------------------------------------------------
 
         //蓮花相關音效

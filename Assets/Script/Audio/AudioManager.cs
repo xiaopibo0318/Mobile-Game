@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource generalButton;
     private AudioSource confirmButton;
     private AudioSource popUp;
+    private AudioSource salvageButton;
 
 
 
@@ -151,6 +152,11 @@ public class AudioManager : MonoBehaviour
         popUp.loop = false;
         popUp.volume = 0.1f;
 
+        salvageButton = gameObject.AddComponent<AudioSource>();
+        salvageButton.clip = audioResource.Salvage;
+        salvageButton.loop = false;
+        salvageButton.volume = 0.1f;
+
     }
 
     public void clickButton(string buttonName)
@@ -162,6 +168,14 @@ public class AudioManager : MonoBehaviour
         else if (buttonName == "c")
         {
             confirmButton.Play();
+        }
+        else if (buttonName == "popUp")
+        {
+            popUp.Play();
+        }
+        else if (buttonName == "salvage")
+        {
+            salvageButton.Play();
         }
     }
 
