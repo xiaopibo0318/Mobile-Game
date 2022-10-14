@@ -9,21 +9,24 @@ public class SiginalUI : MonoBehaviour
     public Text siginalText;
     public GameObject confirm;
     public GameObject dontDo;
+    public GameObject panel;
 
     public static SiginalUI Instance;
     public void Awake()
     {
         Instance = this;
         ResetSiginal();
-        
+
     }
 
 
-    public void SiginalText(string myText)
+    public void SiginalText(string myText, int signalTime = 3, int textFontSize = 50)
     {
         siginalContent.SetActive(true);
         siginalText.text = myText;
-        StartCoroutine(CloseSignal(3));
+        siginalText.fontSize = textFontSize;
+        panel.SetActive(true);
+        StartCoroutine(CloseSignal(signalTime));
     }
 
     public void TextInterectvie(string myText)
@@ -51,6 +54,7 @@ public class SiginalUI : MonoBehaviour
         siginalText.text = "";
         confirm.SetActive(false);
         dontDo.SetActive(false);
+        panel.SetActive(false);
     }
 
 }

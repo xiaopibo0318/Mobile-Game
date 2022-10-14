@@ -50,12 +50,9 @@ public class SandPaperOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+        ParticleManager.Instance.WoodParticleDisable();
         if (eventData.pointerCurrentRaycast.gameObject.name == "Circle")
         {
-            Debug.Log(1);
-            //transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);
-            //transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
             if(stayTime >= 5)
             {
                 Debug.Log("成功砂磨");
@@ -63,7 +60,6 @@ public class SandPaperOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 Destroy(gameObject);
                 stayTime = 0;
             }
- 
         }
         else
         {

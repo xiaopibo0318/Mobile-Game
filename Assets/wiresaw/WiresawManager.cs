@@ -69,6 +69,12 @@ public class WiresawManager : MonoBehaviour
             BookContentManager.Instance.ActivateKnowledge(0);
             isSignal = true;
         }
+        else
+        {
+            SiginalUI.Instance.SiginalText("已重製手線鋸狀態\n請重新開始組裝");
+        }
+
+
 
     }
 
@@ -234,6 +240,7 @@ public class WiresawManager : MonoBehaviour
         myStressSlider.gameObject.SetActive(true);
         myButton.gameObject.SetActive(true);
         timerText.gameObject.SetActive(true);
+        timerText.text = "10";
         StartCoroutine(StartStressGame());
     }
 
@@ -243,6 +250,15 @@ public class WiresawManager : MonoBehaviour
         var thisTime = 10f;
         myStressSlider.value = 10;
         var addKnifeSuccess = false;
+
+        SiginalUI.Instance.SiginalText("請配合左下角的按鍵\n將上方壓力值控制在中間時\n將鋸條拖進去", 10,40);
+        float signalTIme = 10;
+        while (signalTIme > 0)
+        {
+            yield return null; //延遲 一秒
+            signalTIme -= Time.deltaTime;
+
+        }
         while (thisTime > 0)
         {
             timerText.text = string.Format("{0}", thisTime.ToString("f2")).Replace(".", ":");

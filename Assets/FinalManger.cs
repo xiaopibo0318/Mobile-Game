@@ -64,16 +64,17 @@ public class FinalManger : Singleton<FinalManger>
         mainText.text += "美術設計： 許聿銘\n";
         mainText.text += "場景搭建： 張子濰\n";
         mainText.text += "教材設計： 卓育霆\n";
-        
+        mainText.text += "劇情設計： 徐存昇、張子濰、卓育霆";
+
         mainText.text += "\n\n\n\n\n";
         mainText.text += "《特別感謝》\n";
         mainText.text += "音樂設計： 廖于任\n";
         mainText.text += "獎章系統： 劉威成\n";
-        mainText.text += "技術指導： 王厚竣\n\n";
+        mainText.text += "技術指導： Apple Wang\n\n";
         mainText.text += "指導老師： 蕭顯勝\n";
         mainText.text += "\n\n\n\n\n";
         mainText.text += "《西境山海製作委員會》2022製作";
-        
+
     }
 
     IEnumerator RollText()

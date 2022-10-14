@@ -67,33 +67,49 @@ public class ballGameManager : MonoBehaviour
         CheckBallInBag();
     }
 
+    private void OnEnable()
+    {
+        SiginalUI.Instance.SiginalText("將球滾到右下角的洞裡\n好像會發生什麼事情");
+    }
 
 
     public void StartGame()
     {
+        int a = 0;
+        for (int i = 0; i < myBag.itemList.Count; i++)
+        {
+            if (myBag.itemList[i] == null)
+            {
+                a += 1;
+            }
+        }
+        if (a == 0)
+        {
+            SiginalUI.Instance.SiginalText("背包已滿\n請清空一格再進行");
+            return;
+        }
+
         if (nowType != 0)
         {
             if (!isStart)
             {
-
+                //if (ballType[nowType - 1] == null)
+                //{
+                //    cacheVisable.Instance.siginalSomething("還沒選擇球球喔");
+                //    return;
+                //}
                 InventoryManager.Instance.SubItem(GetNowBall(nowType));
-                if(ballType[nowType - 1] == null)
-                {
-                    cacheVisable.Instance.siginalSomething("還沒選擇球球喔");
-                    return;
-                }
-                ballType[nowType-1].SetActive(true);
+                ballType[nowType - 1].SetActive(true);
                 ResetPosition();
-                ballType[nowType-1].GetComponent<Rigidbody2D>().gravityScale = 20;
+                ballType[nowType - 1].GetComponent<Rigidbody2D>().gravityScale = 20;
                 isStart = true;
             }
         }
         else
         {
-            //之後要換大字
-            cacheVisable.Instance.siginalSomething("還沒選擇球球喔");
+            SiginalUI.Instance.SiginalText("尚未選擇球的種類");
         }
-        
+
     }
 
     public Item GetNowBall(int NowType)
@@ -115,7 +131,7 @@ public class ballGameManager : MonoBehaviour
             topLeft = true;
         else
             topLeft = false;
- 
+
     }
     public void rotateRightUP(bool goRotate)
     {
@@ -145,11 +161,11 @@ public class ballGameManager : MonoBehaviour
     public void ReStartGame()
     {
         isStart = false;
-        if(nowType != 0)
+        if (nowType != 0)
         {
             ballType[nowType - 1].GetComponent<Rigidbody2D>().gravityScale = 0;
         }
-            
+
         ResetPosition();
     }
 
@@ -160,9 +176,9 @@ public class ballGameManager : MonoBehaviour
         downGroundRotateNum = 0;
         if (nowType != 0)
         {
-            ballType[nowType-1].GetComponent<RectTransform>().localPosition = new Vector3(-205, 369, 0);
+            ballType[nowType - 1].GetComponent<RectTransform>().localPosition = new Vector3(-205, 369, 0);
         }
-       
+
         upGround.transform.rotation = Quaternion.Euler(0, 0, topGroundRotateNum);
         downGround.transform.rotation = Quaternion.Euler(0, 0, topGroundRotateNum);
     }
@@ -194,12 +210,13 @@ public class ballGameManager : MonoBehaviour
             downGround.transform.rotation = Quaternion.Euler(0, 0, downGroundRotateNum);
         }
         else return;
-        
+
     }
 
 
     public void EndGame()
     {
+
         InventoryManager.Instance.AddNewItem(Key);
     }
 
@@ -233,10 +250,11 @@ public class ballGameManager : MonoBehaviour
 
     public void openBackPack()
     {
-        if(Content.activeInHierarchy== true)
+        if (Content.activeInHierarchy == true)
         {
             Content.SetActive(false);
-        } else
+        }
+        else
         {
             Content.SetActive(true);
         }
@@ -261,5 +279,5 @@ public class ballGameManager : MonoBehaviour
         else panel3.SetActive(true);
     }
 
-   
+
 }
