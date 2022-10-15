@@ -41,7 +41,7 @@ public class InterectiveManager : MonoBehaviour
 
     public void closeAllIcon()
     {
-        for (int i = 0; i < interectiveList.Length; i++) 
+        for (int i = 0; i < interectiveList.Length; i++)
         {
             CloseIcon(interectiveList[i]);
         }
@@ -76,7 +76,8 @@ public class InterectiveManager : MonoBehaviour
 
     public void WhichITouch(string myTouch)
     {
-        switch(myTouch){
+        switch (myTouch)
+        {
             case "wiresawInterective":
                 nextWay = 1;
                 break;
@@ -149,7 +150,7 @@ public class InterectiveManager : MonoBehaviour
 
         }
 
- 
+
     }
 
     /// <summary>
@@ -236,7 +237,8 @@ public class InterectiveManager : MonoBehaviour
                 InventoryManager.Instance.AddNewItem(myItemList[5]);
                 break;
             case 221:
-                SiginalUI.Instance.SiginalText("你發現了靈果以及\n西王母的財產");
+                //通關
+                Player.Instance.myStatus.UpdateBookClick();
                 GameCenter.Instance.EndGame();
                 break;
 

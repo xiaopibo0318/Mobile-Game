@@ -45,7 +45,7 @@ public class itemUIManager : MonoBehaviour
         Instance = this;
     }
 
-    private void OnEnable()
+    private void FixedUpdate()
     {
         if (SceneManager.GetActiveScene().buildIndex == 2)
         {
@@ -68,7 +68,7 @@ public class itemUIManager : MonoBehaviour
     public void settingLove()
     {
         Instantiate(lovePrefab, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z), Quaternion.identity);
-        InventoryManager.Instance.SubItem(Love,1);
+        InventoryManager.Instance.SubItem(Love, 1);
         CanvasManager.Instance.openCanvas("original");
     }
 
@@ -76,24 +76,26 @@ public class itemUIManager : MonoBehaviour
     {
         InventoryManager.Instance.SubItem(wood, 1);
         InventoryManager.Instance.AddNewItem(woodBoard);
-        
-        
+
+
     }
 
     public void UsingWiresawToCut()
     {
         CanvasManager.Instance.openCanvas("cuttingWood");
     }
-    
+
     public string GetWhichBall()
     {
         if (ball0.activeInHierarchy)
         {
             return ball0.tag;
-        }else if (ball1.activeInHierarchy)
+        }
+        else if (ball1.activeInHierarchy)
         {
             return ball1.tag;
-        }else if (ball2.activeInHierarchy)
+        }
+        else if (ball2.activeInHierarchy)
         {
             return ball2.tag;
         }
@@ -105,7 +107,7 @@ public class itemUIManager : MonoBehaviour
         ///這個一定要先Get
         SandPaperManager.Instance.NowBallType(GetWhichBall());
         CanvasManager.Instance.openCanvas("SandPaperBall");
-        
+
     }
 
 
@@ -123,5 +125,5 @@ public class itemUIManager : MonoBehaviour
         treasureBox.SetActive(true);
     }
 
-    
+
 }

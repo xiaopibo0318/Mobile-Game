@@ -168,6 +168,7 @@ public class playerStatus
     public int gameStatus;
     public int totalTime;
     public int levelChoose;
+    public int bookClick;
 
     public int timeMin;
     public int timeSec;
@@ -209,6 +210,10 @@ public class playerStatus
 
     }
 
+    public void UpdateBookClick()
+    {
+        this.bookClick = UIManager.Instance.bookClick;
+    }
     /*public void PlayerInformation()
     {
         name = Main.Instance.Web.GetUserName;

@@ -117,7 +117,7 @@ public class Web : MonoBehaviour
                 GetUserEmail = GetValueData(usersData[i], "email:");
                 Debug.Log(GetUserName);
                 Debug.Log(GetUserEmail);
-
+                Player.Instance.myStatus.UpdateEmailAndName();
             }
             i += 1;
         }

@@ -14,6 +14,7 @@ public class PostMethod : MonoBehaviour
     private string playerEmail;
     public int lastMin;
     public int lastSec;
+    private int bookClick;
     public int totalSeconds { get; set; }
 
     public static PostMethod Instance;
@@ -47,6 +48,7 @@ public class PostMethod : MonoBehaviour
         lastSec = Player.Instance.myStatus.timeSec;
         playerName = Player.Instance.myStatus.name;
         playerEmail = Player.Instance.myStatus.emailAddress;
+        bookClick = Player.Instance.myStatus.bookClick;
         totalSeconds = 4500 - (lastMin * 60 + lastSec);
         postData();
     }
@@ -60,6 +62,7 @@ public class PostMethod : MonoBehaviour
         form.AddField("username", playerName);
         form.AddField("email", playerEmail);
         form.AddField("second", totalSeconds);
+        form.AddField("clickCount", bookClick);
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
@@ -67,16 +70,16 @@ public class PostMethod : MonoBehaviour
             if (request.isNetworkError)
             {
                 Debug.Log(1);
-                outPutArea.text = request.error;
+                //outPutArea.text = request.error;
             }
             else if (request.isHttpError)
             {
                 Debug.Log(2);
-                outPutArea.text = request.error;
+                //outPutArea.text = request.error;
             }
             else
             {
-                outPutArea.text = request.downloadHandler.text;
+                //outPutArea.text = request.downloadHandler.text;
             }
             Debug.Log(request.error);
             Debug.Log(request.downloadHandler);

@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
 
     public static UIManager Instance;
     bool book_open;
-
+    public int bookClick { get; set; }
     [SerializeField] private Button settingButton;
 
     private void Awake()
@@ -31,11 +31,12 @@ public class UIManager : MonoBehaviour
             Book_2.SetActive(false);
         }
 
+        bookClick = 0;
         book_open = false;
-       
+
 
     }
-    
+
 
     public void OnClickBook()
     {
@@ -53,6 +54,7 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("開起書來");
             Book_2.SetActive(true);
+            bookClick++;
             _open = true;
         }
         book_open = _open;

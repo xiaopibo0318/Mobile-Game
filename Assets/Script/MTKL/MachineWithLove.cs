@@ -26,7 +26,7 @@ public class MachineWithLove : MonoBehaviour
         radius = gameObject.GetComponent<CircleCollider2D>().radius;
         pos_x = gameObject.GetComponent<Transform>().position.x;
         pos_y = gameObject.GetComponent<Transform>().position.y;
-        
+
     }
 
     private void FixedUpdate()
@@ -36,7 +36,7 @@ public class MachineWithLove : MonoBehaviour
         {
             float a = love.transform.position.x;
             float b = love.transform.position.y;
-            if (Mathf.Abs(a - pos_x) + Mathf.Abs(b - pos_y) < radius/10)
+            if (Mathf.Abs(a - pos_x) + Mathf.Abs(b - pos_y) < radius / 10)
             {
                 isElectric = true;
             }
@@ -49,6 +49,8 @@ public class MachineWithLove : MonoBehaviour
             isElectric = false;
             //Debug.Log("場上沒有Love");
         }
+
+        //Debug.Log("電力狀態：" + isElectric);
     }
 
 
