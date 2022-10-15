@@ -45,9 +45,9 @@ public class itemUIManager : MonoBehaviour
         Instance = this;
     }
 
-    private void FixedUpdate()
+    private void OnEnable()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 2)
         {
             if (MachineWithLove.Instance.GetIsElectric())
             {
@@ -55,7 +55,7 @@ public class itemUIManager : MonoBehaviour
             }
             else interectiveWood.SetActive(false);
         }
-        
+
 
         if (myBag.itemList.Contains(wiresaw))
         {

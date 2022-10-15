@@ -38,6 +38,7 @@ public class DialogueMTKL : Singleton<DialogueMTKL>
 
     public void ChangeChatStatus()
     {
+        if (story == null) return;
         var gameStatus = (int)story.variablesState["gameStatus"];
         var chatStatus = (int)story.variablesState["chatStatus"];
 

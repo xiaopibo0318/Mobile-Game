@@ -11,6 +11,7 @@ public class WiresawManager : MonoBehaviour
     private Button myButton;
     private bool isStart;
     [SerializeField] private Text timerText;
+    private bool firstUse = true;
 
     [Header("螺絲")]
     private const float rotateTarget = 540;
@@ -53,8 +54,8 @@ public class WiresawManager : MonoBehaviour
     {
         Instance = this;
         GetTextFromFile(textFile);
-
-        myButton = transform.Find("Stress/click").GetComponent<Button>();
+        firstUse = true;
+        myButton = transform.Find("Panel/Stress/click").GetComponent<Button>();
         myButton.onClick.AddListener(delegate () { buttonOnClick(); });
         ResetWireSaw();
         //StartMyGame();
@@ -246,19 +247,25 @@ public class WiresawManager : MonoBehaviour
 
     IEnumerator StartStressGame()
     {
-        var myRange = new List<float>(8) { 0.3f, 0.6f, 0.9f, 0.9f, 3f, 0.88f, 0.4f, 2f };
+        var myRange = new List<float>(8) { 0.3f, 0.6f, 0.9f, 0.9f, 3f, 8.8f, 0.4f, 2f };
         var thisTime = 10f;
         myStressSlider.value = 10;
         var addKnifeSuccess = false;
 
-        SiginalUI.Instance.SiginalText("請配合左下角的按鍵\n將上方壓力值控制在中間時\n將鋸條拖進去", 10,40);
-        float signalTIme = 10;
-        while (signalTIme > 0)
+        if (firstUse)
         {
-            yield return null; //延遲 一秒
-            signalTIme -= Time.deltaTime;
+            SiginalUI.Instance.SiginalText("請配合左下角的按鍵\n將上方壓力值控制在中間時\n將鋸條拖進去", 10, 40);
+            firstUse = false;
+            float signalTIme = 10;
+            while (signalTIme > 0)
+            {
+                yield return null; //延遲 一秒
+                signalTIme -= Time.deltaTime;
 
+            }
         }
+
+        
         while (thisTime > 0)
         {
             timerText.text = string.Format("{0}", thisTime.ToString("f2")).Replace(".", ":");

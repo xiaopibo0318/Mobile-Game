@@ -15,9 +15,14 @@ public class FinalManger : Singleton<FinalManger>
     private void Start()
     {
         CaculateScore();
-        TextUpdate();
+        string timeText = ((int)totalTime / 60).ToString() + "：" + ((int)totalTime % 60).ToString();
+        TextUpdate(Player.Instance.myStatus.name, timeText);
     }
 
+    private void OnEnable()
+    {
+        StartText();
+    }
 
     /// <summary>
     /// 共 75分鐘 4500秒
@@ -39,7 +44,7 @@ public class FinalManger : Singleton<FinalManger>
         {
             level = 2;
         }
-        int sceneIndex = 2; //Player.Instance.myStatus.levelChose;
+        int sceneIndex = Player.Instance.myStatus.levelChoose;
         int score = (sceneIndex - 2) + level * 3;
         awardSignal.sprite = awardSprites[score];
     }
@@ -51,8 +56,16 @@ public class FinalManger : Singleton<FinalManger>
 
     private void TextUpdate(string name = "xiaopibo", string score = "29:30", string location = "崑崙山")
     {
-        //mainText.fontSize = 70;
+
         mainText.text = "";
+
+        mainText.text += "你發現了崑崙山失竊的靈果\n以及西王母的資產\n";
+        mainText.text += "這是西王母的保險櫃\n";
+        mainText.text += "原來靈果並不是無緣故得消失\n";
+        mainText.text += "而是西王母藏起來了\n";
+        mainText.text += "\n\n\n\n\n";
+        //mainText.fontSize = 70;
+
         mainText.text += "恭喜玩家" + name + "\n";
         mainText.text += "用時 " + score + " 通關 " + location + "\n";
         mainText.text += "\n\n\n";
@@ -79,11 +92,12 @@ public class FinalManger : Singleton<FinalManger>
 
     IEnumerator RollText()
     {
+        float textSpeed = 50;
         RectTransform moveContent = mainText.gameObject.GetComponentInParent<RectTransform>();
         var targetPos = moveContent.position.y;
         while (targetPos < 2000)
         {
-            targetPos += 100 * Time.deltaTime;
+            targetPos += textSpeed * Time.deltaTime;
             yield return null;
 
             moveContent.position = new Vector2(mainText.gameObject.transform.position.x, targetPos);

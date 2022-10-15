@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class Player : Singleton<Player> , ISaveable
+public class Player : Singleton<Player>, ISaveable
 {
     public float myspeed;
-    
+
     Animator myAnime;
     public Rigidbody2D myRigid;
     Camera viewCamera;
@@ -19,7 +19,7 @@ public class Player : Singleton<Player> , ISaveable
     [SerializeField] GameObject[] PlayerStyle;
 
     public playerStatus myStatus;
-    
+
 
 
     public void Start()
@@ -52,8 +52,8 @@ public class Player : Singleton<Player> , ISaveable
         //float b = Input.GetAxisRaw("Vertical");
 
         velocity = new Vector3(a, 0, b);
-        
-        
+
+
 
         if (a < 0)
         {
@@ -109,7 +109,7 @@ public class Player : Singleton<Player> , ISaveable
     public void PlayerCache()
     {
         StartCoroutine(playerCache());
- 
+
     }
 
     IEnumerator playerCache()
@@ -161,13 +161,13 @@ public class Player : Singleton<Player> , ISaveable
 }
 
 
-public class playerStatus 
+public class playerStatus
 {
-    public string emailAddress = "myEmail"; // Main.Instance.Web.GetUserEmail;
-    public string name = "myName"; //Main.Instance.Web.GetUserName;
+    public string emailAddress;
+    public string name;
     public int gameStatus;
     public int totalTime;
-    public int levelChose;
+    public int levelChoose;
 
     public int timeMin;
     public int timeSec;
@@ -179,7 +179,7 @@ public class playerStatus
 
     public void ChangeGameStatus(int index)
     {
-        gameStatus = index;
+        this.gameStatus = index;
     }
 
     public int GetGameStatus()
@@ -193,8 +193,20 @@ public class playerStatus
     /// </summary>
     public void UpdateNowTime()
     {
-        timeMin = 30;// TimeCounter.Instance.GetNowTimeMin();
-        timeSec = 45;// TimeCounter.Instance.GetNowTimeSec();
+        this.timeMin = TimeCounter.Instance.GetNowTimeMin();
+        this.timeSec = TimeCounter.Instance.GetNowTimeSec();
+    }
+
+    public void UpdateRoom(int levelChoose)
+    {
+        this.levelChoose = levelChoose;
+    }
+
+    public void UpdateEmailAndName()
+    {
+        this.emailAddress = Main.Instance.Web.GetUserEmail;
+        this.name = Main.Instance.Web.GetUserName;
+
     }
 
     /*public void PlayerInformation()

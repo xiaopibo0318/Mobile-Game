@@ -12,9 +12,9 @@ public class PostMethod : MonoBehaviour
     [Header("數據儲存")]
     private string playerName;
     private string playerEmail;
-    private int lastMin;
-    private int lastSec;
-    public int totalSeconds { get; set ; }
+    public int lastMin;
+    public int lastSec;
+    public int totalSeconds { get; set; }
 
     public static PostMethod Instance;
 
@@ -25,11 +25,6 @@ public class PostMethod : MonoBehaviour
         else Destroy(this);
 
 
-        outPutArea = GameObject.Find("OutPutArea").GetComponent<InputField>();
-        outPutArea.text = "";
-        GameObject.Find("PostButton").GetComponent<Button>().onClick.AddListener(postData);
-        
-
         MySceneManager.Instance.OnLoadNewScene();
 
     }
@@ -38,8 +33,8 @@ public class PostMethod : MonoBehaviour
 
     private void OnEnable()
     {
-        //Settlement();
-        totalSeconds = 1799;
+        //totalSeconds = 1799;
+        Settlement();
     }
 
     void postData() => StartCoroutine(PostData_Coroutine());
@@ -53,9 +48,9 @@ public class PostMethod : MonoBehaviour
         playerName = Player.Instance.myStatus.name;
         playerEmail = Player.Instance.myStatus.emailAddress;
         totalSeconds = 4500 - (lastMin * 60 + lastSec);
-        outPutArea.text = "剩下時間：" + lastMin.ToString() + ":" + lastSec.ToString();
-        outPutArea.text += "總花秒數" + totalSeconds.ToString();
+        postData();
     }
+
 
 
     IEnumerator PostData_Coroutine()
@@ -65,7 +60,7 @@ public class PostMethod : MonoBehaviour
         form.AddField("username", playerName);
         form.AddField("email", playerEmail);
         form.AddField("second", totalSeconds);
-        
+
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();

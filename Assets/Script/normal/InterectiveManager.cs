@@ -236,7 +236,7 @@ public class InterectiveManager : MonoBehaviour
                 InventoryManager.Instance.AddNewItem(myItemList[5]);
                 break;
             case 221:
-                SiginalUI.Instance.SiginalText("你發現了靈果以及西王母的財產");
+                SiginalUI.Instance.SiginalText("你發現了靈果以及\n西王母的財產");
                 GameCenter.Instance.EndGame();
                 break;
 

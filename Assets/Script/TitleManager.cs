@@ -172,7 +172,7 @@ public class TitleManager : Singleton<TitleManager>
     {
         AudioManager.Instance.clickButton("c");
         TransiitionManager.Instance.GoToMTKL();
-
+        Player.Instance.myStatus.UpdateRoom(2);
     }
 
     private void StartGD()

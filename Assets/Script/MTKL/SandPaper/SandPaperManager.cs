@@ -41,7 +41,7 @@ public class SandPaperManager : MonoBehaviour
         Instance = this;
     }
 
-    private void FixedUpdate()
+    private void OnEnable()
     {
         CheckSandPaperInBag();
         UpdateContent();
@@ -50,18 +50,21 @@ public class SandPaperManager : MonoBehaviour
 
     public void CheckSandPaperInBag()
     {
-      if (myBag.itemList.Contains(paper400))
-      {
+        if (myBag.itemList.Contains(paper400))
+        {
             is400 = true;
-      }
-      if (myBag.itemList.Contains(paper240))
-      {
+        }
+        else is400 = false;
+        if (myBag.itemList.Contains(paper240))
+        {
             is240 = true;
-      }
-      if (myBag.itemList.Contains(paper150))
-      {
-            is150= true;
-      }
+        }
+        else is240 = false;
+        if (myBag.itemList.Contains(paper150))
+        {
+            is150 = true;
+        }
+        else is150 = false;
     }
 
     public void UpdateContent()
@@ -71,7 +74,7 @@ public class SandPaperManager : MonoBehaviour
 
         if (is240) panel240.SetActive(false);
         else panel240.SetActive(true);
-        
+
 
         if (is400) panel400.SetActive(false);
         else panel400.SetActive(true);
@@ -92,10 +95,12 @@ public class SandPaperManager : MonoBehaviour
         if (nowBall == 0)
         {
             InventoryManager.Instance.AddNewItem(ball1);
-        }else if (nowBall == 1)
+        }
+        else if (nowBall == 1)
         {
             InventoryManager.Instance.AddNewItem(ball2);
-        }else if (nowBall == 2)
+        }
+        else if (nowBall == 2)
         {
             InventoryManager.Instance.AddNewItem(ball3);
         }
@@ -111,10 +116,12 @@ public class SandPaperManager : MonoBehaviour
         if (myTag == "ball0")
         {
             nowBall = 0;
-        } else if (myTag == "ball1")
+        }
+        else if (myTag == "ball1")
         {
             nowBall = 1;
-        } else if (myTag == "ball2")
+        }
+        else if (myTag == "ball2")
         {
             nowBall = 2;
         }

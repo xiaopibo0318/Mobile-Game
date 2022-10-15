@@ -17,6 +17,7 @@ public class Login : MonoBehaviour
         {
             //AudioManager.Instance.clickButton();
             StartCoroutine(Main.Instance.Web.Login(UsernameInput.text, PasswordInput.text));
+            Player.Instance.myStatus.UpdateEmailAndName();
         });
 
     }
