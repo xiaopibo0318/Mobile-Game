@@ -51,6 +51,7 @@ public class KLMTmanager : MonoBehaviour
     {
         Camerafollowww.Instance.UpdateNowSceneBuildIndex();
         TimeCounter.Instance.StartCountDown();
+        DialogueMTKL.Instance.ChangeChatStatus();
     }
 
     private void Update()
@@ -76,6 +77,7 @@ public class KLMTmanager : MonoBehaviour
     //蓮花謎題
     public void firstStepKL()
     {
+        
         CanvasManager.Instance.openCanvas("original");
     }
 

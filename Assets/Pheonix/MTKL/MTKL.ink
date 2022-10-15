@@ -1,5 +1,6 @@
 VAR gameStatus = 1
 VAR chatStatus = 1
+VAR nowEvent = ""
 
 ->initial
 
@@ -49,6 +50,7 @@ VAR chatStatus = 1
         
 === A_1 ===
 仔細看看崑崙山的環境，說不定會發現一些有幫助的訊息，這次先給你一個提示吧！
+ ~ nowEvent = "lotus1"
  ~ chatStatus = 2
 ->endDiaoluge
 
@@ -129,7 +131,7 @@ VAR chatStatus = 1
 ->endDiaoluge
 
 === D_3 ===
-以基為陽，以偶為陰，由上下移至左右之後，由左至右的三個基偶要
+以奇為陽，以偶為陰，由上下移至左右之後，由左至右的三個基偶要
 看黑槓的數量。101所代表的是係數，他們分別要乘上對應的次方後
 ->D_4
 
@@ -219,6 +221,7 @@ VAR chatStatus = 1
 
 === endDiaoluge ===
 快去尋找其他線索吧，下次見
+~ nowEvent = ""
 ->initial
 
     -> END

@@ -14,16 +14,18 @@ public class MyGrid : MonoBehaviour
 
     public SiginalUI siginalUI;
 
+    List<Shape> closeList = new List<Shape>();
+
     private void Awake()
     {
         answer = new int[9] { 0, 1, 1, 1, 1, 0, 0, 1, 0 };
         myAnswer = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         //幫每個格子上編號
-        for (int i=0; i < _girdSquares.Count; i++)
+        for (int i = 0; i < _girdSquares.Count; i++)
         {
             _girdSquares[i].GetComponent<GridSquare>().SquareIndex = i;
         }
-        
+
     }
 
     private void OnEnable()
@@ -37,7 +39,7 @@ public class MyGrid : MonoBehaviour
         GameEvent.CheckIfShapeCanBePlaced -= CheckIfShapeCanBePlaced;
     }
 
-    
+
     private void CheckIfShapeCanBePlaced()
     {
         var equalIndexs = new List<int>();
@@ -46,7 +48,7 @@ public class MyGrid : MonoBehaviour
         {
             var gridSquare = square.GetComponent<GridSquare>();
 
-            if(gridSquare.Selected && !gridSquare.SquareOccupied)
+            if (gridSquare.Selected && !gridSquare.SquareOccupied)
             {
                 equalIndexs.Add(gridSquare.SquareIndex);
                 gridSquare.Selected = false;
@@ -68,21 +70,22 @@ public class MyGrid : MonoBehaviour
         //Debug.Log("選擇的方塊有編號" + currentSelectedShape.shapeID);
         //Debug.Log("接觸到了幾個方塊" + equalIndexs.Count);
 
-        if(currentSelectedShape.totalSquareNumber == equalIndexs.Count)
+        if (currentSelectedShape.totalSquareNumber == equalIndexs.Count)
         {
-            
+
             foreach (var squareIndex in equalIndexs)
             {
                 Debug.Log("我的" + squareIndex);
                 _girdSquares[squareIndex].GetComponent<GridSquare>().PlaceShapeOnBoard();
             }
             currentSelectedShape.DeactiveShape();
+            closeList.Add(currentSelectedShape);
         }
         else
         {
             GameEvent.MoveShapeToStartPosition();
         }
-        
+
 
 
         //shapeStorage.GetCurrentSelectedSquare().DeactiveShape();
@@ -93,7 +96,7 @@ public class MyGrid : MonoBehaviour
     public void checkAnswer()
     {
         var myCorrect = 0;
-        for (int i =0; i < answer.Length; i++)
+        for (int i = 0; i < answer.Length; i++)
         {
             if (_girdSquares[i].GetComponent<GridSquare>().SquareOccupied)
             {
@@ -107,7 +110,7 @@ public class MyGrid : MonoBehaviour
 
         }
         Debug.Log("放對幾個" + myCorrect);
-        
+
         if (myCorrect == 9)
         {
             KLMTmanager.Instance.thirdStepKL();
@@ -124,16 +127,19 @@ public class MyGrid : MonoBehaviour
 
     public void ClearBoard()
     {
-        for(int i= 0 ;i < _girdSquares.Count; i++) 
+        for (int i = 0; i < _girdSquares.Count; i++)
         {
             var comp = _girdSquares[i].GetComponent<GridSquare>();
             myAnswer[i] = 0;
             comp.DeActivateSquare();
-            
-
-
         }
-        
+        for (int i = 0; i < closeList.Count; i++)
+        {
+            closeList[i].ActivateShape();
+            GameEvent.MoveShapeToStartPosition();
+        }
+        closeList.Clear();
+
     }
 
 }
