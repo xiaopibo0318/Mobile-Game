@@ -43,13 +43,14 @@ public class SandPaperManager : MonoBehaviour
 
     private void OnEnable()
     {
-        
-        UpdateContent();
+
+
     }
 
     private void Update()
     {
         CheckSandPaperInBag();
+        UpdateContent();
     }
 
     public void CheckSandPaperInBag()
@@ -134,6 +135,8 @@ public class SandPaperManager : MonoBehaviour
             nowBall = 999;
         }
     }
+
+
 
 }
 
