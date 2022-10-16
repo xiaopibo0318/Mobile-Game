@@ -43,10 +43,14 @@ public class SandPaperManager : MonoBehaviour
 
     private void OnEnable()
     {
-        CheckSandPaperInBag();
+        
         UpdateContent();
     }
 
+    private void Update()
+    {
+        CheckSandPaperInBag();
+    }
 
     public void CheckSandPaperInBag()
     {
