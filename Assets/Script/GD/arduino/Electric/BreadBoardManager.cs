@@ -154,14 +154,6 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         else return false;
     }
 
-    private void StartDetect()
-    {
-        foreach (var item in myboard.isObjectInBoard)
-        {
-
-        }
-    }
-
     private void ClearAllLine()
     {
         for (int i = 0; i < lineParent.childCount; i++)
@@ -183,6 +175,15 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         for (int i = 0; i < slotSet.Count; i++)
         {
             slotSet[i].ResetSlot();
+        }
+        
+        ///重製Node狀態
+        for (int i = 0; i < myboard.GetBoardRow(); i++)
+        {
+            for (int j = 0; j < myboard.GetBoardCol(); j++)
+            {
+                nodes[i, j].type = Node_Type.Stop;
+            }
         }
     }
 
@@ -282,8 +283,11 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     }
 
-    private void StartFind(Vector2 start, Vector2 end)
+
+    private List<AStarNode> StartFind(Vector2 start, Vector2 end)
     {
+        LoadLevel1();
+
         pointAddList.Clear();
         trashNodeList.Clear();
         //intAddList.Enqueue(start);
@@ -301,41 +305,113 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         startNode.h = 0;
         closeList.Add(startNode);
 
-        FindPointAndAddNode(start, end);
+        //FindPointAndAddNode(start, end);
+
+        ///遍歷nodes，添加他們的neighbor
+        for (int i = 0; i < myboard.GetBoardRow(); i++)
+        {
+            for (int j = 0; j < myboard.GetBoardCol(); j++)
+            {
+                if (myboard.isObjectInBoard[i, j] == true)
+                {
+                    AddNeighBor(nodes[i, j]);
+                }
+            }
+        }
+
+        while (true)
+        {
+            foreach (var neighbor in startNode.neighborList)
+            {
+                FindNearlyNodeToOpenList(neighbor, neighbor.g, startNode, endNode);
+            }
+            
+
+            if (openList.Count == 0)
+            {
+                Debug.Log("空、死路");
+                return null;
+            }
+
+            //找尋路中消耗最小的點、要把亂的排序一下
+            openList.Sort(SortOpenList);
+
+            //放入關閉列表中，並從開啟列表移除
+            closeList.Add(openList[0]);
+            //找的點為新的起點
+            startNode = openList[0];
+            openList.RemoveAt(0);
+
+            if (startNode == endNode)
+            {
+                List<AStarNode> path = new List<AStarNode>();
+                path.Add(endNode);
+                while (endNode.parent != null)
+                {
+                    path.Add(endNode.parent);
+                    endNode = endNode.parent;
+                }
+                path.Reverse();
+
+                return path;
+            }
+        }
+
+
+        
+
+    }
+
+    private void FindNearlyNodeToOpenList(AStarNode nextNode, float g, AStarNode parent, AStarNode end)
+    {
+
+        if (nextNode == null || nextNode.type == Node_Type.Stop ||
+            closeList.Contains(nextNode) || openList.Contains(nextNode)) return;
+
+
+
+        //計算f值
+        nextNode.parent = parent;
+
+        //計算g 我離起點的距離 = 我父親離起點的距離+ 我離我父親的距離
+        nextNode.g = parent.g + g;
+        nextNode.h = 0; // Mathf.Abs(end.x - node.x) + Mathf.Abs(end.y - node.y);
+        nextNode.f = nextNode.g + nextNode.h;
+
+        openList.Add(nextNode);
+    }
+
+    private int SortOpenList(AStarNode a, AStarNode b)
+    {
+        if (a.f > b.f)
+            return 1;
+        else if (a.f == b.f)
+            return 1;
+        else
+            return -1;
     }
 
     /// <summary>
-    /// 開始遞迴尋找 ，但還要考慮 上下左右的分開尋找(尚未處理)
-    /// 考慮是否要 增加參數 int diret來判斷 +1還是-1
-    /// ----
-    /// 改為先建立節點
+    /// 幫現在的節點添加鄰居關係
+    /// 共分為兩步驟、查找他的另外一點，以及他自己的一排
     /// </summary>
-    /// <param name="nowPos"></param>
-    private void FindPointAndAddNode(Vector2 nowPos, Vector2 end)
+    /// <param name="nowNode"></param>
+    private void AddNeighBor(AStarNode nowNode)
     {
-        Node nowNode = new Node(nowPos);
-        AStarNode myNode = nodes[(int)nowPos.x, (int)nowPos.y];
-        if (trashNodeList.Contains(nowPos))
-        {
-            FindNextNodeInQueue(end);
-            return;
-        }
-        else pointAddList.Enqueue(nowPos);
-
-        trashNodeList.Enqueue(nowPos);
-        Debug.Log("開找囉");
-        int now_row = (int)nowPos.x;
-        int now_col = (int)nowPos.y;
+        int now_row = (int)nowNode.x;
+        int now_col = (int)nowNode.y;
+        Vector2 nowPos = new Vector2(now_row, now_col);
         Vector2 errorVector = new Vector2(-99, -99);
+
+        ///將另一個點算入他的鄰居中
         if (GetLineAnotherPoint(nowPos) != errorVector)
         {
-            pointAddList.Enqueue(GetLineAnotherPoint(nowPos));
-            Node nextNode = new Node(GetLineAnotherPoint(nowPos));
-            nextNode.parent = nowNode;
-            Debug.Log("成功新增節點");
+            float neighborX = GetLineAnotherPoint(nowPos).x;
+            float neighborY = GetLineAnotherPoint(nowPos).y;
+            nowNode.AddNeighbor(nodes[(int)neighborX, (int)neighborY]);
         }
 
-        ////先判斷他的屬性為何、並找尋同一層之所有siblings
+        ///先判斷他的屬性為何、並找尋同一層之所有siblings 
         if (CheckIsHorizontalOrVertical(now_row))
         {
             now_col = 0;
@@ -344,10 +420,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 if (myboard.isObjectInBoard[now_row, now_col])
                 {
                     Debug.Log("偵測點為：" + now_row.ToString() + now_col.ToString());
-                    Vector2 nodePos = new Vector2(now_row, now_col);
-                    pointAddList.Enqueue(nodePos);
-                    Node nextNode = new Node(nodePos);
-                    nextNode.parent = nowNode;
+                    nodes[now_row, now_col].type = Node_Type.Walk;
+                    nowNode.AddNeighbor(nodes[now_row, now_col]);
                 }
                 now_col++;
                 if (now_col >= myboard.GetBoardCol())
@@ -367,10 +441,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 {
                     if (myboard.isObjectInBoard[now_row, now_col])
                     {
-                        Vector2 nodePos = new Vector2(now_row, now_col);
-                        pointAddList.Enqueue(nodePos);
-                        Node nextNode = new Node(nodePos);
-                        nextNode.parent = nowNode;
+                        nodes[now_row, now_col].type = Node_Type.Walk;
+                        nowNode.AddNeighbor(nodes[now_row, now_col]);
                     }
                     now_row++;
                     if (now_row >= 5)
@@ -386,10 +458,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 {
                     if (myboard.isObjectInBoard[now_row, now_col])
                     {
-                        Vector2 nodePos = new Vector2(now_row, now_col);
-                        pointAddList.Enqueue(nodePos);
-                        Node nextNode = new Node(nodePos);
-                        nextNode.parent = nowNode;
+                        nodes[now_row, now_col].type = Node_Type.Walk;
+                        nowNode.AddNeighbor(nodes[now_row, now_col]);
                     }
                     now_row++;
                     if (now_row >= 5)
@@ -399,29 +469,6 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 }
             }
         }
-        //移除Queue最上層。 找下一個點。
-        Debug.Log("當前最頂的元素是：" + pointAddList.Peek());
-        FindNextNodeInQueue(end);
-
-
-    }
-
-
-
-
-    private void FindNextNodeInQueue(Vector2 end)
-    {
-        if (pointAddList.Count == 0)
-        {
-            Debug.Log("走訪結束");
-            return;
-        }
-        else
-        {
-            var tempPoint = pointAddList.Dequeue();
-            FindPointAndAddNode(tempPoint, end);
-        }
-
     }
 
     private Vector2 GetLineAnotherPoint(Vector2 nowPos)
@@ -457,6 +504,13 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     }
 
 
+    private void LoadLevel1()
+    {
+        nodes[4, 2].type = Node_Type.Walk;
+        nodes[4, 2].g = 10;
+        nodes[4, 3].type = Node_Type.Walk;
+        nodes[4, 3].g = 10;
 
+    }
 }
 

@@ -24,11 +24,23 @@ public class AStarNode
     public AStarNode parent;
     public Node_Type type;
 
+    public List<AStarNode> neighborList = new List<AStarNode>();
+
     public AStarNode(int x, int y, Node_Type type)
     {
         this.x = x;
         this.y = y;
         this.type = type;
+    }
+
+    public void ResetNode()
+    {
+        this.neighborList.Clear();
+    }
+
+    public void AddNeighbor(AStarNode node)
+    {
+        this.neighborList.Add(node);
     }
 
 }
