@@ -41,6 +41,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         myboard.Init();
         InitSlot();
         ButtonInit();
+
+        LoadLevel1();
     }
 
     [Header("電路查找")]
@@ -176,7 +178,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         {
             slotSet[i].ResetSlot();
         }
-        
+
         ///重製Node狀態
         for (int i = 0; i < myboard.GetBoardRow(); i++)
         {
@@ -286,7 +288,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private List<AStarNode> StartFind(Vector2 start, Vector2 end)
     {
-        LoadLevel1();
+
 
         pointAddList.Clear();
         trashNodeList.Clear();
@@ -312,7 +314,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         {
             for (int j = 0; j < myboard.GetBoardCol(); j++)
             {
-                if (myboard.isObjectInBoard[i, j] == true)
+                if (myboard.isObjectInBoard[i, j] == true || nodes[i, j].type == Node_Type.Walk)
                 {
                     AddNeighBor(nodes[i, j]);
                 }
@@ -323,9 +325,11 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         {
             foreach (var neighbor in startNode.neighborList)
             {
+                Debug.Log("現在的點的x:" + startNode.x + ",y:" + startNode.y);
+                Debug.Log("現在的點的鄰居x:" + neighbor.x + ",y:" + neighbor.y);
                 FindNearlyNodeToOpenList(neighbor, neighbor.g, startNode, endNode);
             }
-            
+
 
             if (openList.Count == 0)
             {
@@ -353,12 +357,18 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 }
                 path.Reverse();
 
+                for (int i = 0; i < path.Count; i++)
+                {
+                    Debug.Log("路徑為：" + path[i].x + "," + path[i].y);
+                }
+
+
                 return path;
             }
         }
 
 
-        
+
 
     }
 
@@ -507,9 +517,30 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     private void LoadLevel1()
     {
         nodes[4, 2].type = Node_Type.Walk;
-        nodes[4, 2].g = 10;
+        nodes[4, 2].g = 0;
         nodes[4, 3].type = Node_Type.Walk;
-        nodes[4, 3].g = 10;
+        nodes[4, 3].g = 0;
+
+        ///建立節點關係
+        nodes[4, 2].AddNeighbor(nodes[4, 3]);
+        nodes[4, 3].AddNeighbor(nodes[4, 2]);
+
+
+        ElectricSlot start = slotSet[myboard.GetBoardCol()];
+        ElectricSlot end = slotSet[0];
+        ElectricSlot slot1 = slotSet[4 * myboard.GetBoardCol() + 1];
+        ElectricSlot slot2 = slotSet[4 * myboard.GetBoardCol() + 2];
+        start.ChangeToActive();
+        end.ChangeToActive();
+        slot1.ChangeToActive();
+        slot2.ChangeToActive();
+        myboard.isObjectInBoard[0, 0] = true;
+        myboard.isObjectInBoard[1, 0] = true;
+        myboard.isObjectInBoard[4, 2] = true;
+        myboard.isObjectInBoard[4, 3] = true;
+
+
+
 
     }
 }
