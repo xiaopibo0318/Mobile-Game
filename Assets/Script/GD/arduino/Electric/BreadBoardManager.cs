@@ -309,6 +309,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
         //FindPointAndAddNode(start, end);
 
+        LoadLevel1();
+
         ///遍歷nodes，添加他們的neighbor
         for (int i = 0; i < myboard.GetBoardRow(); i++)
         {
@@ -427,6 +429,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             now_col = 0;
             for (int i = 0; i < myboard.GetBoardCol(); i++)
             {
+                //if (now_col == (int)nowNode.y) continue;
+
                 if (myboard.isObjectInBoard[now_row, now_col])
                 {
                     Debug.Log("偵測點為：" + now_row.ToString() + now_col.ToString());
@@ -449,6 +453,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 now_row = 2;
                 for (int i = 0; i < 3; i++)
                 {
+                    //if (now_row == (int)nowNode.x) continue;
+
                     if (myboard.isObjectInBoard[now_row, now_col])
                     {
                         nodes[now_row, now_col].type = Node_Type.Walk;
@@ -466,13 +472,15 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 now_row = 5;
                 for (int i = 0; i < 3; i++)
                 {
+                    //if (now_row == (int)nowNode.x) continue;
+
                     if (myboard.isObjectInBoard[now_row, now_col])
                     {
                         nodes[now_row, now_col].type = Node_Type.Walk;
                         nowNode.AddNeighbor(nodes[now_row, now_col]);
                     }
                     now_row++;
-                    if (now_row >= 5)
+                    if (now_row >= 8)
                     {
                         break;
                     }
