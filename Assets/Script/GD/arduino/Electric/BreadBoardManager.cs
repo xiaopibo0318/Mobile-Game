@@ -525,9 +525,9 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     private void LoadLevel1()
     {
         nodes[4, 2].type = Node_Type.Walk;
-        nodes[4, 2].g = 0;
+        nodes[4, 2].g = 5;
         nodes[4, 3].type = Node_Type.Walk;
-        nodes[4, 3].g = 0;
+        nodes[4, 3].g = 5;
 
         ///建立節點關係
         nodes[4, 2].AddNeighbor(nodes[4, 3]);
@@ -536,8 +536,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
         ElectricSlot start = slotSet[myboard.GetBoardCol()];
         ElectricSlot end = slotSet[0];
-        ElectricSlot slot1 = slotSet[4 * myboard.GetBoardCol() + 1];
-        ElectricSlot slot2 = slotSet[4 * myboard.GetBoardCol() + 2];
+        ElectricSlot slot1 = slotSet[4 * myboard.GetBoardCol() + 2];
+        ElectricSlot slot2 = slotSet[4 * myboard.GetBoardCol() + 3];
         start.ChangeToActive();
         end.ChangeToActive();
         slot1.ChangeToActive();

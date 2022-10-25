@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using TouchEvent_Handler;
 
-public class QuestionElectricManager : EventDetect, IPointerDownHandler
+public class QuestionElectricManager : EventDetect
 {
     private float gaps = 450;
     private float reduceSize = 0.2f;
@@ -111,11 +111,6 @@ public class QuestionElectricManager : EventDetect, IPointerDownHandler
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log("點道一下");
-        TouchDetect();
-    }
 
     public override void Hold()
     {
