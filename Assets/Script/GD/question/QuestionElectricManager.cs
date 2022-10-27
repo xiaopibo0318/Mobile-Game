@@ -80,7 +80,7 @@ public class QuestionElectricManager : EventDetect
             else
             {
                 allPicTransform[i].DOMove(rightPos[i - currentID][0], .5f);
-                allPicTransform[i].DOScale(rightPos[i - currentID][0], .5f);
+                allPicTransform[i].DOScale(rightPos[i - currentID][1], .5f);
             }
 
         }
@@ -93,7 +93,7 @@ public class QuestionElectricManager : EventDetect
         {
             RectTransform tempCreate = Instantiate(prefab, prefabParent);
             //定位0,0 1,1 拉滿版塊
-            tempCreate.anchorMin = Vector2.zero; 
+            tempCreate.anchorMin = Vector2.zero;
             tempCreate.anchorMax = Vector2.one;
             tempCreate.localScale = Vector3.one * (1 - (i * reduceSize));
             tempCreate.anchoredPosition = new Vector2(i * (prefab.sizeDelta.x + gaps -
@@ -114,8 +114,16 @@ public class QuestionElectricManager : EventDetect
 
     public override void Hold()
     {
+        if (moveDirection.x > 0)
+        {
+            RightSlide();
+        }
+        else
+        {
+            LeftSlide();
+        }
         Debug.Log("觸發移動");
-        LeftSlide();
+
     }
 
 }

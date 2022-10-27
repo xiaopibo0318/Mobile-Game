@@ -6,18 +6,20 @@ using UnityEngine.EventSystems;
 
 namespace TouchEvent_Handler
 {
-    public class EventDetect : MonoBehaviour, IPointerDownHandler 
+    public class EventDetect : MonoBehaviour, IPointerDownHandler
     {
-        public static float beginTime = 0;
-        public static float intervals;
-        private static float lastTouchTime;
-        public static float holdTime = 3;
-        private static Vector2 startPos = Vector2.zero;
-        private static Vector2 endPos = Vector2.zero;
-        private static Vector2 moveDirection = Vector2.zero;
+        public float beginTime = 0;
+        public float intervals;
+        private float lastTouchTime;
+        public float holdTime = 3;
+        private Vector2 startPos = Vector2.zero;
+        private Vector2 endPos = Vector2.zero;
+        public Vector2 moveDirection = Vector2.zero;
+        private Coroutine coroutine = null;
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            coroutine = StartCoroutine(StartDetect(eventData));
             TouchDetect(eventData);
         }
 
@@ -26,24 +28,41 @@ namespace TouchEvent_Handler
             Debug.Log("有典籍到物品A");
 
 
-            //switch (touch.phase)
-            //{
-            //    case TouchPhase.Moved:
-            //        moveDirection = eventData.position - startPos;
-            //        intervals = Time.realtimeSinceStartup - beginTime;
 
-            //        Hold();
-            //        break;
-            //    case TouchPhase.Ended://手離開螢幕時的狀態
-            //        intervals = Time.realtimeSinceStartup - beginTime;
-            //        lastTouchTime = Time.realtimeSinceStartup;
-            //        endPos = startPos + moveDirection;
-            //        Swipe(intervals, moveDirection);
-            //        break;
-            //}
+            if (Input.touchCount >= 1)
+            {
+                Touch touch = Input.GetTouch(0);
+                Debug.Log(touch.phase.ToString());
+                switch (touch.phase)
+                {
+                    case TouchPhase.Moved:
+                        moveDirection = eventData.position - startPos;
+                        intervals = Time.realtimeSinceStartup - beginTime;
 
+                        Hold();
+                        break;
+                    case TouchPhase.Ended://手離開螢幕時的狀態
+                        intervals = Time.realtimeSinceStartup - beginTime;
+                        lastTouchTime = Time.realtimeSinceStartup;
+                        endPos = startPos + moveDirection;
+                        Swipe(intervals, moveDirection);
+                        break;
 
+                }
+            }
         }
+
+        IEnumerator StartDetect(PointerEventData eventData)
+        {
+            float detectTime = 0.1f;
+            while (detectTime > 0)
+            {
+                detectTime -= Time.deltaTime;
+                TouchDetect(eventData);
+                yield return null;
+            }
+        }
+
 
         public virtual void Hold()
         {
