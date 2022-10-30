@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TouchEvent_Handler;
+using DG.Tweening;
 
-public class BoardManager : MonoBehaviour
+public class BoardManager : EventDetect
 {
     public List<GameObject> myNews;
     public GameObject goBack;
     public GameObject backGround;
-
+    private int currentID;
 
     public void Awake()
     {
@@ -19,7 +21,8 @@ public class BoardManager : MonoBehaviour
     {
         myNews[n].SetActive(true);
         goBack.SetActive(true);
-        backGround.SetActive(true); 
+        backGround.SetActive(true);
+        currentID = n;
     }
 
 
@@ -33,4 +36,13 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    public override void Bigger()
+    {
+        myNews[currentID].transform.DOScale(scaleOffset, .2f);
+    }
+
+    public override void Smaller()
+    {
+        base.Smaller();
+    }
 }

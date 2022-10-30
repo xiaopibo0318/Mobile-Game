@@ -18,6 +18,7 @@ public class QuestionElectricManager : EventDetect
     private List<Transform> allPicTransform = new List<Transform>();
     private Dictionary<int, List<Vector3>> leftPos = new Dictionary<int, List<Vector3>>();
     private Dictionary<int, List<Vector3>> rightPos = new Dictionary<int, List<Vector3>>();
+    [SerializeField] private Button enterButton;
 
     private int currentID;
 
@@ -32,6 +33,7 @@ public class QuestionElectricManager : EventDetect
     {
         LoadPicture();
         InitScreen();
+        enterButton.onClick.AddListener(GoToAnswer);
     }
 
 
@@ -42,7 +44,8 @@ public class QuestionElectricManager : EventDetect
         allQuesInfo = new QuesInfo[allPic.Length];
         for (int i = 0; i < allPic.Length; i++)
         {
-            allQuesInfo[i] = new QuesInfo("問題 " + i.ToString(), "000");
+            var index = i;
+            allQuesInfo[index] = new QuesInfo("問題 " + index.ToString(), "000");
         }
     }
 
@@ -74,13 +77,13 @@ public class QuestionElectricManager : EventDetect
         {
             if (i - currentID < 0)
             {
-                allPicTransform[i].DOMove(leftPos[Mathf.Abs(currentID - i)][0], .5f);
-                allPicTransform[i].DOScale(leftPos[Mathf.Abs(currentID - i)][1], .5f);
+                allPicTransform[i].DOMove(leftPos[Mathf.Abs(currentID - i)][0], .9f);
+                allPicTransform[i].DOScale(leftPos[Mathf.Abs(currentID - i)][1], .9f);
             }
             else
             {
-                allPicTransform[i].DOMove(rightPos[i - currentID][0], .5f);
-                allPicTransform[i].DOScale(rightPos[i - currentID][1], .5f);
+                allPicTransform[i].DOMove(rightPos[i - currentID][0], .9f);
+                allPicTransform[i].DOScale(rightPos[i - currentID][1], .9f);
             }
 
         }
@@ -114,6 +117,7 @@ public class QuestionElectricManager : EventDetect
 
     public override void Hold()
     {
+        Debug.Log("移動的位置差" + moveDirection.x);
         if (moveDirection.x > 0)
         {
             RightSlide();
@@ -123,6 +127,25 @@ public class QuestionElectricManager : EventDetect
             LeftSlide();
         }
         Debug.Log("觸發移動");
+
+    }
+
+
+    private void GoToAnswer()
+    {
+        Vector3 endPos = new Vector3(400, 450, 0);
+        for (int i = 0; i < allPicTransform.Count; i++)
+        {
+            if (i == currentID)
+            {
+                allPicTransform[currentID].DOMove(endPos, .8f);
+            }
+            else
+            {
+                allPicTransform[i].gameObject.SetActive(false);
+            }
+        }
+        enterButton.gameObject.SetActive(false);
 
     }
 
