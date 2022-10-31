@@ -13,13 +13,17 @@ public class QuestionElectricManager : EventDetect
     public RectTransform prefab;
     public Transform prefabParent;
 
+    [Header("圖片素材")]
     private Sprite[] allPic;
     private QuesInfo[] allQuesInfo;
     private List<Transform> allPicTransform = new List<Transform>();
     private Dictionary<int, List<Vector3>> leftPos = new Dictionary<int, List<Vector3>>();
     private Dictionary<int, List<Vector3>> rightPos = new Dictionary<int, List<Vector3>>();
-    [SerializeField] private Button enterButton;
 
+    [Header("按鈕")]
+    [SerializeField] private Button enterButton;
+    [SerializeField] private List<Button> answerButton;
+    [SerializeField] private Button goBackButton;
     private int currentID;
 
     public int CurrentID
@@ -33,7 +37,7 @@ public class QuestionElectricManager : EventDetect
     {
         LoadPicture();
         InitScreen();
-        enterButton.onClick.AddListener(GoToAnswer);
+        ButtonInit();
     }
 
 
@@ -45,7 +49,7 @@ public class QuestionElectricManager : EventDetect
         for (int i = 0; i < allPic.Length; i++)
         {
             var index = i;
-            allQuesInfo[index] = new QuesInfo("問題 " + index.ToString(), "000");
+            allQuesInfo[index] = new QuesInfo("問題 " + index.ToString(), "內容");
         }
     }
 
@@ -114,6 +118,16 @@ public class QuestionElectricManager : EventDetect
         }
     }
 
+    private void ButtonInit()
+    {
+        for (int i = 0; i < answerButton.Count; i++)
+        {
+            int index = i;
+            answerButton[i].onClick.AddListener(delegate { AnswerQues(index); });
+            answerButton[i].gameObject.SetActive(false);
+        }
+        enterButton.onClick.AddListener(GoToAnswer);
+    }
 
     public override void Hold()
     {
@@ -147,7 +161,59 @@ public class QuestionElectricManager : EventDetect
         }
         enterButton.gameObject.SetActive(false);
 
+        for (int i = 0; i < answerButton.Count; i++)
+        {
+            answerButton[i].gameObject.SetActive(true);
+        }
+
     }
+
+    /// <summary>
+    /// index:
+    /// 0 可以亮
+    /// 1 搭配程式會亮
+    /// 2 不能亮
+    /// 3 短路
+    /// 
+    /// curentID : 1 可以亮; 2 短路; 3 不會亮; 4 搭配程式可以亮
+    /// </summary>
+    /// <param name="index"></param>
+    private void AnswerQues(int index)
+    {
+        switch (currentID)
+        {
+            case 1:
+                if (index == 0)
+                {
+                    SuccessButton(index);
+                }
+                break;
+            case 2:
+                if(index == 3)
+                {
+                    SuccessButton(index);
+                }
+                break;
+            case 3:
+                if (index == 2)
+                {
+                    SuccessButton(index);
+                }
+                break;
+            case 4:
+                if (index == 1)
+                {
+                    SuccessButton(index);
+                }
+                break;
+        }
+    }
+
+    private void SuccessButton(int index)
+    {
+        answerButton[1].gameObject.SetActive(false);
+    }
+
 
 }
 
