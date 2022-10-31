@@ -60,12 +60,6 @@ namespace TouchEvent_Handler
                         intervals = Time.realtimeSinceStartup - beginTime;
                         Hold();
                         break;
-                        //case TouchPhase.Ended://手離開螢幕時的狀態
-                        //    intervals = Time.realtimeSinceStartup - beginTime;
-                        //    lastTouchTime = Time.realtimeSinceStartup;
-                        //    endPos = startPos + moveDirection;
-                        //    Swipe(intervals, moveDirection);
-                        //    break;
                 }
             }
             if (Input.touchCount == 2)
@@ -78,6 +72,7 @@ namespace TouchEvent_Handler
                 {
                     oldTouch1 = newTouch1;
                     oldTouch2 = newTouch2;
+                    Init();
                     return;
                 }
 
@@ -85,12 +80,17 @@ namespace TouchEvent_Handler
                 float newDistance = Vector2.Distance(newTouch1.position, newTouch2.position);
                 Debug.Log("老:" + oldDistance + "新" + newDistance);
                 float offset = newDistance - oldDistance;
-                scaleOffset = offset / 100;
-                if (newTouch1.position.y - oldTouch1.position.y > 0)
-                    Bigger();
-                else
-                    Smaller();
+                scaleOffset = 1 + (offset / 100);
 
+                ChangeScale(newTouch1, newTouch2);
+
+                oldTouch1 = newTouch1;
+                oldTouch2 = newTouch2;
+
+                if (newTouch1.phase == TouchPhase.Ended || newTouch2.phase == TouchPhase.Ended)
+                {
+                    ResetImage();
+                }
 
             }
         }
@@ -101,20 +101,13 @@ namespace TouchEvent_Handler
 
         }
 
-        public virtual void Swipe(float intervalTime, Vector2 moveDirect)
-        {
 
-        }
+        public virtual void Init() { }
 
-        public virtual void Bigger()
-        {
+        public virtual void ChangeScale(Touch touch1, Touch touch2) { }
 
-        }
+        public virtual void ResetImage() { }
 
-        public virtual void Smaller()
-        {
-
-        }
 
     }
 }

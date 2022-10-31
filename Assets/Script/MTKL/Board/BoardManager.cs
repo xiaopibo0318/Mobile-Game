@@ -6,10 +6,12 @@ using DG.Tweening;
 
 public class BoardManager : EventDetect
 {
-    public List<GameObject> myNews;
+    public List<RectTransform> myNews;
     public GameObject goBack;
     public GameObject backGround;
     private int currentID;
+
+    private RectTransform originalTransform;
 
     public void Awake()
     {
@@ -19,7 +21,7 @@ public class BoardManager : EventDetect
 
     public void OpenNews(int n)
     {
-        myNews[n].SetActive(true);
+        myNews[n].gameObject.SetActive(true);
         goBack.SetActive(true);
         backGround.SetActive(true);
         currentID = n;
@@ -30,19 +32,33 @@ public class BoardManager : EventDetect
     {
         for (int i = 0; i < myNews.Count; i++)
         {
-            myNews[i].SetActive(false);
+            myNews[i].gameObject.SetActive(false);
             goBack.SetActive(false);
             backGround.SetActive(false);
         }
     }
 
-    public override void Bigger()
+    public override void Init()
     {
-        myNews[currentID].transform.DOScale(scaleOffset, .2f);
+        originalTransform = myNews[currentID];
+        myNews[currentID].anchorMin = Vector2.zero;
+        myNews[currentID].anchorMax = Vector2.zero;
     }
 
-    public override void Smaller()
+    public override void ChangeScale(Touch touch1, Touch touch2)
     {
-        base.Smaller();
+        myNews[currentID].anchorMin = Vector2.zero;
+        myNews[currentID].anchorMax = Vector2.zero;
+        myNews[currentID].DOScale(scaleOffset, .2f);
+        Vector3 newPivotPos = (touch1.position + touch2.position) / 2;
+        myNews[currentID].anchoredPosition = newPivotPos;
     }
+
+    public override void ResetImage()
+    {
+        myNews[currentID].localPosition = originalTransform.localPosition;
+        myNews[currentID].anchoredPosition = originalTransform.anchoredPosition;
+
+    }
+
 }
