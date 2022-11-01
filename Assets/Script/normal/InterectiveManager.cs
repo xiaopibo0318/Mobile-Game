@@ -155,6 +155,9 @@ public class InterectiveManager : MonoBehaviour
             case "electricQuesInterective":
                 nextWay = 31;
                 break;
+            case "scratchInterective":
+                nextWay = 32;
+                break;
 
 
         }
@@ -259,6 +262,9 @@ public class InterectiveManager : MonoBehaviour
             case 31:
                 Debug.Log("AAA");
                 CanvasManager.Instance.openCanvas("ElectricQues");
+                break;
+            case 32:
+                CanvasManager.Instance.openCanvas("ScratchWalk");
                 break;
 
         }

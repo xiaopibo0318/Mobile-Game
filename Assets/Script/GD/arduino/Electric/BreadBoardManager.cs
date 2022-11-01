@@ -187,11 +187,13 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 nodes[i, j].type = Node_Type.Stop;
             }
         }
+        LoadLevel1();
     }
 
     private void ClearNowLine(UILineRenderer uILineRenderer)
     {
         Destroy(uILineRenderer.gameObject);
+
     }
 
     private void OnOperateRangePointerDown(PointerEventData eventData)
@@ -350,11 +352,14 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
             if (startNode == endNode)
             {
+                float totalcost = 0;
+
                 List<AStarNode> path = new List<AStarNode>();
                 path.Add(endNode);
                 while (endNode.parent != null)
                 {
                     path.Add(endNode.parent);
+                    totalcost += endNode.f;
                     endNode = endNode.parent;
                 }
                 path.Reverse();
@@ -363,10 +368,14 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 {
                     Debug.Log("路徑為：" + path[i].x + "," + path[i].y);
                 }
-
+                Debug.Log("總消耗為：" + totalcost);
+                if (totalcost <= 65) ElectricFail();
+                else ElectricSuccess();
 
                 return path;
             }
+
+            
         }
 
 
@@ -511,14 +520,17 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         return vector2;
     }
 
+
+
+
     private void ElectricSuccess()
     {
-
+        SiginalUI.Instance.SiginalText("成功");
     }
 
     private void ElectricFail()
     {
-
+        SiginalUI.Instance.SiginalText("失敗");
     }
 
 
