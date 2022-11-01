@@ -25678,7 +25678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1436620120
 Transform:
   m_ObjectHideFlags: 0
@@ -25719,7 +25719,7 @@ MonoBehaviour:
   - {fileID: 1692148864}
   - {fileID: 21721441}
   - {fileID: 1466563062}
-  goBackButton: {fileID: 0}
+  goBackButton: {fileID: 991012069}
 --- !u!1001 &1439671132
 PrefabInstance:
   m_ObjectHideFlags: 0

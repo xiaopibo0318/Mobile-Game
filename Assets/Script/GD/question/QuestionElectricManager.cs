@@ -24,7 +24,10 @@ public class QuestionElectricManager : EventDetect
     [SerializeField] private Button enterButton;
     [SerializeField] private List<Button> answerButton;
     [SerializeField] private Button goBackButton;
+
+    [Header("判定區域")]
     private int currentID;
+    private bool[] answer = new bool[4];
 
     public int CurrentID
     {
@@ -38,6 +41,10 @@ public class QuestionElectricManager : EventDetect
         LoadPicture();
         InitScreen();
         ButtonInit();
+        for (int i = 0; i < answer.Length; i++)
+        {
+            answer[i] = false;
+        }
     }
 
 
@@ -127,6 +134,8 @@ public class QuestionElectricManager : EventDetect
             answerButton[i].gameObject.SetActive(false);
         }
         enterButton.onClick.AddListener(GoToAnswer);
+        goBackButton.onClick.AddListener(GoBackToChoose);
+        goBackButton.gameObject.SetActive(false);
     }
 
     public override void Hold()
@@ -163,8 +172,12 @@ public class QuestionElectricManager : EventDetect
 
         for (int i = 0; i < answerButton.Count; i++)
         {
-            answerButton[i].gameObject.SetActive(true);
+            if (!answer[i])
+                answerButton[i].gameObject.SetActive(true);
+            else
+                answerButton[i].gameObject.SetActive(false);
         }
+        goBackButton.gameObject.SetActive(true);
 
     }
 
@@ -189,7 +202,7 @@ public class QuestionElectricManager : EventDetect
                 }
                 break;
             case 2:
-                if(index == 3)
+                if (index == 3)
                 {
                     SuccessButton(index);
                 }
@@ -209,9 +222,27 @@ public class QuestionElectricManager : EventDetect
         }
     }
 
+    private void GoBackToChoose()
+    {
+        for (int i = 0; i < allPicTransform.Count; i++)
+        {
+            allPicTransform[i].gameObject.SetActive(true);
+        }
+        for (int i = 0; i < answerButton.Count; i++)
+        {
+            answerButton[i].gameObject.SetActive(false);
+        }
+        enterButton.gameObject.SetActive(true);
+        goBackButton.gameObject.SetActive(false);
+        Slide();
+    }
+
     private void SuccessButton(int index)
     {
-        answerButton[1].gameObject.SetActive(false);
+        answerButton[index].gameObject.SetActive(false);
+        answer[index] = true;
+        GoBackToChoose();
+        //SiginalUI.Instance.SiginalText("正確");
     }
 
 
