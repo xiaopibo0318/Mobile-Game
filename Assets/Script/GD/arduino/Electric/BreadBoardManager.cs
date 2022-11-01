@@ -526,26 +526,36 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     {
         nodes[4, 2].type = Node_Type.Walk;
         nodes[4, 2].g = 5;
-        nodes[4, 3].type = Node_Type.Walk;
-        nodes[4, 3].g = 5;
+        nodes[3, 3].type = Node_Type.Walk;
+        nodes[3, 3].g = 5;
+        nodes[2, 3].type = Node_Type.Walk;
+        nodes[2, 4].type = Node_Type.Walk;
 
         ///建立節點關係
-        nodes[4, 2].AddNeighbor(nodes[4, 3]);
-        nodes[4, 3].AddNeighbor(nodes[4, 2]);
+        nodes[4, 2].AddNeighbor(nodes[3, 3]);
+        nodes[3, 3].AddNeighbor(nodes[4, 2]);
+        nodes[2, 3].AddNeighbor(nodes[2, 4]);
+        nodes[2, 4].AddNeighbor(nodes[2, 3]);
 
 
         ElectricSlot start = slotSet[myboard.GetBoardCol()];
         ElectricSlot end = slotSet[0];
         ElectricSlot slot1 = slotSet[4 * myboard.GetBoardCol() + 2];
-        ElectricSlot slot2 = slotSet[4 * myboard.GetBoardCol() + 3];
+        ElectricSlot slot2 = slotSet[3 * myboard.GetBoardCol() + 3];
+        ElectricSlot slot3 = slotSet[2 * myboard.GetBoardCol() + 3];
+        ElectricSlot slot4 = slotSet[2 * myboard.GetBoardCol() + 4];
         start.ChangeToActive();
         end.ChangeToActive();
         slot1.ChangeToActive();
         slot2.ChangeToActive();
+        slot3.ChangeToActive();
+        slot4.ChangeToActive();
         myboard.isObjectInBoard[0, 0] = true;
         myboard.isObjectInBoard[1, 0] = true;
         myboard.isObjectInBoard[4, 2] = true;
-        myboard.isObjectInBoard[4, 3] = true;
+        myboard.isObjectInBoard[3, 3] = true;
+        myboard.isObjectInBoard[2, 3] = true;
+        myboard.isObjectInBoard[2, 4] = true;
 
 
 

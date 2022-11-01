@@ -148,6 +148,15 @@ public class InterectiveManager : MonoBehaviour
                 nextWay = 11;
                 break;
 
+            ///<summary>
+            ///以下為宮殿的互動
+            /// </summary>
+
+            case "electricQuesInterective":
+                nextWay = 31;
+                break;
+
+
         }
 
 
@@ -244,6 +253,12 @@ public class InterectiveManager : MonoBehaviour
 
             case 11:
                 myLoveTag.Instance.CacheOrSignal();
+                break;
+
+
+            case 31:
+                Debug.Log("AAA");
+                CanvasManager.Instance.openCanvas("ElectricQues");
                 break;
 
         }
