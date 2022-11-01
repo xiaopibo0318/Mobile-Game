@@ -34,6 +34,9 @@ public class Camerafollowww : Singleton<Camerafollowww>
             case 2:
                 CameraInMTKL();
                 break;
+            case 3:
+                CameraInGD();
+                break;
 
         }
 
@@ -83,7 +86,52 @@ public class Camerafollowww : Singleton<Camerafollowww>
         }
     }
 
+    /// <summary>
+    /// x, -13, 13
+    /// y. -9.5, 9.5
+    /// </summary>
+    private void CameraInGD()
+    {
+        if (target.position.x > -25)
+        {
+            if (target.position.x >= -13 && target.position.x <= 13)
+            {
+                if (target.position.y >= -9.5 && target.position.y <= 9.5)
+                {
+                    if (transform.position != target.position)
+                    {
+                        Vector3 targetPos = target.position;
+                        transform.position = Vector3.Lerp(transform.position, targetPos, smoothing);
+                    }
+                }
+            }
+            else if (target.position.x >= -13 && target.position.x <= 13)
+            {
+                transform.position = new Vector3(target.position.x, transform.position.y, transform.position.z);
+            }
+            else if (target.position.y >= -9.5 && target.position.y <= 9.5)
+            {
+                transform.position = new Vector3(transform.position.x, target.position.y, transform.position.z);
+            }
+            else
+            {
+                return;
+            }
+        }
+        else if (target.position.x < -35)
+        {
 
+            if (target.position.y < 7.5f && target.position.y > -7.5f)
+            {
+                transform.position = new Vector3(-50, target.position.y, target.position.z);
+            }
+
+        }
+        else
+        {
+            Debug.Log("找不到人");
+        }
+    }
     public int GetMyPos()
     {
         return myPos;

@@ -242,7 +242,14 @@ public class QuestionElectricManager : EventDetect
         answerButton[index].gameObject.SetActive(false);
         answer[index] = true;
         GoBackToChoose();
-        //SiginalUI.Instance.SiginalText("正確");
+        SiginalUI.Instance.SiginalText("正確");
+
+        for (int i = 0; i < answer.Length; i++)
+        {
+            if (!answer[i]) return;
+        }
+        SiginalUI.Instance.SiginalText("全數答對\n棒棒");
+
     }
 
 
