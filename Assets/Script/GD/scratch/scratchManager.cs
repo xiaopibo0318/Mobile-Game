@@ -24,6 +24,7 @@ public class ScratchManager : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Button clearButton;
     [SerializeField] private InputField goAheadStep;
+    [SerializeField] private Button goBackButton;
 
     public static ScratchManager Instance;
 
@@ -35,7 +36,9 @@ public class ScratchManager : MonoBehaviour
 
         startButton.onClick.AddListener(StartGame);
         clearButton.onClick.AddListener(ResetBlock);
+        goBackButton.onClick.AddListener(Close);
     }
+    private void Close() => CanvasManager.Instance.openCanvas("Original");
 
     // Start is called before the first frame update
     public void OnEnable()

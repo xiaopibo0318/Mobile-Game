@@ -103,50 +103,6 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         }
     }
 
-    /// <summary>
-    /// 注意，這裡的now_x是指從上到下的row，
-    /// now_y是指左到右的col
-    /// </summary>
-    /// <param name="now_x"></param>
-    /// <param name="now_y"></param>
-    /// <param name="electricType"></param>
-    private void ChangeElectricMode(int now_x, int now_y, int electricType)
-    {
-        //如果該點的electrictype != 現在的electric type or -99 =>短路
-        if (myboard.isElectric[now_x, now_y] != electricType ||
-            myboard.isElectric[now_x, now_y] != -99)
-        {
-
-            //短路?
-        }
-
-
-        if (CheckIsHorizontalOrVertical(now_x))
-        {
-            for (int i = 0; i < myboard.GetBoardCol(); i++)
-            {
-                myboard.isElectric[now_x, i] = electricType;
-            }
-        }
-        else
-        {
-            //將上排的值的給弄一弄
-            if (now_x >= 2 && now_x <= 4)
-            {
-                for (int i = 2; i < 5; i++)
-                {
-                    myboard.isElectric[i, now_y] = electricType;
-                }
-            }
-            else if (now_x >= 5 && now_x <= 7)
-            {
-                for (int i = 5; i < 8; i++)
-                {
-                    myboard.isElectric[i, now_y] = electricType;
-                }
-            }
-        }
-    }
 
     // true = Horizontal
     // false = Vertical
@@ -190,11 +146,6 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         LoadLevel1();
     }
 
-    private void ClearNowLine(UILineRenderer uILineRenderer)
-    {
-        Destroy(uILineRenderer.gameObject);
-
-    }
 
     private void OnOperateRangePointerDown(PointerEventData eventData)
     {
