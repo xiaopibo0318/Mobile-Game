@@ -158,6 +158,9 @@ public class InterectiveManager : MonoBehaviour
             case "scratchInterective":
                 nextWay = 32;
                 break;
+            case "electricalBoxInterective":
+                nextWay = 33;
+                break;
 
 
         }
@@ -265,6 +268,9 @@ public class InterectiveManager : MonoBehaviour
                 break;
             case 32:
                 CanvasManager.Instance.openCanvas("ScratchWalk");
+                break;
+            case 33:
+                CanvasManager.Instance.openCanvas("LightElectric");
                 break;
 
         }
