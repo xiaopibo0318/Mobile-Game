@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class SiginalUI : MonoBehaviour
 {
     public GameObject siginalContent;
     public Text siginalText;
-    public GameObject confirm;
-    public GameObject dontDo;
+    public Button confirm;
+    public Button dontDo;
     public GameObject panel;
+    private UnityAction nextAction;
 
     public static SiginalUI Instance;
     public void Awake()
@@ -29,14 +31,31 @@ public class SiginalUI : MonoBehaviour
         StartCoroutine(CloseSignal(signalTime));
     }
 
-    public void TextInterectvie(string myText)
+    public void TextInterectvie(string myText, UnityAction unityAction1 = null, UnityAction unityAction2 = null)
     {
         siginalContent.SetActive(true);
         siginalText.text = myText;
-        confirm.SetActive(true);
-        dontDo.SetActive(true);
+        confirm.gameObject.SetActive(true);
+        dontDo.gameObject.SetActive(true);
+        nextAction = unityAction1;
+        confirm.onClick.AddListener(delegate { ExecuteOptionYes(nextAction); });
+        UnityAction temp = unityAction2;
+        dontDo.onClick.AddListener(delegate { ExecuteOptionNo(temp); });
     }
 
+
+    private void ExecuteOptionYes(UnityAction unityAction = null)
+    {
+        ResetSiginal();
+        unityAction?.Invoke();
+        nextAction = null;
+    }
+    private void ExecuteOptionNo(UnityAction unityAction = null)
+    {
+        ResetSiginal();
+        unityAction?.Invoke();
+        nextAction = null;
+    }
 
     IEnumerator CloseSignal(float delayTime)
     {
@@ -52,8 +71,8 @@ public class SiginalUI : MonoBehaviour
     {
         siginalContent.SetActive(false);
         siginalText.text = "";
-        confirm.SetActive(false);
-        dontDo.SetActive(false);
+        confirm.gameObject.SetActive(false);
+        dontDo.gameObject.SetActive(false);
         panel.SetActive(false);
     }
 

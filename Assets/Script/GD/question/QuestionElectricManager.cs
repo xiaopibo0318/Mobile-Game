@@ -43,14 +43,13 @@ public class QuestionElectricManager : EventDetect
 
     private void OnEnable()
     {
-        LoadPicture();
-        InitScreen();
         ButtonInit();
         for (int i = 0; i < answer.Length; i++)
         {
             answer[i] = false;
         }
     }
+
 
     private void LoadPicture()
     {

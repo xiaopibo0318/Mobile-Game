@@ -27,9 +27,7 @@ public class TeachingResistance : MonoBehaviour, IPointerDownHandler
 
     private void TeachResistance(int index)
     {
-        if (index > mainText.Count) return;
-
-        if (index > 0)
+        if (index > 0 && index < mainText.Count-1)
         {
             mainText[index - 1].gameObject.SetActive(false);
             mainText[index].gameObject.SetActive(true);
@@ -37,6 +35,7 @@ public class TeachingResistance : MonoBehaviour, IPointerDownHandler
         switch (index)
         {
             case 0:
+                ResetTeach();
                 mainText[0].gameObject.SetActive(true);
                 resistanceImage.gameObject.SetActive(true);
                 break;
@@ -56,15 +55,35 @@ public class TeachingResistance : MonoBehaviour, IPointerDownHandler
             case 4:
                 teachImage.gameObject.SetActive(false);
                 resistanceImage.gameObject.SetActive(true);
+                colorImage.gameObject.SetActive(true);
                 break;
             case 5:
-                teachImage.gameObject.SetActive(true);
+                mainText[4].gameObject.SetActive(false);
+                break;
+            case 6:
+                colorImage.gameObject.SetActive(false);
+                SiginalUI.Instance.TextInterectvie("是否還要再看一次", agianTeach);
                 break;
             default:
                 break;
 
 
         }
+
     }
 
+    private void ResetTeach()
+    {
+        for (int i = 0; i < mainText.Count; i++)
+        {
+            mainText[i].gameObject.SetActive(false);
+        }
+        resistanceImage.gameObject.SetActive(false);
+        colorImage.gameObject.SetActive(false);
+        teachImage.gameObject.SetActive(false);
+        teachStep = 0;
+    }
+
+
+    private void agianTeach() =>  TeachResistance(0);
 }

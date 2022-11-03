@@ -26,6 +26,7 @@ namespace TouchEvent_Handler
         {
             isTouch = true;
             touch1Data = eventData;
+            PointerDown(eventData);
         }
         public void OnPointerUp(PointerEventData eventData)
         {
@@ -96,11 +97,8 @@ namespace TouchEvent_Handler
         }
 
 
-        public virtual void Hold()
-        {
-
-        }
-
+        public virtual void Hold() { }
+        public virtual void PointerDown(PointerEventData eventData) { }
 
         public virtual void Init() { }
 
