@@ -123,7 +123,7 @@ public class Camerafollowww : Singleton<Camerafollowww>
 
             if (target.position.y < 7.5f && target.position.y > -7.5f)
             {
-                transform.position = new Vector3(-50, target.position.y, target.position.z);
+                transform.position = new Vector3(target.position.x, target.position.y, target.position.z);
             }
 
         }

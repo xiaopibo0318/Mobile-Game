@@ -307,12 +307,17 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
                 List<AStarNode> path = new List<AStarNode>();
                 path.Add(endNode);
+                float temp = 0;
                 while (endNode.parent != null)
                 {
                     path.Add(endNode.parent);
-                    totalcost += endNode.f;
+                    if (temp < endNode.g)
+                    {
+                        temp = endNode.g;
+                    }
                     endNode = endNode.parent;
                 }
+                totalcost = temp;
                 path.Reverse();
 
                 for (int i = 0; i < path.Count; i++)
@@ -320,13 +325,13 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                     Debug.Log("路徑為：" + path[i].x + "," + path[i].y);
                 }
                 Debug.Log("總消耗為：" + totalcost);
-                if (totalcost <= 65) ElectricFail();
+                if (totalcost != 10) ElectricFail();
                 else ElectricSuccess();
 
                 return path;
             }
 
-            
+
         }
 
 

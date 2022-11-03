@@ -38,7 +38,7 @@ public class ScratchManager : MonoBehaviour
         clearButton.onClick.AddListener(ResetBlock);
         goBackButton.onClick.AddListener(Close);
     }
-    private void Close() => CanvasManager.Instance.openCanvas("Original");
+    private void Close() => CanvasManager.Instance.openCanvas("original");
 
     // Start is called before the first frame update
     public void OnEnable()

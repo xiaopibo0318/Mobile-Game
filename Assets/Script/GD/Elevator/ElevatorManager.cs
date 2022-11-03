@@ -305,7 +305,10 @@ public class ElevatorManager : EventDetect
                 while (endNode.parent != null)
                 {
                     path.Add(endNode.parent);
-                    totalcost += endNode.f;
+                    if (totalcost < endNode.g)
+                    {
+                        totalcost = endNode.g;
+                    }
                     endNode = endNode.parent;
                 }
                 path.Reverse();

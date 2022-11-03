@@ -38,6 +38,11 @@ public class QuestionElectricManager : EventDetect
 
     private void Start()
     {
+        
+    }
+
+    private void OnEnable()
+    {
         LoadPicture();
         InitScreen();
         ButtonInit();
@@ -46,7 +51,6 @@ public class QuestionElectricManager : EventDetect
             answer[i] = false;
         }
     }
-
 
     private void LoadPicture()
     {
@@ -105,16 +109,17 @@ public class QuestionElectricManager : EventDetect
     {
         for (int i = 0; i < allPic.Length; i++)
         {
+            var index = i;
             RectTransform tempCreate = Instantiate(prefab, prefabParent);
             //定位0,0 1,1 拉滿版塊
             tempCreate.anchorMin = Vector2.zero;
             tempCreate.anchorMax = Vector2.one;
-            tempCreate.localScale = Vector3.one * (1 - (i * reduceSize));
-            tempCreate.anchoredPosition = new Vector2(i * (prefab.sizeDelta.x + gaps -
-                ((i * reduceSize)) * tempCreate.sizeDelta.x / 2), 0);
-            tempCreate.Find("Image").GetComponent<Image>().sprite = allPic[i];
+            tempCreate.localScale = Vector3.one * (1 - (index * reduceSize));
+            tempCreate.anchoredPosition = new Vector2(index * (prefab.sizeDelta.x + gaps -
+                ((index * reduceSize)) * tempCreate.sizeDelta.x / 2), 0);
+            tempCreate.Find("Image").GetComponent<Image>().sprite = allPic[index];
             tempCreate.Find("TitleText").GetComponent<Text>().text = allQuesInfo[0].title;
-            rightPos.Add(i, new List<Vector3>() { tempCreate.transform.position, tempCreate.localScale });
+            rightPos.Add(index, new List<Vector3>() { tempCreate.transform.position, tempCreate.localScale });
             allPicTransform.Add(tempCreate);
         }
 
