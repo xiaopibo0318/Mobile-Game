@@ -93,6 +93,7 @@ public class TeachingResistance : MonoBehaviour, IPointerDownHandler
         {
             mainText[i].gameObject.SetActive(false);
         }
+        resistanceImage.gameObject.SetActive(false);
     }
 
 

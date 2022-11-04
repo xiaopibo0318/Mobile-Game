@@ -15,6 +15,7 @@ public class ElevatorManager : EventDetect
     private Dictionary<Vector2, Vector2> linePointList = new Dictionary<Vector2, Vector2>();
     private MyBoard myboard;
     private List<Vector2> tempPointList = new List<Vector2>();
+    private List<List<AStarNode>> allPath = new List<List<AStarNode>>();
 
     [Header("板子上的素材")]
     [SerializeField] private DragItem operateRange;
@@ -234,7 +235,7 @@ public class ElevatorManager : EventDetect
     }
 
 
-    private List<AStarNode> StartFind(Vector2 start, Vector2 end)
+    private void StartFind(Vector2 start, Vector2 end)
     {
 
 
@@ -284,7 +285,7 @@ public class ElevatorManager : EventDetect
             if (openList.Count == 0)
             {
                 Debug.Log("空、死路");
-                return null;
+                return;
             }
 
             //找尋路中消耗最小的點、要把亂的排序一下
@@ -318,10 +319,14 @@ public class ElevatorManager : EventDetect
                     Debug.Log("路徑為：" + path[i].x + "," + path[i].y);
                 }
                 Debug.Log("總消耗為：" + totalcost);
-                if (totalcost <= 65) ElectricFail();
-                else ElectricSuccess();
+                if (totalcost == 10)
+                {
+                    allPath.Add(path);
+                    StartFind(start, end);
+                }
+                else continue;
 
-                return path;
+                
             }
 
 

@@ -162,6 +162,20 @@ public class InterectiveManager : MonoBehaviour
                 nextWay = 33;
                 break;
 
+            case "pillarInterectiveA":
+                nextWay = 311;
+                break;
+            case "pillarInterectiveB":
+                nextWay = 312;
+                break;
+            case "pillarInterectiveC":
+                nextWay = 313;
+                break;
+            case "pillarInterectiveD":
+                nextWay = 314;
+                break;
+
+
 
         }
 
@@ -271,6 +285,27 @@ public class InterectiveManager : MonoBehaviour
                 break;
             case 33:
                 CanvasManager.Instance.openCanvas("LightElectric");
+                break;
+
+            case 311:
+                CanvasManager.Instance.openCanvas("FourPillar");
+                FourPillarManager.Instance.nowQues = 0;
+                FourPillarManager.Instance.TriggerQues();
+                break;
+            case 312:
+                CanvasManager.Instance.openCanvas("FourPillar");
+                FourPillarManager.Instance.nowQues = 1;
+                FourPillarManager.Instance.TriggerQues();
+                break;
+            case 313:
+                CanvasManager.Instance.openCanvas("FourPillar");
+                FourPillarManager.Instance.nowQues = 2;
+                FourPillarManager.Instance.TriggerQues();
+                break;
+            case 314:
+                CanvasManager.Instance.openCanvas("FourPillar");
+                FourPillarManager.Instance.nowQues = 3;
+                FourPillarManager.Instance.TriggerQues();
                 break;
 
         }

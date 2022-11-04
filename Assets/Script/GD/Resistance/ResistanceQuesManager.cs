@@ -136,6 +136,7 @@ public class ResistanceQuesManager : EventDetect
             if (eventData.pointerCurrentRaycast.gameObject == allPicTransform[i].gameObject)
             {
                 currentID = i;
+                
             }
         }
 
