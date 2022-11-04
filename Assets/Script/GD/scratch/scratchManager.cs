@@ -57,9 +57,7 @@ public class ScratchManager : MonoBehaviour
             blocks.Add(Instantiate(emptyBlockSlot));
             emptyBlockSlot.name = "blockSlot";
             blocks[i].transform.SetParent(blockGrid.transform);
-
             blocks[i].GetComponent<blockSlot>().slotID = i;
-
         }
     }
 

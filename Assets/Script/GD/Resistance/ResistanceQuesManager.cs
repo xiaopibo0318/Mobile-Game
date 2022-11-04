@@ -8,26 +8,33 @@ using UnityEngine.EventSystems;
 
 public class ResistanceQuesManager : EventDetect
 {
-    private float gaps = 450;
-    private float reduceSize = 0.2f;
-    public RectTransform prefab;
-    public Transform prefabParent;
-
     [Header("圖片素材")]
-    private Sprite[] allPic;
-    private QuesInfo[] allQuesInfo;
-    private List<Transform> allPicTransform = new List<Transform>();
-    private Dictionary<int, List<Vector3>> leftPos = new Dictionary<int, List<Vector3>>();
-    private Dictionary<int, List<Vector3>> rightPos = new Dictionary<int, List<Vector3>>();
+    public List<Transform> allPicTransform = new List<Transform>();
+
+    public Image colorImage;
 
     [Header("按鈕")]
     [SerializeField] private Button enterButton;
-    [SerializeField] private List<Button> answerButton;
     [SerializeField] private Button goBackButton;
+    [SerializeField] private Button detectButton;
 
     [Header("判定區域")]
     private int currentID;
-    private bool[] answer = new bool[3];
+    [SerializeField] private InputField answerZone1;
+    [SerializeField] private InputField answerZone2;
+    [Header("UI階段")]
+    [SerializeField] private GameObject quesChoose;
+    [SerializeField] private GameObject quesAnswer;
+
+
+    private List<Vector3> imagePos = new List<Vector3>();
+
+    public static ResistanceQuesManager Instance;
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(this);
+    }
 
     public int CurrentID
     {
@@ -36,41 +43,33 @@ public class ResistanceQuesManager : EventDetect
     }
 
 
-    private void Start()
-    {
-
-    }
-
     private void OnEnable()
     {
-        ButtonInit();
-        for (int i = 0; i < answer.Length; i++)
+        for (int i = 0; i < allPicTransform.Count; i++)
         {
-            answer[i] = false;
+            imagePos.Add(allPicTransform[i].position);
         }
+        ButtonInit();
+        GoBackToChoose();
+        quesChoose.gameObject.SetActive(false);
+        quesAnswer.gameObject.SetActive(false);
     }
-
-
-
 
 
     private void ButtonInit()
     {
-        for (int i = 0; i < answerButton.Count; i++)
-        {
-            int index = i;
-            answerButton[i].gameObject.SetActive(false);
-        }
         enterButton.onClick.AddListener(GoToAnswer);
         goBackButton.onClick.AddListener(GoBackToChoose);
         goBackButton.gameObject.SetActive(false);
+        detectButton.onClick.AddListener(DetectAnswer);
     }
 
 
 
     private void GoToAnswer()
     {
-        Vector3 endPos = new Vector3(400, 450, 0);
+        quesAnswer.SetActive(true);
+        Vector3 endPos = new Vector3(300, 700, 0);
         for (int i = 0; i < allPicTransform.Count; i++)
         {
             if (i == currentID)
@@ -83,15 +82,11 @@ public class ResistanceQuesManager : EventDetect
             }
         }
         enterButton.gameObject.SetActive(false);
-
-        for (int i = 0; i < answerButton.Count; i++)
-        {
-            if (!answer[i])
-                answerButton[i].gameObject.SetActive(true);
-            else
-                answerButton[i].gameObject.SetActive(false);
-        }
         goBackButton.gameObject.SetActive(true);
+        detectButton.gameObject.SetActive(true);
+        answerZone1.gameObject.SetActive(true);
+        answerZone2.gameObject.SetActive(true);
+        colorImage.gameObject.SetActive(true);
 
     }
 
@@ -100,15 +95,37 @@ public class ResistanceQuesManager : EventDetect
         for (int i = 0; i < allPicTransform.Count; i++)
         {
             allPicTransform[i].gameObject.SetActive(true);
-        }
-        for (int i = 0; i < answerButton.Count; i++)
-        {
-            answerButton[i].gameObject.SetActive(false);
+            allPicTransform[i].DOMove(imagePos[i], .8f);
         }
         enterButton.gameObject.SetActive(true);
         goBackButton.gameObject.SetActive(false);
+        answerZone1.gameObject.SetActive(false);
+        answerZone2.gameObject.SetActive(false);
+        detectButton.gameObject.SetActive(false);
+        colorImage.gameObject.SetActive(false);
     }
 
+
+    private void DetectAnswer()
+    {
+        string answer1 = answerZone1.text;
+        string answer2 = answerZone2.text;
+        switch (currentID)
+        {
+            case 0:
+                if (answer1 == "2.4M" || answer1 == "2400K" || answer1 == "2400000")
+                {
+                    if (answerZone2.text == "5")
+                    {
+                        SiginalUI.Instance.SiginalText("成功");
+                    }
+
+                }
+                break;
+            case 1:
+                break;
+        }
+    }
 
 
     public override void PointerDown(PointerEventData eventData)
@@ -121,7 +138,18 @@ public class ResistanceQuesManager : EventDetect
                 currentID = i;
             }
         }
-        
+
+        for (int i = 0; i < allPicTransform.Count; i++)
+        {
+            if (i == currentID) allPicTransform[currentID].DOScale(1.1f, 0.6f);
+            else allPicTransform[i].DOScale(1, 0.6f);
+        }
+
+    }
+
+    public void OpenQues()
+    {
+        quesChoose.SetActive(true);
     }
 
 }
