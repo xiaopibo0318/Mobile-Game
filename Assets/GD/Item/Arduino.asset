@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 401
   itemName: Arduino
-  itemImage: {fileID: 0}
+  itemImage: {fileID: 4081745225753756801, guid: 6e993a99c735c3c43a0d789d00d1ec9c,
+    type: 3}
   itemTag: 
   itemHave: 0
   itemInfo: 

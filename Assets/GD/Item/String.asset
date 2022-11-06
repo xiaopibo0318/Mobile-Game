@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3284a4da7f52a5740bee82ec381f8593, type: 3}
-  m_Name: LED
+  m_Name: String
   m_EditorClassIdentifier: 
-  itemID: 404
-  itemName: LED
-  itemImage: {fileID: -1395620539264383005, guid: 6e993a99c735c3c43a0d789d00d1ec9c,
+  itemID: 406
+  itemName: "\u675C\u90A6\u7DDA"
+  itemImage: {fileID: 3124164176247399077, guid: 6e993a99c735c3c43a0d789d00d1ec9c,
     type: 3}
   itemTag: 
   itemHave: 0

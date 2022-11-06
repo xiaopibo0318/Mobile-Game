@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Opad
   m_EditorClassIdentifier: 
   itemID: 499
-  itemName: 
-  itemImage: {fileID: 0}
+  itemName: OPAD
+  itemImage: {fileID: 685076598362429633, guid: bf420b119b9572c44bc483a0e00ee98d,
+    type: 3}
   itemTag: 
   itemHave: 0
   itemInfo: 

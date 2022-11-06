@@ -155,6 +155,7 @@ public class ScratchManager : MonoBehaviour
         if (nowPos == endPos)
         {
             SiginalUI.Instance.SiginalText("程式編譯器\n \"O Pad\" \n 以添加至背包中");
+            ItemUIManagerGD.Instance.AddItemToBag("OPAD");
             return;
         }
         if (nowPos.x < 0 || nowPos.x > 4 || nowPos.y < 0 || nowPos.y > 6) isOut = true;
