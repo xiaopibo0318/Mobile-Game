@@ -19,6 +19,9 @@ public class ScratchManager : MonoBehaviour
     public GameObject target;
     public GameObject direct;
     private int nowDirect;
+    private Vector2 nowPos = new Vector2(0, 0);
+    private Vector2 endPos = new Vector2(4, 6);
+    private bool isOut;
 
     [Header("UI組件")]
     [SerializeField] private Button startButton;
@@ -41,13 +44,11 @@ public class ScratchManager : MonoBehaviour
     private void Close() => CanvasManager.Instance.openCanvas("original");
 
     // Start is called before the first frame update
-    public void OnEnable()
-    {
-        setUpBlockSlot();
-        ResetBlock();
-        ResetObject();
-    }
 
+    private void Start()
+    {
+        ResetBlock();
+    }
 
     public void setUpBlockSlot()
     {
@@ -91,7 +92,7 @@ public class ScratchManager : MonoBehaviour
                 case 0:
                     break;
                 case 1:
-                    GoAhead(nowDirect, tempMoveList[nowTempListIndex]);
+                    GoAhead(nowDirect, tempMoveList[nowTempListIndex], IsGoal);
                     nowTempListIndex++;
                     break;
                 case 11:
@@ -121,15 +122,19 @@ public class ScratchManager : MonoBehaviour
         {
             case 0:
                 target.transform.position = new Vector3(target.transform.position.x, target.transform.position.y + 100 * moveStep, target.transform.position.z);
+                nowPos.y += moveStep;
                 break;
             case 1:
                 target.transform.position = new Vector3(target.transform.position.x - 100 * moveStep, target.transform.position.y, target.transform.position.z);
+                nowPos.x -= moveStep;
                 break;
             case 2:
                 target.transform.position = new Vector3(target.transform.position.x, target.transform.position.y - 100 * moveStep, target.transform.position.z);
+                nowPos.y -= moveStep;
                 break;
             case 3:
                 target.transform.position = new Vector3(target.transform.position.x + 100 * moveStep, target.transform.position.y, target.transform.position.z);
+                nowPos.x += moveStep;
                 break;
             default:
 
@@ -146,12 +151,28 @@ public class ScratchManager : MonoBehaviour
     /// </summary>
     private void IsGoal()
     {
+        isOut = false;
+        if (nowPos == endPos)
+        {
+            SiginalUI.Instance.SiginalText("程式編譯器\n \"O Pad\" \n 以添加至背包中");
+            return;
+        }
+        if (nowPos.x < 0 || nowPos.x > 4 || nowPos.y < 0 || nowPos.y > 6) isOut = true;
+        if (nowPos.x != 4 && nowPos.y != 0) isOut = true;
 
+        if (isOut)
+        {
+            SiginalUI.Instance.SiginalText("失敗");
+            ResetBlock();
+        }
     }
 
 
     public void ResetBlock()
     {
+        nowPos.x = 0;
+        nowPos.y = 0;
+
         for (int i = 0; i < exeLists.exeList.Length; i++)
         {
             exeLists.exeList[i] = -99;
@@ -172,6 +193,7 @@ public class ScratchManager : MonoBehaviour
         target.transform.position = new Vector3(1150, 170, 0);
         nowDirect = 3;
         direct.transform.position = DirectPoint.GetArrowPos(nowDirect, target.transform.position);
+        direct.transform.rotation = Quaternion.Euler(0, 0, DirectPoint.GetArrowRotate(nowDirect));
 
     }
 

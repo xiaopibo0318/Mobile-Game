@@ -6,6 +6,11 @@ public class GDMananger : MonoBehaviour
 {
     private void Start()
     {
-        
+
+    }
+
+    private void OnEnable()
+    {
+        Camerafollowww.Instance.UpdateNowSceneBuildIndex();
     }
 }

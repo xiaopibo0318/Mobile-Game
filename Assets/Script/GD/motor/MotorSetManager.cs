@@ -30,7 +30,6 @@ public class MotorSetManager : MonoBehaviour, IPointerDownHandler
             else
             {
                 allMotorTransform[i].DOScale(1, 0.8f);
-                currentID = -99;
             }
 
         }
