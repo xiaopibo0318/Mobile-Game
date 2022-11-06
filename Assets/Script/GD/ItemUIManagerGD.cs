@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemUIManagerGD : MonoBehaviour
+public class ItemUIManagerGD : Singleton<ItemUIManagerGD>
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private List<Item> items = new List<Item>();
+
+
+    public void AddItemToBag(string itemName)
     {
-        
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].itemName == itemName)
+            {
+                InventoryManager.Instance.AddNewItem(items[i]);
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

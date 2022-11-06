@@ -7,6 +7,7 @@ public class InterectiveManager : MonoBehaviour
     [SerializeField] IamInterective[] interectiveList;
     [SerializeField] GameObject interctiveBackground;
     public static InterectiveManager Instance;
+    public GameObject nowTouch { get; set; }
 
     int nextWay;
 
@@ -21,6 +22,7 @@ public class InterectiveManager : MonoBehaviour
         closeAllIcon();
         interctiveBackground.SetActive(false);
         nextWay = 0;
+        nowTouch = null;
     }
 
     public void openIcon(string _interectName)
@@ -161,6 +163,9 @@ public class InterectiveManager : MonoBehaviour
             case "electricalBoxInterective":
                 nextWay = 33;
                 break;
+            case "resistanceInterective":
+                nextWay = 34;
+                break;
 
             case "pillarInterectiveA":
                 nextWay = 311;
@@ -175,6 +180,10 @@ public class InterectiveManager : MonoBehaviour
                 nextWay = 314;
                 break;
 
+            ///四個共用
+            case "motorInterective":
+                nextWay = 401;
+                break;
 
 
         }
@@ -240,7 +249,7 @@ public class InterectiveManager : MonoBehaviour
                 break;
             case 1113:
                 InventoryManager.Instance.AddNewItem(myItemList[2]);
-                Interactive_icon.Instance.DestroyGameObject();
+                DestroyTouchObject();
                 Player.Instance.PlayerCache();
                 break;
 
@@ -286,6 +295,9 @@ public class InterectiveManager : MonoBehaviour
             case 33:
                 CanvasManager.Instance.openCanvas("LightElectric");
                 break;
+            case 34:
+                CanvasManager.Instance.openCanvas("Resistance");
+                break;
 
             case 311:
                 CanvasManager.Instance.openCanvas("FourPillar");
@@ -306,6 +318,11 @@ public class InterectiveManager : MonoBehaviour
                 CanvasManager.Instance.openCanvas("FourPillar");
                 FourPillarManager.Instance.nowQues = 3;
                 FourPillarManager.Instance.TriggerQues();
+                break;
+
+            case 401: ///四個共用
+                ItemUIManagerGD.Instance.AddItemToBag("馬達");
+                DestroyTouchObject();
                 break;
 
         }
@@ -335,5 +352,14 @@ public class InterectiveManager : MonoBehaviour
     //{
     //    Wood.Instance.AddNewItem();
     //}
+
+    private void DestroyTouchObject()
+    {
+        if (nowTouch != null)
+        {
+            Destroy(nowTouch);
+        }
+    }
+
 
 }

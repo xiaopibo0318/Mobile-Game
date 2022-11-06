@@ -53,7 +53,10 @@ ID    name
 
 401 Arduino
 402 馬達
-403 I pad
+403 電阻
+404 LED燈
+405 麵包版
+499 I pad
 
 
 

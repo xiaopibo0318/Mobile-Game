@@ -38,11 +38,6 @@ public class QuestionElectricManager : EventDetect
 
     private void Start()
     {
-        
-    }
-
-    private void OnEnable()
-    {
         ButtonInit();
         for (int i = 0; i < answer.Length; i++)
         {
