@@ -19,7 +19,8 @@ public class ElevatorManager : EventDetect
 
     [Header("板子上的素材")]
     [SerializeField] private DragItem operateRange;
-    [SerializeField] private List<ElectricSlot> slotSet;
+    [SerializeField] private List<ElectricSlot> slotSetInBreadBoard;
+    [SerializeField] private List<ElectricSlot> slotSetInOther;
     [SerializeField] private Transform slotParent;
     [SerializeField] private GameObject myLine;
     [SerializeField] private Transform lineParent;
@@ -74,11 +75,17 @@ public class ElevatorManager : EventDetect
         {
             for (int j = 0; j < myboard.GetBoardCol(); j++)
             {
-                slotSet[i * myboard.GetBoardCol() + j].Init(i, j);
+                slotSetInBreadBoard[i * myboard.GetBoardCol() + j].Init(i, j);
                 AStarNode node = new AStarNode(i, j, Node_Type.Stop);
                 nodes[i, j] = node;
             }
         }
+        for (int i = 0; i < slotSetInOther.Count; i++)
+        {
+            AStarNode node = new AStarNode(i, 12, Node_Type.Stop);
+
+        }
+
     }
 
     private void ButtonInit()
@@ -130,10 +137,16 @@ public class ElevatorManager : EventDetect
         nowLine = null;
         isOperate = false;
         myboard.ResetAll();
-        for (int i = 0; i < slotSet.Count; i++)
+        for (int i = 0; i < slotSetInBreadBoard.Count; i++)
         {
-            slotSet[i].ResetSlot();
+            slotSetInBreadBoard[i].ResetSlot();
         }
+
+        for (int i = 0; i < slotSetInOther.Count; i++)
+        {
+            slotSetInOther[i].ResetSlot();
+        }
+
 
         ///重製Node狀態
         for (int i = 0; i < myboard.GetBoardRow(); i++)
@@ -326,7 +339,7 @@ public class ElevatorManager : EventDetect
                 }
                 else continue;
 
-                
+
             }
 
 

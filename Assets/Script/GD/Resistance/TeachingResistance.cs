@@ -9,6 +9,7 @@ public class TeachingResistance : MonoBehaviour, IPointerDownHandler
 {
     private bool isFirst = true;
     private int teachStep = 0;
+    [SerializeField] private GameObject mainObject;
     [SerializeField] private Image resistanceImage;
     [SerializeField] private Image teachImage;
     [SerializeField] private Image colorImage;
@@ -20,9 +21,15 @@ public class TeachingResistance : MonoBehaviour, IPointerDownHandler
         TeachResistance(teachStep);
     }
 
-    private void OnEnable()
+    private void Awake()
+    {
+        mainObject.SetActive(true);
+    }
+
+    private void Start()
     {
         if (isFirst) TeachResistance(0);
+        mainObject.SetActive(false);
     }
 
     private void TeachResistance(int index)

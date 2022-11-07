@@ -32,10 +32,11 @@ public class ItemIntroduceMananger : MonoBehaviour
     {
         for (int i = 0; i < myItem.Length; i++)
         {
-            if(myItem[i].itemID == myID)
+            if (myItem[i].itemID == myID)
             {
                 OpenIntroduce(myItem[i]);
-            }else if (myItem[i].open)
+            }
+            else if (myItem[i].open)
             {
                 CloseIntrodice(myItem[i]);
             }
@@ -52,6 +53,11 @@ public class ItemIntroduceMananger : MonoBehaviour
             }
         }
         _name.Open();
+        if (ItemUIManagerGD.Instance != null)
+        {
+            ItemUIManagerGD.Instance.currentID = _name.itemID;
+        }
+
     }
 
     void CloseIntrodice(IamItem _name)

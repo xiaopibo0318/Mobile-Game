@@ -12,6 +12,7 @@ public class QuestionElectricManager : EventDetect
     private float reduceSize = 0.2f;
     public RectTransform prefab;
     public Transform prefabParent;
+    [SerializeField] private GameObject mainObject;
 
     [Header("圖片素材")]
     private Sprite[] allPic;
@@ -35,6 +36,12 @@ public class QuestionElectricManager : EventDetect
         set { currentID = value; }
     }
 
+    private void Awake()
+    {
+        mainObject.SetActive(true);
+    }
+
+
 
     private void Start()
     {
@@ -43,7 +50,31 @@ public class QuestionElectricManager : EventDetect
         {
             answer[i] = false;
         }
+        LoadPicture();
+        InitScreen();
+        mainObject.SetActive(false);
     }
+
+    //private void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        foreach (var x in leftPos)
+    //        {
+    //            Debug.Log("leftPos值：" + x.Key);
+    //            foreach (var item in x.Value)
+    //            {
+    //                Debug.Log("value：" + item.x.ToString() + "," + item.y.ToString() + "," + item.z.ToString());
+    //            }
+    //        }
+    //        //foreach (var y in rightPos)
+    //        //{
+    //        //    Debug.Log("rightPos值：" + y.Key + "。value：" + y.Value);
+    //        //}
+
+    //    }
+    //}
+
 
 
     private void LoadPicture()
@@ -250,6 +281,8 @@ public class QuestionElectricManager : EventDetect
         SiginalUI.Instance.SiginalText("全數答對\n棒棒");
 
     }
+
+
 
 
 }
