@@ -103,8 +103,8 @@ public class ElevatorManager : EventDetect
             colorList[i].onClick.AddListener(delegate { SelectColor(index); });
         }
         clearAllLineButton.onClick.AddListener(ClearAllLine);
-        //startFindButton.onClick.AddListener(delegate { StartFind(myStart, myEnd); });
-        startFindButton.onClick.AddListener(delegate { GetAllPath(myStart,myEnd,allPathList,storeList); });
+        startFindButton.onClick.AddListener(delegate { StartFind(myStart, myEnd); });
+        //startFindButton.onClick.AddListener(delegate { GetAllPath(myStart,myEnd,allPathList,storeList); });
     }
 
     private void SelectColor(int index)
@@ -413,6 +413,7 @@ public class ElevatorManager : EventDetect
 
     private void GetAllPath(Vector2 start, Vector2 end, List<List<AStarNode>> totalNode, List<AStarNode> oldList)
     {
+        Debug.Log("a");
         AStarNode startNode;
         AStarNode endNode;
         if (start.y < 11)
@@ -432,17 +433,25 @@ public class ElevatorManager : EventDetect
             endNode = nodes2[(int)end.x, (int)end.y];
         }
 
-        AStarNode temp = startNode;
-        if (oldList.Contains(temp)) return;
-        oldList.Add(temp);
-        if (temp == endNode)
+        if (oldList.Contains(startNode)) return;
+        oldList.Add(startNode);
+        if (startNode == endNode)
         {
             totalNode.Add(oldList);
+            foreach (var item in totalNode)
+            {
+                Debug.Log("aaa");
+                foreach (var point in item)
+                {
+                    Debug.Log("點的位置是：" + point.x + "," + point.y);
+                }
+            }
             return;
         }
-        foreach (var nextNode in temp.neighborList)
+        Debug.Log("C");
+        foreach (var nextNode in startNode.neighborList)
         {
-            if (nextNode == startNode) continue;
+            Debug.Log("b");
             List<AStarNode> copiedList = new List<AStarNode>();
             foreach (var tempNode in oldList)
             {
@@ -452,8 +461,14 @@ public class ElevatorManager : EventDetect
             GetAllPath(nextNodeVector, end, totalNode, copiedList);
         }
 
+    }
+
+    private void LookWhatHappend()
+    {
+        Debug.Log("33");
+        
         ///顯示
-        foreach (var item in totalNode)
+        foreach (var item in allPathList)
         {
             Debug.Log("aaa");
             foreach (var point in item)

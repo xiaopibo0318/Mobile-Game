@@ -14,7 +14,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     [Header("板子上的素材")]
     [SerializeField] private DragItem operateRange;
-    [SerializeField] private List<ElectricSlot> slotSet;
+    [SerializeField] private List<ElectricSlot> slotSetInBoard;
+    [SerializeField] private List<ElectricSlot> slotSetInOther;
     [SerializeField] private Transform slotParent;
     [SerializeField] private GameObject myLine;
     [SerializeField] private Transform lineParent;
@@ -49,10 +50,11 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     [SerializeField] Button startFindButton;
     List<Node> nodeList;
     Queue<Vector2> pointAddList = new Queue<Vector2>();
-    Vector2 myStart = new Vector2(1, 0);
-    Vector2 myEnd = new Vector2(0, 0);
+    Vector2 myStart = new Vector2(22, 12);
+    Vector2 myEnd = new Vector2(24, 12);
     Queue<Vector2> trashNodeList = new Queue<Vector2>();
     public AStarNode[,] nodes;
+    public AStarNode[,] nodes2;
     List<AStarNode> closeList = new List<AStarNode>();
     List<AStarNode> openList = new List<AStarNode>();
 
@@ -64,15 +66,23 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         operateRange.AddEndDragListener(OnOperateRangeEndDrag);
 
         nodes = new AStarNode[myboard.GetBoardRow(), myboard.GetBoardCol()];
+        nodes2 = new AStarNode[slotSetInOther.Count, 13];
 
         for (int i = 0; i < myboard.GetBoardRow(); i++)
         {
             for (int j = 0; j < myboard.GetBoardCol(); j++)
             {
-                slotSet[i * myboard.GetBoardCol() + j].Init(i, j);
+                slotSetInBoard[i * myboard.GetBoardCol() + j].Init(i, j);
                 AStarNode node = new AStarNode(i, j, Node_Type.Stop);
                 nodes[i, j] = node;
             }
+        }
+        for (int i = 0; i < slotSetInOther.Count; i++)
+        {
+            slotSetInOther[i].Init(i, 12);
+            AStarNode node = new AStarNode(i, 12, Node_Type.Stop);
+            nodes2[i, 12] = node;
+
         }
     }
 
@@ -130,11 +140,14 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         nowLine = null;
         isOperate = false;
         myboard.ResetAll();
-        for (int i = 0; i < slotSet.Count; i++)
+        for (int i = 0; i < slotSetInBoard.Count; i++)
         {
-            slotSet[i].ResetSlot();
+            slotSetInBoard[i].ResetSlot();
         }
-
+        for (int i = 0; i < slotSetInOther.Count; i++)
+        {
+            slotSetInOther[i].ResetSlot();
+        }
         ///重製Node狀態
         for (int i = 0; i < myboard.GetBoardRow(); i++)
         {
@@ -142,6 +155,10 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             {
                 nodes[i, j].type = Node_Type.Stop;
             }
+        }
+        for (int i = 0; i < slotSetInOther.Count; i++)
+        {
+            nodes2[i, 12].type = Node_Type.Stop;
         }
         LoadLevel1();
     }
@@ -201,6 +218,35 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                     return;
                 }
 
+
+                Debug.Log("之前的位置是" + firstSlot.row + "OOOO" + firstSlot.col);
+                Debug.Log("現在的位置是" + nowSlot.row + "OOOO" + nowSlot.col);
+
+                AStarNode a;
+                AStarNode b;
+                AStarNode temp1 = null;
+                AStarNode temp2 = null;
+                for (int i = 0; i < slotSetInOther.Count; i++)
+                {
+                    if (slotSetInOther[i] == nowSlot)
+                    {
+                        temp2 = nodes2[i, 12];
+                    }
+                    if (slotSetInOther[i] == firstSlot)
+                    {
+                        temp1 = nodes2[i, 12];
+                    }
+                }
+
+                if (nowSlot.col < 11) b = nodes[nowSlot.row, nowSlot.col];
+                else b = temp2;
+                if (firstSlot.col < 11) a = nodes[firstSlot.row, firstSlot.col];
+                else a = temp1;
+
+                a.type = Node_Type.Walk;
+                b.type = Node_Type.Walk;
+
+
                 nowSlot.ChangeToActive();
                 firstSlot.ChangeToActive();
                 Debug.Log("格子的row" + nowSlot);
@@ -208,8 +254,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 //nowSlot有 但是nowSlot.row沒有
                 myboard.ChangeObjectInBoard(firstSlot.row, firstSlot.col);
                 myboard.ChangeObjectInBoard(nowSlot.row, nowSlot.col);
-                Debug.Log("之前的位置是" + firstSlot.row + "OOOO" + firstSlot.col);
-                Debug.Log("現在的位置是" + nowSlot.row + "OOOO" + nowSlot.col);
+                
 
                 isOperate = false;
                 nowLine = null;
@@ -247,8 +292,24 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         trashNodeList.Clear();
         //intAddList.Enqueue(start);
 
-        AStarNode startNode = nodes[(int)start.x, (int)start.y];
-        AStarNode endNode = nodes[(int)end.x, (int)end.y];
+        AStarNode startNode;
+        AStarNode endNode;
+        if (start.y < 11)
+        {
+            startNode = nodes[(int)start.x, (int)start.y];
+        }
+        else
+        {
+            startNode = nodes2[(int)start.x, (int)start.y];
+        }
+        if (end.y < 11)
+        {
+            endNode = nodes[(int)end.x, (int)end.y];
+        }
+        else
+        {
+            endNode = nodes2[(int)end.x, (int)end.y];
+        }
 
         closeList.Clear();
         openList.Clear();
@@ -273,6 +334,13 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 {
                     AddNeighBor(nodes[i, j]);
                 }
+            }
+        }
+        for (int i = 0; i < slotSetInOther.Count; i++)
+        {
+            if (nodes2[i, 12].type == Node_Type.Walk)
+            {
+                AddNeighBor(nodes2[i, 12]);
             }
         }
 
@@ -385,9 +453,12 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         {
             float neighborX = GetLineAnotherPoint(nowPos).x;
             float neighborY = GetLineAnotherPoint(nowPos).y;
-            nowNode.AddNeighbor(nodes[(int)neighborX, (int)neighborY]);
+            if ((int)neighborY < 11) nowNode.AddNeighbor(nodes[(int)neighborX, (int)neighborY]);
+            else nowNode.AddNeighbor(nodes2[(int)neighborX, (int)neighborY]);
         }
 
+
+        if (now_col > 11) return;
         ///先判斷他的屬性為何、並找尋同一層之所有siblings 
         if (CheckIsHorizontalOrVertical(now_row))
         {
@@ -506,20 +577,14 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         nodes[2, 4].AddNeighbor(nodes[2, 3]);
 
 
-        ElectricSlot start = slotSet[myboard.GetBoardCol()];
-        ElectricSlot end = slotSet[0];
-        ElectricSlot slot1 = slotSet[4 * myboard.GetBoardCol() + 2];
-        ElectricSlot slot2 = slotSet[3 * myboard.GetBoardCol() + 3];
-        ElectricSlot slot3 = slotSet[2 * myboard.GetBoardCol() + 3];
-        ElectricSlot slot4 = slotSet[2 * myboard.GetBoardCol() + 4];
-        start.ChangeToActive();
-        end.ChangeToActive();
+        ElectricSlot slot1 = slotSetInBoard[4 * myboard.GetBoardCol() + 2];
+        ElectricSlot slot2 = slotSetInBoard[3 * myboard.GetBoardCol() + 3];
+        ElectricSlot slot3 = slotSetInBoard[2 * myboard.GetBoardCol() + 3];
+        ElectricSlot slot4 = slotSetInBoard[2 * myboard.GetBoardCol() + 4];
         slot1.ChangeToActive();
         slot2.ChangeToActive();
         slot3.ChangeToActive();
         slot4.ChangeToActive();
-        myboard.isObjectInBoard[0, 0] = true;
-        myboard.isObjectInBoard[1, 0] = true;
         myboard.isObjectInBoard[4, 2] = true;
         myboard.isObjectInBoard[3, 3] = true;
         myboard.isObjectInBoard[2, 3] = true;
