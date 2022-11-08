@@ -45,12 +45,16 @@ public class ElevatorManager : EventDetect
     [SerializeField] Button startFindButton;
     List<Node> nodeList;
     Queue<Vector2> pointAddList = new Queue<Vector2>();
-    Vector2 myStart = new Vector2(1, 0);
-    Vector2 myEnd = new Vector2(0, 0);
+    Vector2 myStart = new Vector2(22, 12);
+    Vector2 myEnd = new Vector2(24, 12);
     Queue<Vector2> trashNodeList = new Queue<Vector2>();
     public AStarNode[,] nodes;
+    public AStarNode[,] nodes2;
     List<AStarNode> closeList = new List<AStarNode>();
     List<AStarNode> openList = new List<AStarNode>();
+
+    private List<List<AStarNode>> allPathList = new List<List<AStarNode>>();
+    private List<AStarNode> storeList = new List<AStarNode>();
 
     private void Start()
     {
@@ -70,6 +74,7 @@ public class ElevatorManager : EventDetect
         operateRange.AddEndDragListener(OnOperateRangeEndDrag);
 
         nodes = new AStarNode[myboard.GetBoardRow(), myboard.GetBoardCol()];
+        nodes2 = new AStarNode[slotSetInOther.Count, 13];
 
         for (int i = 0; i < myboard.GetBoardRow(); i++)
         {
@@ -82,7 +87,9 @@ public class ElevatorManager : EventDetect
         }
         for (int i = 0; i < slotSetInOther.Count; i++)
         {
+            slotSetInOther[i].Init(i, 12);
             AStarNode node = new AStarNode(i, 12, Node_Type.Stop);
+            nodes2[i, 12] = node;
 
         }
 
@@ -96,7 +103,8 @@ public class ElevatorManager : EventDetect
             colorList[i].onClick.AddListener(delegate { SelectColor(index); });
         }
         clearAllLineButton.onClick.AddListener(ClearAllLine);
-        startFindButton.onClick.AddListener(delegate { StartFind(myStart, myEnd); });
+        //startFindButton.onClick.AddListener(delegate { StartFind(myStart, myEnd); });
+        startFindButton.onClick.AddListener(delegate { GetAllPath(myStart,myEnd,allPathList,storeList); });
     }
 
     private void SelectColor(int index)
@@ -156,6 +164,10 @@ public class ElevatorManager : EventDetect
                 nodes[i, j].type = Node_Type.Stop;
             }
         }
+        for (int i = 0; i < slotSetInOther.Count; i++)
+        {
+            nodes2[i, 12].type = Node_Type.Stop;
+        }
         LoadLevel1();
     }
 
@@ -209,7 +221,32 @@ public class ElevatorManager : EventDetect
                     nowLine = null;
                     return;
                 }
+                Debug.Log("之前的位置是" + firstSlot.row + "OOOO" + firstSlot.col);
+                Debug.Log("現在的位置是" + nowSlot.row + "OOOO" + nowSlot.col);
 
+                AStarNode a;
+                AStarNode b;
+                AStarNode temp1 = null;
+                AStarNode temp2 = null;
+                for (int i = 0; i < slotSetInOther.Count; i++)
+                {
+                    if (slotSetInOther[i] == nowSlot)
+                    {
+                        temp2 = nodes2[i, 12];
+                    }
+                    if (slotSetInOther[i] == firstSlot)
+                    {
+                        temp1 = nodes2[i, 12];
+                    }
+                }
+
+                if (nowSlot.col < 11) b = nodes[nowSlot.row, nowSlot.col];
+                else b = temp2;
+                if (firstSlot.col < 11) a = nodes[firstSlot.row, firstSlot.col];
+                else a = temp1;
+
+                a.type = Node_Type.Walk;
+                b.type = Node_Type.Walk;
                 nowSlot.ChangeToActive();
                 firstSlot.ChangeToActive();
                 Debug.Log("格子的row" + nowSlot);
@@ -217,8 +254,7 @@ public class ElevatorManager : EventDetect
                 //nowSlot有 但是nowSlot.row沒有
                 myboard.ChangeObjectInBoard(firstSlot.row, firstSlot.col);
                 myboard.ChangeObjectInBoard(nowSlot.row, nowSlot.col);
-                Debug.Log("之前的位置是" + firstSlot.row + "OOOO" + firstSlot.col);
-                Debug.Log("現在的位置是" + nowSlot.row + "OOOO" + nowSlot.col);
+
 
                 isOperate = false;
                 nowLine = null;
@@ -255,9 +291,26 @@ public class ElevatorManager : EventDetect
         pointAddList.Clear();
         trashNodeList.Clear();
         //intAddList.Enqueue(start);
+        AStarNode startNode;
+        AStarNode endNode;
+        if (start.y < 11)
+        {
+            startNode = nodes[(int)start.x, (int)start.y];
+        }
+        else
+        {
+            startNode = nodes2[(int)start.x, (int)start.y];
+        }
+        if (end.y < 11)
+        {
+            endNode = nodes[(int)end.x, (int)end.y];
+        }
+        else
+        {
+            endNode = nodes2[(int)end.x, (int)end.y];
+        }
 
-        AStarNode startNode = nodes[(int)start.x, (int)start.y];
-        AStarNode endNode = nodes[(int)end.x, (int)end.y];
+
 
         closeList.Clear();
         openList.Clear();
@@ -282,6 +335,14 @@ public class ElevatorManager : EventDetect
                 {
                     AddNeighBor(nodes[i, j]);
                 }
+            }
+        }
+
+        for (int i = 0; i < slotSetInOther.Count; i++)
+        {
+            if (nodes2[i, 12].type == Node_Type.Walk)
+            {
+                AddNeighBor(nodes2[i, 12]);
             }
         }
 
@@ -350,13 +411,68 @@ public class ElevatorManager : EventDetect
 
     }
 
+    private void GetAllPath(Vector2 start, Vector2 end, List<List<AStarNode>> totalNode, List<AStarNode> oldList)
+    {
+        AStarNode startNode;
+        AStarNode endNode;
+        if (start.y < 11)
+        {
+            startNode = nodes[(int)start.x, (int)start.y];
+        }
+        else
+        {
+            startNode = nodes2[(int)start.x, (int)start.y];
+        }
+        if (end.y < 11)
+        {
+            endNode = nodes[(int)end.x, (int)end.y];
+        }
+        else
+        {
+            endNode = nodes2[(int)end.x, (int)end.y];
+        }
+
+        AStarNode temp = startNode;
+        if (oldList.Contains(temp)) return;
+        oldList.Add(temp);
+        if (temp == endNode)
+        {
+            totalNode.Add(oldList);
+            return;
+        }
+        foreach (var nextNode in temp.neighborList)
+        {
+            if (nextNode == startNode) continue;
+            List<AStarNode> copiedList = new List<AStarNode>();
+            foreach (var tempNode in oldList)
+            {
+                copiedList.Add(tempNode);
+            }
+            Vector2 nextNodeVector = new Vector2(nextNode.x, nextNode.y);
+            GetAllPath(nextNodeVector, end, totalNode, copiedList);
+        }
+
+        ///顯示
+        foreach (var item in totalNode)
+        {
+            Debug.Log("aaa");
+            foreach (var point in item)
+            {
+                Debug.Log("點的位置是：" + point.x + "," + point.y);
+            }
+        }
+    }
+
+    private void FindNextNode(AStarNode nextNode, float g, AStarNode parent, AStarNode end)
+    {
+        if (nextNode == null || nextNode.type == Node_Type.Stop) return;
+    }
+
     private void FindNearlyNodeToOpenList(AStarNode nextNode, float g, AStarNode parent, AStarNode end)
     {
 
         if (nextNode == null || nextNode.type == Node_Type.Stop ||
             closeList.Contains(nextNode) || openList.Contains(nextNode)) return;
-
-
 
         //計算f值
         nextNode.parent = parent;
@@ -396,9 +512,10 @@ public class ElevatorManager : EventDetect
         {
             float neighborX = GetLineAnotherPoint(nowPos).x;
             float neighborY = GetLineAnotherPoint(nowPos).y;
-            nowNode.AddNeighbor(nodes[(int)neighborX, (int)neighborY]);
+            if ((int)neighborY < 11) nowNode.AddNeighbor(nodes[(int)neighborX, (int)neighborY]);
+            else nowNode.AddNeighbor(nodes2[(int)neighborX, (int)neighborY]);
         }
-
+        if (now_col > 11) return;
         ///先判斷他的屬性為何、並找尋同一層之所有siblings 
         if (CheckIsHorizontalOrVertical(now_row))
         {

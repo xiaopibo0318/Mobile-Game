@@ -72,7 +72,7 @@ public class MyBoard
 
     public void ChangeObjectInBoard(int _row, int _col)
     {
-        isObjectInBoard[_row, _col] = true;
+        if(_col<11) isObjectInBoard[_row, _col] = true;
     }
 
     public void ResetAll()
