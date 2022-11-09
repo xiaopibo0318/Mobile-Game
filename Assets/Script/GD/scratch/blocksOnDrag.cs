@@ -8,7 +8,12 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 {
     public Transform originalParent;
     public blockList exeList;
+    [Header("前進方格")]
     private InputField walkStep;
+
+    [Header("蜂鳴器")]
+    private InputField frequencyNum;
+    private Dropdown buzzerPin;
 
     int nowBlock;
 
@@ -35,7 +40,7 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
             transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);
             transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
             exeList.exeList[eventData.pointerCurrentRaycast.gameObject.GetComponent<blockSlot>().slotID] = nowBlock;
-            if(nowBlock == 1)
+            if (nowBlock == 1)
             {
                 int temp;
                 walkStep = this.GetComponentInChildren<InputField>();
@@ -45,11 +50,20 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                     int.TryParse(walkStep.text, out temp);
                     ScratchManager.Instance.AddMoveStepToList(temp);
                 }
-                else { 
+                else
+                {
                     Debug.Log("不是數字");
                 }
-                    
             }
+            else if (nowBlock == 2)
+            {
+                frequencyNum = this.GetComponentInChildren<InputField>();
+                buzzerPin = this.GetComponentInChildren<Dropdown>();
+                CodingManager.Instance.frequencyBuzzer = frequencyNum.text;
+
+            }
+
+
         }
         else
         {
