@@ -184,6 +184,17 @@ public class InterectiveManager : MonoBehaviour
             case "motorInterective":
                 nextWay = 401;
                 break;
+            case "arduinoInterective":
+                nextWay = 402;
+                break;
+
+            case "storyInterective4":
+                nextWay = 464;
+                break;
+            case "storyInterective5":
+                nextWay = 465;
+                break;
+
 
 
         }
@@ -323,6 +334,22 @@ public class InterectiveManager : MonoBehaviour
             case 401: ///四個共用
                 ItemUIManagerGD.Instance.AddItemToBag("馬達");
                 DestroyTouchObject();
+                break;
+            case 402:
+                ItemUIManagerGD.Instance.AddItemToBag("Arduino");
+                DestroyTouchObject();
+                break;
+
+
+            case 464:
+                StoryManager.Instance.currentID = 0;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 465:
+                StoryManager.Instance.currentID = 1;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
                 break;
 
         }

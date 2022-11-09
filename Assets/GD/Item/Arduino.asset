@@ -19,5 +19,5 @@ MonoBehaviour:
   itemTag: 
   itemHave: 0
   itemInfo: 
-  missioable: 0
+  missioable: 1
   storyable: 0

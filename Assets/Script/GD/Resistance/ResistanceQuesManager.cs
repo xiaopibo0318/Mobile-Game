@@ -23,6 +23,7 @@ public class ResistanceQuesManager : EventDetect
     private int currentID;
     [SerializeField] private InputField answerZone1;
     [SerializeField] private InputField answerZone2;
+    private bool[] isCorrect = new bool[3];
     [Header("UI階段")]
     [SerializeField] private GameObject quesChoose;
     [SerializeField] private GameObject quesAnswer;
@@ -54,6 +55,10 @@ public class ResistanceQuesManager : EventDetect
         GoBackToChoose();
         quesChoose.gameObject.SetActive(false);
         quesAnswer.gameObject.SetActive(false);
+        for (int i = 0; i < isCorrect.Length; i++)
+        {
+            isCorrect[i] = false;
+        }
     }
 
 
@@ -120,16 +125,50 @@ public class ResistanceQuesManager : EventDetect
             case 0:
                 if (answer1 == "2.4M" || answer1 == "2400K" || answer1 == "2400000")
                 {
-                    if (answerZone2.text == "5")
+                    if (answerZone2.text == "5" || answerZone2.text == "5%")
                     {
                         SiginalUI.Instance.SiginalText("成功");
+                        isCorrect[currentID] = true;
                     }
+                    else { SiginalUI.Instance.SiginalText("錯誤，再想想呦！"); }
 
                 }
+                else { SiginalUI.Instance.SiginalText("錯誤，再想想呦！"); }
                 break;
             case 1:
+                if (answer1 == "6K" || answer1 == "6000")
+                {
+                    if (answerZone2.text == "10" || answerZone2.text == "10%")
+                    {
+                        SiginalUI.Instance.SiginalText("成功");
+                        isCorrect[currentID] = true;
+                    }
+                    else { SiginalUI.Instance.SiginalText("錯誤，再想想呦！"); }
+
+                }
+                else { SiginalUI.Instance.SiginalText("錯誤，再想想呦！"); }
+                break;
+            case 2:
+                if (answer1 == "92M" || answer1 == "92000K" || answer1 == "92000000")
+                {
+                    if (answerZone2.text == "1" || answerZone2.text == "1%")
+                    {
+                        SiginalUI.Instance.SiginalText("成功");
+                        isCorrect[currentID] = true;
+                    }
+                    else { SiginalUI.Instance.SiginalText("錯誤，再想想呦！"); }
+
+                }
+                else { SiginalUI.Instance.SiginalText("錯誤，再想想呦！"); }
                 break;
         }
+        for (int i = 0; i < isCorrect.Length; i++)
+        {
+            if (!isCorrect[i]) return;
+        }
+        SiginalUI.Instance.SiginalText("恭喜全部答對\n獲得了電阻！");
+        ItemUIManagerGD.Instance.AddItemToBag("電阻");
+
     }
 
 
