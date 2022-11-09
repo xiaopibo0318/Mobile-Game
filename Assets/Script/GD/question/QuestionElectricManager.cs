@@ -25,6 +25,7 @@ public class QuestionElectricManager : EventDetect
     [SerializeField] private Button enterButton;
     [SerializeField] private List<Button> answerButton;
     [SerializeField] private Button goBackButton;
+    [SerializeField] private Button goToMainButton;
 
     [Header("判定區域")]
     private int currentID;
@@ -166,6 +167,8 @@ public class QuestionElectricManager : EventDetect
         enterButton.onClick.AddListener(GoToAnswer);
         goBackButton.onClick.AddListener(GoBackToChoose);
         goBackButton.gameObject.SetActive(false);
+        goToMainButton.onClick.AddListener(delegate { CanvasManager.Instance.openCanvas("original"); });
+        goToMainButton.gameObject.SetActive(true);
     }
 
     public override void Hold()
@@ -208,7 +211,7 @@ public class QuestionElectricManager : EventDetect
                 answerButton[i].gameObject.SetActive(false);
         }
         goBackButton.gameObject.SetActive(true);
-
+        goToMainButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -264,6 +267,7 @@ public class QuestionElectricManager : EventDetect
         }
         enterButton.gameObject.SetActive(true);
         goBackButton.gameObject.SetActive(false);
+        goToMainButton.gameObject.SetActive(true);
         Slide();
     }
 

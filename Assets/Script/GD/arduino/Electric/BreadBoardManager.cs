@@ -36,6 +36,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     [Header("UI介面")]
     [SerializeField] private Button clearAllLineButton;
+    [SerializeField] private Button goBackButton;
     private void Start()
     {
         myboard = new MyBoard();
@@ -95,6 +96,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         }
         clearAllLineButton.onClick.AddListener(ClearAllLine);
         startFindButton.onClick.AddListener(delegate { StartFind(myStart, myEnd); });
+        goBackButton.onClick.AddListener(delegate { CanvasManager.Instance.openCanvas("original"); });
     }
 
     /// <summary>
@@ -254,7 +256,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 //nowSlot有 但是nowSlot.row沒有
                 myboard.ChangeObjectInBoard(firstSlot.row, firstSlot.col);
                 myboard.ChangeObjectInBoard(nowSlot.row, nowSlot.col);
-                
+
 
                 isOperate = false;
                 nowLine = null;

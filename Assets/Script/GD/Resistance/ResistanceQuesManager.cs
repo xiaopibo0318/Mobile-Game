@@ -17,6 +17,7 @@ public class ResistanceQuesManager : EventDetect
     [SerializeField] private Button enterButton;
     [SerializeField] private Button goBackButton;
     [SerializeField] private Button detectButton;
+    [SerializeField] private Button goToMainButton;
 
     [Header("判定區域")]
     private int currentID;
@@ -62,6 +63,8 @@ public class ResistanceQuesManager : EventDetect
         goBackButton.onClick.AddListener(GoBackToChoose);
         goBackButton.gameObject.SetActive(false);
         detectButton.onClick.AddListener(DetectAnswer);
+        goToMainButton.onClick.AddListener(delegate { CanvasManager.Instance.openCanvas("original"); });
+        goToMainButton.gameObject.SetActive(true);
     }
 
 
@@ -83,6 +86,7 @@ public class ResistanceQuesManager : EventDetect
         }
         enterButton.gameObject.SetActive(false);
         goBackButton.gameObject.SetActive(true);
+        goToMainButton.gameObject.SetActive(false);
         detectButton.gameObject.SetActive(true);
         answerZone1.gameObject.SetActive(true);
         answerZone2.gameObject.SetActive(true);
@@ -99,6 +103,7 @@ public class ResistanceQuesManager : EventDetect
         }
         enterButton.gameObject.SetActive(true);
         goBackButton.gameObject.SetActive(false);
+        goToMainButton.gameObject.SetActive(true);
         answerZone1.gameObject.SetActive(false);
         answerZone2.gameObject.SetActive(false);
         detectButton.gameObject.SetActive(false);
@@ -136,7 +141,7 @@ public class ResistanceQuesManager : EventDetect
             if (eventData.pointerCurrentRaycast.gameObject == allPicTransform[i].gameObject)
             {
                 currentID = i;
-                
+
             }
         }
 
