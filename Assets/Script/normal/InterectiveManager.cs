@@ -166,6 +166,10 @@ public class InterectiveManager : MonoBehaviour
             case "resistanceInterective":
                 nextWay = 34;
                 break;
+            case "electricalBoxMotorInterective":
+                nextWay = 35;
+                break;
+
 
             case "pillarInterectiveA":
                 nextWay = 311;
@@ -187,6 +191,12 @@ public class InterectiveManager : MonoBehaviour
             case "arduinoInterective":
                 nextWay = 402;
                 break;
+            case "breadboardInterective":
+                nextWay = 403;
+                break;
+            case "stringInterectove":
+                nextWay = 404;
+                break;
 
             case "storyInterective4":
                 nextWay = 464;
@@ -194,12 +204,31 @@ public class InterectiveManager : MonoBehaviour
             case "storyInterective5":
                 nextWay = 465;
                 break;
-
-
-
+            case "storyInterective6":
+                nextWay = 466;
+                break;
+            case "storyInterective7":
+                nextWay = 467;
+                break;
+            case "storyInterective8":
+                nextWay = 468;
+                break;
+            case "storyInterective9":
+                nextWay = 469;
+                break;
+            case "storyInterective10":
+                nextWay = 470;
+                break;
+            case "storyInterective11":
+                nextWay = 471;
+                break;
+            case "storyInterective12":
+                nextWay = 472;
+                break;
+            case "storyInterective13":
+                nextWay = 473;
+                break;
         }
-
-
     }
 
     /// <summary>
@@ -309,6 +338,9 @@ public class InterectiveManager : MonoBehaviour
             case 34:
                 CanvasManager.Instance.openCanvas("Resistance");
                 break;
+            case 35:
+                CanvasManager.Instance.openCanvas("motor");
+                break;
 
             case 311:
                 CanvasManager.Instance.openCanvas("FourPillar");
@@ -339,6 +371,12 @@ public class InterectiveManager : MonoBehaviour
                 ItemUIManagerGD.Instance.AddItemToBag("Arduino");
                 DestroyTouchObject();
                 break;
+            case 403:
+                ItemUIManagerGD.Instance.AddItemToBag("麵包版");
+                break;
+            case 404:
+                ItemUIManagerGD.Instance.AddItemToBag("杜邦線");
+                break;
 
 
             case 464:
@@ -351,7 +389,46 @@ public class InterectiveManager : MonoBehaviour
                 StoryManager.Instance.SwitchImage();
                 CanvasManager.Instance.openCanvas("Bamboo");
                 break;
-
+            case 466:
+                StoryManager.Instance.currentID = 2;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 467:
+                StoryManager.Instance.currentID = 3;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 468:
+                StoryManager.Instance.currentID = 4;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 469:
+                StoryManager.Instance.currentID = 5;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 470:
+                StoryManager.Instance.currentID = 6;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 471:
+                StoryManager.Instance.currentID = 7;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 472:
+                StoryManager.Instance.currentID = 8;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 473:
+                StoryManager.Instance.currentID = 9;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
         }
     }
 

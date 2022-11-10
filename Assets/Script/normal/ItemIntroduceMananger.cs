@@ -53,6 +53,7 @@ public class ItemIntroduceMananger : MonoBehaviour
             }
         }
         _name.Open();
+        ItemUIManagerGD.Instance.ChangeInterectiveName(_name.itemID);
         if (ItemUIManagerGD.Instance != null)
         {
             ItemUIManagerGD.Instance.currentID = _name.itemID;

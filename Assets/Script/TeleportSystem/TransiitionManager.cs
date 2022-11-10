@@ -26,7 +26,7 @@ public class TransiitionManager : Singleton<TransiitionManager>
     {
         yield return Fade(1);
 
-        player.transform.position = new Vector3(-117, 8, 0);
+        player.transform.position = new Vector3(-117, -8, 0);
 
         yield return Fade(0);
     }

@@ -283,7 +283,8 @@ public class QuestionElectricManager : EventDetect
             if (!answer[i]) return;
         }
         SiginalUI.Instance.SiginalText("全數答對\n某處傳來了聲響\n好像有那裡改變了");
-
+        GDMananger.Instance.gameStatus = 3;
+        GDMananger.Instance.UpdateMap();
     }
 
 

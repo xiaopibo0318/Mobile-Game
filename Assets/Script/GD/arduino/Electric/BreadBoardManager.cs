@@ -21,6 +21,9 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     [SerializeField] private Transform lineParent;
     private ElectricSlot firstSlot = null;
 
+    [Header("背包素材")]
+    [SerializeField] private List<Item> detectBagList = new List<Item>();
+    [SerializeField] private Inventory myBag;
 
     [Header("線")]
     private UILineRenderer nowLine;
@@ -168,6 +171,14 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void OnOperateRangePointerDown(PointerEventData eventData)
     {
+        for (int i = 0; i < detectBagList.Count; i++)
+        {
+            if (!myBag.itemList.Contains(detectBagList[i]))
+            {
+                SiginalUI.Instance.SiginalText("你尚未擁有足夠電子元件");
+            }
+        }
+
         if (eventData.pointerCurrentRaycast.gameObject != null)
         {
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Normal"))
@@ -555,6 +566,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     private void ElectricSuccess()
     {
         SiginalUI.Instance.SiginalText("成功");
+        GDMananger.Instance.gameStatus = 4;
+        GDMananger.Instance.UpdateMap();
     }
 
     private void ElectricFail()

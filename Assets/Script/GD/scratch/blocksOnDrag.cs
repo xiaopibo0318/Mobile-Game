@@ -55,11 +55,12 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
                     Debug.Log("不是數字");
                 }
             }
-            else if (nowBlock == 2)
+            else if (nowBlock == 21)
             {
                 frequencyNum = this.GetComponentInChildren<InputField>();
                 buzzerPin = this.GetComponentInChildren<Dropdown>();
                 CodingManager.Instance.frequencyBuzzer = frequencyNum.text;
+                CodingManager.Instance.pinBuzzer = buzzerPin.value;
 
             }
 
@@ -83,10 +84,8 @@ public class blocksOnDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         {
             return 11;
         }
-        else if (name.Contains("turnRight"))
-        {
-            return 12;
-        }
+        else if (name.Contains("turnRight")) return 12;
+        else if (name.Contains("buzzer")) return 21;
         else
         {
             return 0;

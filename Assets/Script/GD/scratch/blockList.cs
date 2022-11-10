@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New block", menuName = "Scratch/New blockList")]
 public class blockList : ScriptableObject
 {
-    public int[] exeList = new int[8];
+    public int[] exeList = new int[7];
 }

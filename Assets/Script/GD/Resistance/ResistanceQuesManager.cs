@@ -166,9 +166,10 @@ public class ResistanceQuesManager : EventDetect
         {
             if (!isCorrect[i]) return;
         }
-        SiginalUI.Instance.SiginalText("恭喜全部答對\n獲得了電阻！");
+        SiginalUI.Instance.SiginalText("恭喜全部答對\n獲得了電阻！\n遠處傳來了聲響");
         ItemUIManagerGD.Instance.AddItemToBag("電阻");
-
+        GDMananger.Instance.gameStatus = 2;
+        GDMananger.Instance.UpdateMap();
     }
 
 

@@ -10,6 +10,7 @@ public class ItemUIManagerGD : Singleton<ItemUIManagerGD>
     [SerializeField] private Button cancelButton;
     [SerializeField] private Button goBackButton;
     [SerializeField] private GameObject interectiveObject;
+    [SerializeField] private Text mainInterectiveText;
     public int currentID { get; set; }
 
     private void Start()
@@ -32,6 +33,18 @@ public class ItemUIManagerGD : Singleton<ItemUIManagerGD>
         }
     }
 
+    public void ChangeInterectiveName(int itemID)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].itemID == itemID)
+            {
+                mainInterectiveText.text = "是否要使用\n" + items[i].name;
+            }
+        }
+    }
+
+
     private void CancelUse()
     {
         SiginalUI.Instance.SiginalText("不用就不用，哼");
@@ -44,8 +57,10 @@ public class ItemUIManagerGD : Singleton<ItemUIManagerGD>
         switch (itemID)
         {
             case 499:
+                CanvasManager.Instance.openCanvas("Coding");
                 break;
             default:
+                SiginalUI.Instance.SiginalText("這無法使用呦！");
                 break;
         }
     }

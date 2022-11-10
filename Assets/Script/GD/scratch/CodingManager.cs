@@ -20,7 +20,8 @@ public class CodingManager : Singleton<CodingManager>
     [SerializeField] private Button goBackButton;
 
     public string frequencyBuzzer { get; set; }
-    
+    public int pinBuzzer { get; set; }
+
 
     private void Close() => CanvasManager.Instance.openCanvas("original");
 
@@ -65,7 +66,9 @@ public class CodingManager : Singleton<CodingManager>
             yield return new WaitForSeconds(0.5f);
             switch (exeLists.exeList[i])
             {
-
+                case 21:
+                    Debug.Log($"新的東西：{ pinBuzzer }頻率是：{frequencyBuzzer}");
+                    break;
                 default:
                     break;
             }
