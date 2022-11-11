@@ -12,6 +12,7 @@ public class SiginalUI : MonoBehaviour
     public Button dontDo;
     public GameObject panel;
     private UnityAction nextAction;
+    private Coroutine coroutine;
 
     public static SiginalUI Instance;
     public void Awake()
@@ -24,11 +25,12 @@ public class SiginalUI : MonoBehaviour
 
     public void SiginalText(string myText, int signalTime = 3, int textFontSize = 50)
     {
+        if (coroutine != null) StopCoroutine(coroutine);
         siginalContent.SetActive(true);
         siginalText.text = myText;
         siginalText.fontSize = textFontSize;
         panel.SetActive(true);
-        StartCoroutine(CloseSignal(signalTime));
+        coroutine = StartCoroutine(CloseSignal(signalTime));
     }
 
     public void TextInterectvie(string myText, UnityAction unityAction1 = null, UnityAction unityAction2 = null)
@@ -69,11 +71,14 @@ public class SiginalUI : MonoBehaviour
 
     private void ResetSiginal()
     {
+        StopCoroutine(coroutine);
+        coroutine = null;
         siginalContent.SetActive(false);
         siginalText.text = "";
         confirm.gameObject.SetActive(false);
         dontDo.gameObject.SetActive(false);
         panel.SetActive(false);
+        
     }
 
 }

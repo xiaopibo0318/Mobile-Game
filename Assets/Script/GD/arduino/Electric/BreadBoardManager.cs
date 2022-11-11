@@ -159,11 +159,17 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             for (int j = 0; j < myboard.GetBoardCol(); j++)
             {
                 nodes[i, j].type = Node_Type.Stop;
+                nodes[i, j].f = 0;
+                nodes[i, j].g = 0;
+                nodes[i, j].h = 0;
             }
         }
         for (int i = 0; i < slotSetInOther.Count; i++)
         {
             nodes2[i, 12].type = Node_Type.Stop;
+            nodes2[i, 12].f = 0;
+            nodes2[i, 12].g = 0;
+            nodes2[i, 12].h = 0;
         }
         LoadLevel1();
     }
@@ -171,13 +177,13 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void OnOperateRangePointerDown(PointerEventData eventData)
     {
-        for (int i = 0; i < detectBagList.Count; i++)
-        {
-            if (!myBag.itemList.Contains(detectBagList[i]))
-            {
-                SiginalUI.Instance.SiginalText("你尚未擁有足夠電子元件");
-            }
-        }
+        //for (int i = 0; i < detectBagList.Count; i++)
+        //{
+        //    if (!myBag.itemList.Contains(detectBagList[i]))
+        //    {
+        //        SiginalUI.Instance.SiginalText("你尚未擁有足夠電子元件");
+        //    }
+        //}
 
         if (eventData.pointerCurrentRaycast.gameObject != null)
         {
@@ -404,6 +410,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
                 for (int i = 0; i < path.Count; i++)
                 {
                     Debug.Log("路徑為：" + path[i].x + "," + path[i].y);
+                    Debug.Log($"該點之cost為{path[i].g}，f為{path[i].f}");
                 }
                 Debug.Log("總消耗為：" + totalcost);
                 if (totalcost != 10) ElectricFail();
@@ -441,9 +448,9 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private int SortOpenList(AStarNode a, AStarNode b)
     {
-        if (a.f > b.f)
+        if (a.g > b.g)
             return 1;
-        else if (a.f == b.f)
+        else if (a.g == b.g)
             return 1;
         else
             return -1;

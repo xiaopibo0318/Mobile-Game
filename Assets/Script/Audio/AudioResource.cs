@@ -6,6 +6,8 @@ public class AudioResource : MonoBehaviour
 {
     [Header("BGM"),SerializeField]
     public AudioClip bgmMTKL;
+    public AudioClip bgmGD1;
+    public AudioClip bgmGD2;
 
     [Header("環境音效"), SerializeField]
     //public AudioClip rain;

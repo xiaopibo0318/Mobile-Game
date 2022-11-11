@@ -30,7 +30,15 @@ public class SaveLoadSystem : MonoBehaviour
     {
         var state = LoadFile();
         LoadState(state);
-        KLMTmanager.Instance.KLMTinitial();
+        if (Player.Instance.myStatus.levelChoose == 2)
+        {
+            KLMTmanager.Instance.KLMTinitial();
+        }
+        else if (Player.Instance.myStatus.levelChoose == 4)
+        {
+            GDMananger.Instance.UpdateMap();
+        }
+
         Debug.Log(Player.Instance.myStatus.name);
         Debug.Log(Player.Instance.myStatus.emailAddress);
         Debug.Log(Player.Instance.myStatus.totalTime);
@@ -47,7 +55,7 @@ public class SaveLoadSystem : MonoBehaviour
         }
     }
 
-    Dictionary<string,object> LoadFile()
+    Dictionary<string, object> LoadFile()
     {
         if (!File.Exists(SavePath))
         {
@@ -55,7 +63,7 @@ public class SaveLoadSystem : MonoBehaviour
             return new Dictionary<string, object>();
         }
 
-        using(FileStream stream = File.Open(SavePath,FileMode.Open))
+        using (FileStream stream = File.Open(SavePath, FileMode.Open))
         {
             var formatter = new BinaryFormatter();
             return (Dictionary<string, object>)formatter.Deserialize(stream);

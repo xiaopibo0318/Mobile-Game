@@ -18,7 +18,7 @@ public class ItemUIManagerGD : Singleton<ItemUIManagerGD>
         goBackButton.onClick.AddListener(delegate { CanvasManager.Instance.openCanvas("original"); });
         confirmButton.onClick.AddListener(ButtonTrigger);
         cancelButton.onClick.AddListener(CancelUse);
-        interectiveObject.SetActive(false);
+        interectiveObject.SetActive(true);
     }
 
 

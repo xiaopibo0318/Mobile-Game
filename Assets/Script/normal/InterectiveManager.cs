@@ -169,6 +169,12 @@ public class InterectiveManager : MonoBehaviour
             case "electricalBoxMotorInterective":
                 nextWay = 35;
                 break;
+            case "raycastInterective":
+                nextWay = 36;
+                break;
+            case "buzzerInterective":
+                nextWay = 37;
+                break;
 
 
             case "pillarInterectiveA":
@@ -340,6 +346,12 @@ public class InterectiveManager : MonoBehaviour
                 break;
             case 35:
                 CanvasManager.Instance.openCanvas("motor");
+                break;
+            case 36:
+                CanvasManager.Instance.openCanvas("HandleRaycast");
+                break;
+            case 37:
+                CanvasManager.Instance.openCanvas("BuzzerElectric");
                 break;
 
             case 311:

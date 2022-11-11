@@ -26,6 +26,8 @@ public class RayCastManager : Singleton<RayCastManager>, IPointerDownHandler
     {
         goBackButton.onClick.AddListener(delegate { CanvasManager.Instance.openCanvas("original"); });
         isPassFirst = true;
+        //fadeCanvasGroup.blocksRaycasts = false;
+        fadeCanvasGroup.gameObject.GetComponent<Image>().raycastTarget = false;
     }
 
     public void TriggerRayCast()

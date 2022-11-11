@@ -22,6 +22,8 @@ public class CodingManager : Singleton<CodingManager>
     public string frequencyBuzzer { get; set; }
     public int pinBuzzer { get; set; }
 
+    public int pinBuzzerElectricSet { get; set; }
+    public bool isElectricSuccess { get; set; }
 
     private void Close() => CanvasManager.Instance.openCanvas("original");
 
@@ -33,6 +35,7 @@ public class CodingManager : Singleton<CodingManager>
         clearButton.onClick.AddListener(ResetBlock);
         goBackButton.onClick.AddListener(Close);
         ResetBlock();
+        isElectricSuccess = false;
     }
 
     public void setUpBlockSlot()
@@ -61,6 +64,7 @@ public class CodingManager : Singleton<CodingManager>
 
     IEnumerator GoStartGame()
     {
+        
         for (int i = 0; i < exeLists.exeList.Length; i++)
         {
             yield return new WaitForSeconds(0.5f);
@@ -68,10 +72,27 @@ public class CodingManager : Singleton<CodingManager>
             {
                 case 21:
                     Debug.Log($"新的東西：{ pinBuzzer }頻率是：{frequencyBuzzer}");
+                    Debug.Log("電線的pin為；" + pinBuzzerElectricSet);
+                    Debug.Log($"電線連接狀況：{isElectricSuccess.ToString()}");
+                    /// 4 -> 13
+                    /// 5 -> 12
+                    /// 8 -> 9
+                    if (pinBuzzerElectricSet == pinBuzzer && isElectricSuccess)
+                    {
+
+                        if (frequencyBuzzer == "1047")
+                        {
+                            SiginalUI.Instance.SiginalText("打開房門成功");
+                            GDMananger.Instance.gameStatus = 9;
+                            GDMananger.Instance.UpdateMap();
+                            Debug.Log("成功");
+                        }
+                    }
                     break;
                 default:
                     break;
             }
+            SiginalUI.Instance.SiginalText("已燒錄程式進電路板中");
         }
         ClearTempList();
     }

@@ -179,7 +179,8 @@ public class TitleManager : Singleton<TitleManager>
     {
         AudioManager.Instance.clickButton("c");
         TransiitionManager.Instance.GoToGD();
-
+        Player.Instance.myStatus.UpdateRoom(4);
+        AudioManager.Instance.InitGD();
     }
 
     public void EnteringRoomList()

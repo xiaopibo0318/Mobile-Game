@@ -24,11 +24,16 @@ public class GDMananger : Singleton<GDMananger>
         LoadMap();
     }
 
-    public void UpdateMap() => LoadMap();
+    public void UpdateMap()
+    {
+        Player.Instance.myStatus.gameStatus = gameStatus;
+        LoadMap();
+    }
 
 
     private void LoadMap()
     {
+
         switch (gameStatus)
         {
             case 1:
