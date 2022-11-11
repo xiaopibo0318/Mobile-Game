@@ -71,14 +71,15 @@ public class SiginalUI : MonoBehaviour
 
     private void ResetSiginal()
     {
-        StopCoroutine(coroutine);
+        if (coroutine != null) StopCoroutine(coroutine);
+
         coroutine = null;
         siginalContent.SetActive(false);
         siginalText.text = "";
         confirm.gameObject.SetActive(false);
         dontDo.gameObject.SetActive(false);
         panel.SetActive(false);
-        
+
     }
 
 }
