@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Ink.Runtime;
 
-public class DialogueManageGD : MonoBehaviour
+public class DialogueManageGD : Singleton<DialogueManageGD>
 {
     public Button backButton;
     public Text mainText;
@@ -33,7 +33,7 @@ public class DialogueManageGD : MonoBehaviour
         if (story != null) return false;
         story = new Story(inkAsset.text);
         story.variablesState["gameStatus"] = Player.Instance.myStatus.GetGameStatus();
-        story.variablesState["chatStatus"] = 1;
+        //story.variablesState["chatStatus"] = 1;
         NextDialog();
         return true;
     }
@@ -42,31 +42,32 @@ public class DialogueManageGD : MonoBehaviour
     {
         if (story == null) return;
         var gameStatus = (int)story.variablesState["gameStatus"];
-        var chatStatus = (int)story.variablesState["chatStatus"];
+        //var chatStatus = (int)story.variablesState["chatStatus"];
 
-        Debug.Log($"Logging ink variables. 遊戲狀態: {gameStatus}, 聊天狀態: {chatStatus}");
+        Debug.Log($"Logging ink variables. 遊戲狀態: {gameStatus}");
         //Debug.Log(Player.Instance.myStatus.GetGameStatus());
-        if (Player.Instance.myStatus.GetGameStatus() == 2)
-            story.variablesState["chatStatus"] = 2;
-        else if ((Player.Instance.myStatus.GetGameStatus() == 12))
+        if (Player.Instance.myStatus.GetGameStatus() ==1)
         {
-            story.variablesState["gameStatus"] = 12;
-            story.variablesState["chatStatus"] = 11;
+            story.variablesState["gameStatus"] = 1;
         }
 
-        else if ((Player.Instance.myStatus.GetGameStatus() == 13))
+        else if (Player.Instance.myStatus.GetGameStatus() == 2)
         {
-            story.variablesState["gameStatus"] = 13;
-            story.variablesState["chatStatus"] = 21;
+            story.variablesState["gameStatus"] = 2;
+
+        }
+        else if (Player.Instance.myStatus.GetGameStatus() == 4)
+        {
+            story.variablesState["gameStatus"] = 3;
+
         }
         else
         {
             story.variablesState["gameStatus"] = 999;
-            story.variablesState["chatStatus"] = 999;
         }
         gameStatus = (int)story.variablesState["gameStatus"];
-        chatStatus = (int)story.variablesState["chatStatus"];
-        Debug.Log($"Logging ink variables. 遊戲狀態: {gameStatus}, 聊天狀態: {chatStatus}");
+        //chatStatus = (int)story.variablesState["chatStatus"];
+        Debug.Log($"Logging ink variables. 遊戲狀態: {gameStatus}");
 
     }
 

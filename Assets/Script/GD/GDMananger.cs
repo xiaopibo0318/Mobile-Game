@@ -22,6 +22,8 @@ public class GDMananger : Singleton<GDMananger>
         Camerafollowww.Instance.UpdateNowSceneBuildIndex();
         gameStatus = 1;
         LoadMap();
+        TimeCounter.Instance.StartCountDown();
+        DialogueManageGD.Instance.ChangeChatStatus();
     }
 
     public void UpdateMap()
@@ -45,6 +47,7 @@ public class GDMananger : Singleton<GDMananger>
                 {
                     raycastList[i].gameObject.SetActive(true);
                 }
+                teleportObject1.gameObject.SetActive(true);
                 break;
             case 2:
                 firstDoor.gameObject.SetActive(false);

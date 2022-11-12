@@ -103,6 +103,7 @@ public class AudioManager : MonoBehaviour
         nowBGM.clip = audioResource.bgmGD1;
         nowBGM.loop = true;
         nowBGM.volume = 0.05f;
+        nowBGM.Play();
 
         walkOnGrass = gameObject.AddComponent<AudioSource>();
         walkOnGrass.clip = audioResource.walkOnGrass;
@@ -115,6 +116,7 @@ public class AudioManager : MonoBehaviour
         nowBGM.clip = audioResource.bgmGD2;
         nowBGM.loop = true;
         nowBGM.volume = 0.05f;
+        nowBGM.Play();
     }
 
     public void lotus(string buttonName)

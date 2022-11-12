@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class TimeCounter : MonoBehaviour
+public class TimeCounter : Singleton<TimeCounter>
 {
     [SerializeField] TMP_Text timerText;
 
@@ -16,15 +16,8 @@ public class TimeCounter : MonoBehaviour
 
     bool isStart = false;
 
-    public static TimeCounter Instance;
-
     Coroutine nowCoroutine;
 
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(this);
-    }
 
 
     public void StartCountDown()

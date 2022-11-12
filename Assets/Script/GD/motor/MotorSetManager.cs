@@ -43,7 +43,7 @@ public class MotorSetManager : MonoBehaviour, IPointerDownHandler
 
     private void ButtonInit()
     {
-        leftButton.onClick.AddListener(delegate { RotateMotor(-90); });
+        leftButton.onClick.AddListener(delegate { RotateMotor(270); });
         rightButton.onClick.AddListener(delegate { RotateMotor(90); });
         goBackButton.onClick.AddListener(delegate { CanvasManager.Instance.openCanvas("original"); });
     }
@@ -55,9 +55,18 @@ public class MotorSetManager : MonoBehaviour, IPointerDownHandler
         {
             SiginalUI.Instance.SiginalText("還未選擇馬達呦！", 1, 40);
         }
-        Debug.Log(allMotorTransform[currentID].rotation.z % 90);
+        if (((int)((allMotorTransform[currentID].rotation.z) / 90)) % 90 == 0)
+        {
+            dir += ((int)((allMotorTransform[currentID].rotation.z) / 90)) * 90;
+        }
+        else
+        {
+            dir += (((int)((allMotorTransform[currentID].rotation.z) / 90)) + 1) * 90;
+        }
+        Debug.Log((((int)((allMotorTransform[currentID].rotation.z) / 90)) + 1) * 90);
         //if (allMotorTransform[currentID].rotation.z % 90 > 1 || allMotorTransform[currentID].rotation.z < -1) return;
-        dir += allMotorTransform[currentID].rotation.z;
+        dir += (((int)((allMotorTransform[currentID].rotation.z) / 90)) + 1) * 90;
+        while (dir > 360) dir -= 360;
         Vector3 rotateValue = new Vector3(0, 0, dir);
         allMotorTransform[currentID].DORotate(rotateValue, .5f);
     }

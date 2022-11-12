@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class BookContentManagerGD : Singleton<BookContentManagerGD>
 {
@@ -14,6 +15,7 @@ public class BookContentManagerGD : Singleton<BookContentManagerGD>
     public List<GameObject> allKnwledge = new List<GameObject>();
     private List<Sprite[]> allKnowledfeSprie = new List<Sprite[]>();
     private int currentKnowledgeID;
+    public List<Button> knowledgeButton = new List<Button>();
 
     [Header("知識存放處")]
     private Sprite[] ArduinoKnowledge;
@@ -38,6 +40,8 @@ public class BookContentManagerGD : Singleton<BookContentManagerGD>
     public GameObject menu;
     bool nextPageFirst;
     private bool isChooseFromMenu = true;
+    [SerializeField] private Button nextPageButton;
+    [SerializeField] private Button backPageButton;
 
 
 
@@ -45,7 +49,7 @@ public class BookContentManagerGD : Singleton<BookContentManagerGD>
     {
         LoadSprite();
         InitSpriteToList();
-
+        ButtonInit();
         currentID = 0;
 
         menu.SetActive(true);
@@ -53,14 +57,11 @@ public class BookContentManagerGD : Singleton<BookContentManagerGD>
         ImgLeft.color = new Color(255, 255, 255, 0);
         ImgRight.color = new Color(255, 255, 255, 0);
 
-        for (int i = 0; i < myKnowledge.Count; i++)
-        {
-            myKnowledge[i].SetActive(false);
-            allKnwledge[i].SetActive(false);
-        }
-
-
-
+        //for (int i = 0; i < myKnowledge.Count; i++)
+        //{
+        //    myKnowledge[i].SetActive(false);
+        //    allKnwledge[i].SetActive(false);
+        //}
     }
 
     private void LoadSprite()
@@ -99,6 +100,17 @@ public class BookContentManagerGD : Singleton<BookContentManagerGD>
         allKnowledfeSprie.Add(UltrasoundKnowledge);
     }
 
+    private void ButtonInit()
+    {
+        for (int i = 0; i < knowledgeButton.Count; i++)
+        {
+            int index = i;
+            knowledgeButton[i].onClick.AddListener(delegate { Onclick(knowledgeButton[index].gameObject.name); });
+        }
+        nextPageButton.onClick.AddListener(GoNextPage);
+        backPageButton.onClick.AddListener(GoBackPage);
+    }
+
 
     public void Onclick(string name)
     {
@@ -106,13 +118,15 @@ public class BookContentManagerGD : Singleton<BookContentManagerGD>
         {
             if (name == myKnowledge[i].name)
             {
-                myKnowledge[i].SetActive(true);
+                knowledgeButton[i].transform.DOScale(1.2f, .8f);
+                //myKnowledge[i].SetActive(true);
                 nowKnowledge = myKnowledge[i].name;
                 UpdateNowKnowledgeID(nowKnowledge);
             }
             else
             {
-                myKnowledge[i].SetActive(false);
+                knowledgeButton[i].transform.DOScale(1f, .8f);
+                //myKnowledge[i].SetActive(false);
             }
         }
     }

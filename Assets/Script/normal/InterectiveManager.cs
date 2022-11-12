@@ -203,6 +203,9 @@ public class InterectiveManager : MonoBehaviour
             case "stringInterectove":
                 nextWay = 404;
                 break;
+            case "ledInterective":
+                nextWay = 405;
+                break;
 
             case "storyInterective4":
                 nextWay = 464;
@@ -233,6 +236,9 @@ public class InterectiveManager : MonoBehaviour
                 break;
             case "storyInterective13":
                 nextWay = 473;
+                break;
+            case "storyInterective21":
+                nextWay = 474;
                 break;
         }
     }
@@ -389,6 +395,9 @@ public class InterectiveManager : MonoBehaviour
             case 404:
                 ItemUIManagerGD.Instance.AddItemToBag("杜邦線");
                 break;
+            case 405:
+                ItemUIManagerGD.Instance.AddItemToBag("LED");
+                break;
 
 
             case 464:
@@ -441,7 +450,27 @@ public class InterectiveManager : MonoBehaviour
                 StoryManager.Instance.SwitchImage();
                 CanvasManager.Instance.openCanvas("Bamboo");
                 break;
+            case 474:
+                StoryManager.Instance.currentID = 10;
+                StoryManager.Instance.SwitchImage();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                StartCoroutine(EndGame());
+                break;
         }
+    }
+
+
+    IEnumerator EndGame()
+    {
+        SiginalUI.Instance.SiginalText("恭喜破關\n將在20秒後傳送至結算畫面");
+        float time = 20;
+        while (time > 0)
+        {
+            yield return null;
+            time -= Time.deltaTime;
+        }
+        Player.Instance.myStatus.UpdateBookClick();
+        GameCenter.Instance.EndGame();
     }
 
 

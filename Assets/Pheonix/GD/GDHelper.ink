@@ -1,45 +1,17 @@
 VAR gameStatus = 1
-VAR chatStatus = 1
 VAR nowEvent = ""
 
 ->initial
 
 === initial ===
+
 {gameStatus:
--1 : ->initial_1
-//-12: ->initial_2
-//-13: ->initial_3
--else: ->endDiaoluge
-}
-
-
-//蓮花題目前面的問答
-=== initial_1 ===
-
-
-{chatStatus:
  -1: ->firstStep
  -2: ->secondStep
  -3: ->thirdStep
+ -4: ->forthStep
  -else: ->endDiaoluge
 }
-
-/*
-=== initial_2 ===
-{chatStatus:
--11: ->firstStep_2
--12: ->secondStep_2
--13: ->thirdStep_2
--else: ->endDiaoluge
-}
-
-=== initial_3 ===
-{chatStatus:
--21: ->firstStep_3
--else: ->endDiaoluge
-}
-*/
-
 //第一部分
 
 === firstStep ===
@@ -54,7 +26,6 @@ VAR nowEvent = ""
 === A_1 ===
 在執行一向任務時，把所有的事項列出來有助於思考，同時能避免遺漏任何重要動作喔! 
  ~ nowEvent = "lotus1"
- ~ chatStatus = 2
 ->endDiaoluge
 
 === A_2 ===
@@ -81,7 +52,6 @@ VAR nowEvent = ""
 
 === B_1 ===
 要修復這盞燈似乎有些棘手，我將帶領著你嘗試修復它，這會消耗我不少神力，千萬要仔細看啊!
-~ chatStatus = 3
 ->endDiaoluge
 
 

@@ -71,7 +71,7 @@ public class Camerafollowww : Singleton<Camerafollowww>
                 return;
             }
         }
-        else if (target.position.x < 35)
+        else if (target.position.x < 35)// x -113,9.5,-9.5,-
         {
 
             if (target.position.y < 7.5f && target.position.y > -7.5f)
@@ -94,7 +94,7 @@ public class Camerafollowww : Singleton<Camerafollowww>
     {
         if (target.position.x > -25)
         {
-            if (target.position.x >= -13 && target.position.x <= 13)
+            if (target.position.x >= -13 && target.position.x <= 15)
             {
                 if (target.position.y >= -9.5 && target.position.y <= 9.5)
                 {
@@ -105,7 +105,7 @@ public class Camerafollowww : Singleton<Camerafollowww>
                     }
                 }
             }
-            else if (target.position.x >= -13 && target.position.x <= 13)
+            else if (target.position.x >= -13 && target.position.x <= 15)
             {
                 transform.position = new Vector3(target.position.x, transform.position.y, transform.position.z);
             }
@@ -120,10 +120,32 @@ public class Camerafollowww : Singleton<Camerafollowww>
         }
         else if (target.position.x < -35)
         {
+            Vector3 targetPos = target.position;
+            transform.position = Vector3.Lerp(transform.position, targetPos, smoothing);
 
-            if (target.position.y < 7.5f && target.position.y > -7.5f)
+            if (target.position.x > -113 && target.position.x < -87)
             {
-                transform.position = new Vector3(target.position.x, target.position.y, target.position.z);
+                if (target.position.y >= -9.5 && target.position.y <= 9.5)
+                {
+                    if (transform.position != target.position)
+                    {
+                        targetPos = target.position;
+                        transform.position = Vector3.Lerp(transform.position, targetPos, smoothing);
+                    }
+                }
+
+            }
+            else if (target.position.x > -113 && target.position.x < -87)
+            {
+                transform.position = new Vector3(target.position.x, transform.position.y, transform.position.z);
+            }
+            else if (target.position.y >= -9.5 && target.position.y <= 9.5)
+            {
+                transform.position = new Vector3(transform.position.x, target.position.y, transform.position.z);
+            }
+            else
+            {
+                return;
             }
 
         }
