@@ -24,6 +24,13 @@ public class SettingManager : MonoBehaviour
     [Header("其他功能")]
     [SerializeField] private Button goBack;
 
+    [Header("隱藏功能")]
+    [SerializeField] private Button hiddenButton;
+    [SerializeField] private InputField gameStatusInputField;
+    [SerializeField] private Button sendHiddenButton;
+    private int hiddenNum = 0;
+    private string inputGameStatus;
+
     public static SettingManager Instance;
 
 
@@ -49,8 +56,33 @@ public class SettingManager : MonoBehaviour
         {
             SaveLoadSystem.Instance.Load();
         });
+
+        hiddenButton.onClick.AddListener(OnClickHiddenButton);
+        sendHiddenButton.onClick.AddListener(ChangeGameStatus);
+        hiddenButton.gameObject.SetActive(true);
+        gameStatusInputField.gameObject.SetActive(false);
+        sendHiddenButton.gameObject.SetActive(false);
+
     }
 
+
+    private void OnClickHiddenButton()
+    {
+        hiddenNum++;
+        if (hiddenNum > 5)
+        {
+            SiginalUI.Instance.SiginalText("進入開發系統");
+            gameStatusInputField.gameObject.SetActive(true);
+            sendHiddenButton.gameObject.SetActive(true);
+        }
+    }
+
+    private void ChangeGameStatus()
+    {
+        inputGameStatus = gameStatusInputField.text;
+        GDMananger.Instance.gameStatus = int.Parse(inputGameStatus);
+        GDMananger.Instance.UpdateMap();
+    }
 
     public void OpenSetting()
     {
@@ -66,8 +98,8 @@ public class SettingManager : MonoBehaviour
     private void CloseSetting()
     {
         settingObject.SetActive(false);
-        
-        if(SceneManager.GetActiveScene().buildIndex != 1)
+
+        if (SceneManager.GetActiveScene().buildIndex != 1)
         {
             CanvasManager.Instance.openCanvas("original");
         }

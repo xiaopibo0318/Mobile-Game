@@ -42,6 +42,8 @@ public class BookContentManagerGD : Singleton<BookContentManagerGD>
     private bool isChooseFromMenu = true;
     [SerializeField] private Button nextPageButton;
     [SerializeField] private Button backPageButton;
+    [SerializeField] private Image mainImage;
+    [SerializeField] private Text mainText;
 
 
 
@@ -122,6 +124,8 @@ public class BookContentManagerGD : Singleton<BookContentManagerGD>
                 //myKnowledge[i].SetActive(true);
                 nowKnowledge = myKnowledge[i].name;
                 UpdateNowKnowledgeID(nowKnowledge);
+                mainImage.sprite = knowledgeButton[i].image.sprite;
+                mainText.text = knowledgeButton[i].gameObject.name;
             }
             else
             {

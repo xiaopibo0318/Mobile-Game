@@ -11,6 +11,8 @@ public class GDMananger : Singleton<GDMananger>
     [SerializeField] private Transform secondDoor;
     [SerializeField] private Transform thirdDoor;
     [SerializeField] private Transform elevatorDoor;
+    [SerializeField] private SpriteRenderer hiddenDoor;
+    [SerializeField] private GameObject lastLevelObject;
 
     [Header("紅外線設備")]
     [SerializeField] private List<Transform> raycastList;
@@ -33,6 +35,13 @@ public class GDMananger : Singleton<GDMananger>
     }
 
 
+    public void TriggerHiddenDoor()
+    {
+        hiddenDoor.color = new Vector4(255, 255, 255, 1);
+        lastLevelObject.SetActive(true);
+    }
+
+
     private void LoadMap()
     {
 
@@ -47,7 +56,9 @@ public class GDMananger : Singleton<GDMananger>
                 {
                     raycastList[i].gameObject.SetActive(true);
                 }
-                teleportObject1.gameObject.SetActive(true);
+                teleportObject1.gameObject.SetActive(false);
+                hiddenDoor.color = new Vector4(255, 255, 255, 0);
+                lastLevelObject.SetActive(false);
                 break;
             case 2:
                 firstDoor.gameObject.SetActive(false);
@@ -83,6 +94,9 @@ public class GDMananger : Singleton<GDMananger>
             case 8:
                 raycastList[1].gameObject.SetActive(false);
                 raycastList[3].gameObject.SetActive(false);
+                break;
+            case 9:
+                hiddenDoor.gameObject.SetActive(false);
                 break;
 
         }

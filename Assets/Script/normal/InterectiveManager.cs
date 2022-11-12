@@ -200,11 +200,15 @@ public class InterectiveManager : MonoBehaviour
             case "breadboardInterective":
                 nextWay = 403;
                 break;
-            case "stringInterectove":
+            case "stringInterective":
                 nextWay = 404;
                 break;
             case "ledInterective":
                 nextWay = 405;
+                break;
+
+            case "hiddenDoorInterective":
+                nextWay = 411;
                 break;
 
             case "storyInterective4":
@@ -239,6 +243,25 @@ public class InterectiveManager : MonoBehaviour
                 break;
             case "storyInterective21":
                 nextWay = 474;
+                break;
+
+            case "posterInterective1":
+                nextWay = 481;
+                break;
+            case "posterInterective2":
+                nextWay = 482;
+                break;
+            case "posterInterective3":
+                nextWay = 483;
+                break;
+            case "posterInterective4":
+                nextWay = 484;
+                break;
+            case "posterInterective5":
+                nextWay = 485;
+                break;
+            case "posterInterective6":
+                nextWay = 486;
                 break;
         }
     }
@@ -399,6 +422,10 @@ public class InterectiveManager : MonoBehaviour
                 ItemUIManagerGD.Instance.AddItemToBag("LED");
                 break;
 
+            case 411:
+                GDMananger.Instance.TriggerHiddenDoor();
+                SiginalUI.Instance.SiginalText("好像哪裡傳來了一些動靜");
+                break;
 
             case 464:
                 StoryManager.Instance.currentID = 0;
@@ -455,6 +482,37 @@ public class InterectiveManager : MonoBehaviour
                 StoryManager.Instance.SwitchImage();
                 CanvasManager.Instance.openCanvas("Bamboo");
                 StartCoroutine(EndGame());
+                break;
+
+            case 481:
+                StoryManager.Instance.currentID = 0;
+                StoryManager.Instance.SwitchPoster();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 482:
+                StoryManager.Instance.currentID = 1;
+                StoryManager.Instance.SwitchPoster();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 483:
+                StoryManager.Instance.currentID = 2;
+                StoryManager.Instance.SwitchPoster();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 484:
+                StoryManager.Instance.currentID = 3;
+                StoryManager.Instance.SwitchPoster();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 485:
+                StoryManager.Instance.currentID = 4;
+                StoryManager.Instance.SwitchPoster();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 486:
+                StoryManager.Instance.currentID = 5;
+                StoryManager.Instance.SwitchPoster();
+                CanvasManager.Instance.openCanvas("Bamboo");
                 break;
         }
     }

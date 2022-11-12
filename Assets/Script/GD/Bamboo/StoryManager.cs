@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class StoryManager : EventDetect
 {
-    private Sprite[] allStory;
+    private Sprite[] allStoryBamboo;
+    private Sprite[] allStoryPoster;
     [SerializeField] private Image currentImage;
     private RectTransform originalTransform;
     [SerializeField] private Button goBackButton;
@@ -24,14 +25,21 @@ public class StoryManager : EventDetect
 
     private void Start()
     {
-        allStory = Resources.LoadAll<Sprite>("BambooSlips");
+        allStoryBamboo = Resources.LoadAll<Sprite>("BambooSlips");
+        allStoryPoster = Resources.LoadAll<Sprite>("Poster");
         originalTransform = currentImage.rectTransform;
         goBackButton.onClick.AddListener(delegate { CanvasManager.Instance.openCanvas("original"); });
     }
 
     public void SwitchImage()
     {
-        currentImage.sprite = allStory[currentID];
+        currentImage.sprite = allStoryBamboo[currentID];
+    }
+
+    public void SwitchPoster()
+    {
+        currentImage.sprite = allStoryPoster[currentID];
+        currentImage.preserveAspect = true;
     }
 
     public override void ChangeScale(Touch touch1, Touch touch2)
