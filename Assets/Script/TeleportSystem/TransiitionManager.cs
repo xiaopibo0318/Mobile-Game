@@ -19,9 +19,17 @@ public class TransiitionManager : Singleton<TransiitionManager>
 
 
 
-
+    public void TPGD1() => StartCoroutine(TeleportToGD1());
     public void TPGD2() => StartCoroutine(TeleportToGD2());
 
+    private IEnumerator TeleportToGD1()
+    {
+        yield return Fade(1);
+
+        player.transform.position = new Vector3(-15.6f, -5, 0);
+        AudioManager.Instance.SwitchBGMGD();
+        yield return Fade(0);
+    }
     private IEnumerator TeleportToGD2()
     {
         yield return Fade(1);

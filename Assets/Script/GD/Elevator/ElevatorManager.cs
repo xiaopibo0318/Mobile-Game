@@ -632,7 +632,7 @@ public class ElevatorManager : EventDetect
         SiginalUI.Instance.SiginalText("失敗");
     }
 
-    public override void Hold()
+    public override void Move()
     {
         Vector2 temp = new Vector2((map.position.x + moveDirection.x * 10), map.position.y + moveDirection.y * 10);
         map.DOMove(temp, .1f);

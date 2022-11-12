@@ -48,7 +48,7 @@ public class StoryManager : EventDetect
     {
         //currentImage.rectTransform.localPosition = originalTransform.localPosition;
         //currentImage.rectTransform.anchoredPosition = originalTransform.anchoredPosition;
-        currentImage.transform.position = Vector3.zero;
+        currentImage.transform.position = new Vector3(Screen.width / 2, Screen.height / 2);
         currentImage.transform.localScale = Vector3.one;
 
     }

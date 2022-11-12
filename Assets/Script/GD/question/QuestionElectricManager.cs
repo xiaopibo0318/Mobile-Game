@@ -171,7 +171,7 @@ public class QuestionElectricManager : EventDetect
         goToMainButton.gameObject.SetActive(true);
     }
 
-    public override void Hold()
+    public override void Move()
     {
         Debug.Log("移動的位置差" + moveDirection.x);
         if (moveDirection.x > 0)

@@ -23,7 +23,7 @@ public class GDMananger : Singleton<GDMananger>
         gameStatus = 1;
         LoadMap();
         TimeCounter.Instance.StartCountDown();
-        DialogueManageGD.Instance.ChangeChatStatus();
+        //DialogueManageGD.Instance.ChangeChatStatus(); //這行隔壁在start才初始化，因此不能用
     }
 
     public void UpdateMap()

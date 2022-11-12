@@ -6,6 +6,8 @@ public class teleport : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        TransiitionManager.Instance.TPGD2();
+        if (collision.transform.position.x > -50) TransiitionManager.Instance.TPGD2();
+        else TransiitionManager.Instance.TPGD1();
+
     }
 }

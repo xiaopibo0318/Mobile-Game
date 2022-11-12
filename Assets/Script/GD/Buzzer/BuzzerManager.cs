@@ -191,7 +191,7 @@ public class BuzzerManager : Singleton<BuzzerManager>
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Normal"))
             {
 
-                Vector2 point = eventData.position;
+                Vector2 point = GetOriginPos(eventData.position);
                 Debug.Log("点的位置是" + point);
                 nowLine = Instantiate(myLine, lineParent).GetComponent<UILineRenderer>();
                 nowLine.color = new Vector4(colorR, colorG, colorB, colorF);
@@ -217,7 +217,7 @@ public class BuzzerManager : Singleton<BuzzerManager>
         if (!isOperate) return;
         //拖拉顯現需要setAllDirty 讓他髒 還要一直Dirty 所以要放在OnDrag
         nowLine.SetAllDirty();
-        nowLine.Points[1] = eventData.position;
+        nowLine.Points[1] = GetOriginPos(eventData.position);
         mouseFollower.transform.position = eventData.position;
     }
 
@@ -229,7 +229,7 @@ public class BuzzerManager : Singleton<BuzzerManager>
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Hoover"))
             {
 
-                nowLine.Points[1] = eventData.position;
+                nowLine.Points[1] = GetOriginPos(eventData.position);
                 ElectricSlot nowSlot = eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<ElectricSlot>();
                 if (nowSlot == firstSlot)
                 {
@@ -284,7 +284,7 @@ public class BuzzerManager : Singleton<BuzzerManager>
 
                 if (firstSlot.row == 33) buzzerPin = nowSlot.row;
                 else if (nowSlot.row == 33) buzzerPin = firstSlot.row;
-                
+
                 buzzerPin = 17 - buzzerPin;
                 CodingManager.Instance.pinBuzzerElectricSet = buzzerPin;
 
@@ -601,6 +601,17 @@ public class BuzzerManager : Singleton<BuzzerManager>
         nodes2[34, 12].AddNeighbor(nodes2[32, 12]);
         nodes2[34, 12].g = 5;
         nodes2[32, 12].g = 5;
+    }
+
+    public Vector2 GetOriginPos(Vector2 nowPoint)
+    {
+        float w = Screen.width;
+        float h = Screen.height;
+        float changeScale_x = w / 1800;
+        float changeScale_y = h / 900;
+
+        Vector2 afterResetPos = new Vector2(nowPoint.x /= changeScale_x, nowPoint.y /= changeScale_y);
+        return afterResetPos;
     }
 
 }

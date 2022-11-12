@@ -156,7 +156,7 @@ public class ScratchManager : MonoBehaviour
         {
             SiginalUI.Instance.SiginalText("程式編譯器\n \"O Pad\" \n 以添加至背包中");
             ItemUIManagerGD.Instance.AddItemToBag("OPAD");
-            GDMananger.Instance.gameStatus = 3;
+            GDMananger.Instance.gameStatus = 4;
             GDMananger.Instance.UpdateMap();
             return;
         }

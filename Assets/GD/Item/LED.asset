@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 404
   itemName: LED
-  itemImage: {fileID: -1395620539264383005, guid: 6e993a99c735c3c43a0d789d00d1ec9c,
+  itemImage: {fileID: -5661978817693825064, guid: 076c71287b2f9c042a7b98db47096021,
     type: 3}
   itemTag: 
-  itemHave: 0
+  itemHave: 1
   itemInfo: 
   missioable: 0
   storyable: 0

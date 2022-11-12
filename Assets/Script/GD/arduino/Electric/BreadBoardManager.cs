@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using TouchEvent_Handler;
+
 public class BreadBoardManager : Singleton<BreadBoardManager>
 {
     private Dictionary<Vector2, Vector2> linePointList = new Dictionary<Vector2, Vector2>();
@@ -190,7 +192,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Normal"))
             {
 
-                Vector2 point = eventData.position;
+                Vector2 point = GetOriginPos(eventData.position);
                 Debug.Log("点的位置是" + point);
                 nowLine = Instantiate(myLine, lineParent).GetComponent<UILineRenderer>();
                 nowLine.color = new Vector4(colorR, colorG, colorB, colorF);
@@ -216,7 +218,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         if (!isOperate) return;
         //拖拉顯現需要setAllDirty 讓他髒 還要一直Dirty 所以要放在OnDrag
         nowLine.SetAllDirty();
-        nowLine.Points[1] = eventData.position;
+        nowLine.Points[1] = GetOriginPos(eventData.position);
         mouseFollower.transform.position = eventData.position;
     }
 
@@ -228,7 +230,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
             if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Hoover"))
             {
 
-                nowLine.Points[1] = eventData.position;
+                nowLine.Points[1] = GetOriginPos(eventData.position);
                 ElectricSlot nowSlot = eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<ElectricSlot>();
                 if (nowSlot == firstSlot)
                 {
@@ -573,7 +575,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
     private void ElectricSuccess()
     {
         SiginalUI.Instance.SiginalText("成功");
-        GDMananger.Instance.gameStatus = 4;
+        GDMananger.Instance.gameStatus = 5;
         GDMananger.Instance.UpdateMap();
     }
 
@@ -615,6 +617,18 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
 
 
+    }
+
+
+    public Vector2 GetOriginPos(Vector2 nowPoint)
+    {
+        float w = Screen.width;
+        float h = Screen.height;
+        float changeScale_x = w / 1800;
+        float changeScale_y = h / 900;
+
+        Vector2 afterResetPos = new Vector2(nowPoint.x /= changeScale_x, nowPoint.y /= changeScale_y);
+        return afterResetPos;
     }
 }
 

@@ -109,6 +109,8 @@ public class RayCastManager : Singleton<RayCastManager>, IPointerDownHandler
         rayCastObject[2].SetActive(false);
         isPassFirst = false;
         CanvasManager.Instance.openCanvas("original");
+        GDMananger.Instance.gameStatus = 7;
+        GDMananger.Instance.UpdateMap();
     }
 
     private void DeleteElectricLine()
@@ -118,6 +120,8 @@ public class RayCastManager : Singleton<RayCastManager>, IPointerDownHandler
         rayCastObject[1].SetActive(false);
         rayCastObject[3].SetActive(false);
         CanvasManager.Instance.openCanvas("original");
+        GDMananger.Instance.gameStatus = 8;
+        GDMananger.Instance.UpdateMap();
     }
 
 }

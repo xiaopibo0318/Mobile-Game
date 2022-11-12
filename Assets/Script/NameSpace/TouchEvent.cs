@@ -31,6 +31,7 @@ namespace TouchEvent_Handler
         public void OnPointerUp(PointerEventData eventData)
         {
             isTouch = false;
+            ResetImage();
         }
 
         private void Update()
@@ -43,7 +44,6 @@ namespace TouchEvent_Handler
                     delayDetectTime = 20;
                     TouchDetect(touch1Data);
                 }
-
             }
         }
 
@@ -59,7 +59,7 @@ namespace TouchEvent_Handler
                     case TouchPhase.Moved:
                         moveDirection = touch.deltaPosition;
                         intervals = Time.realtimeSinceStartup - beginTime;
-                        Hold();
+                        Move();
                         break;
                 }
             }
@@ -67,6 +67,12 @@ namespace TouchEvent_Handler
             {
                 Touch newTouch1 = Input.GetTouch(0);
                 Touch newTouch2 = Input.GetTouch(1);
+
+                if (newTouch1.phase == TouchPhase.Ended || newTouch2.phase == TouchPhase.Ended)
+                {
+                    Debug.Log("觸發歸位");
+                    ResetImage();
+                }
 
                 ///先記錄第一次點的位置
                 if (newTouch2.phase == TouchPhase.Began)
@@ -81,31 +87,42 @@ namespace TouchEvent_Handler
                 float newDistance = Vector2.Distance(newTouch1.position, newTouch2.position);
                 Debug.Log("老:" + oldDistance + "新" + newDistance);
                 float offset = newDistance - oldDistance;
-                scaleOffset = 1 + (offset / 100);
+                scaleOffset = 1 + (offset / 500);
 
                 ChangeScale(newTouch1, newTouch2);
 
-                oldTouch1 = newTouch1;
-                oldTouch2 = newTouch2;
+                //oldTouch1 = newTouch1;
+                //oldTouch2 = newTouch2;
 
-                if (newTouch1.phase == TouchPhase.Ended || newTouch2.phase == TouchPhase.Ended)
-                {
-                    ResetImage();
-                }
+
+
+
 
             }
         }
 
 
-        public virtual void Hold() { }
+        public virtual void Move() { }
         public virtual void PointerDown(PointerEventData eventData) { }
-
         public virtual void Init() { }
-
         public virtual void ChangeScale(Touch touch1, Touch touch2) { }
-
         public virtual void ResetImage() { }
 
 
     }
+
+    public class WorldOffset
+    {
+        public Vector2 GetOriginPos(Vector2 nowPoint)
+        {
+            float w = nowPoint.x;
+            float h = nowPoint.y;
+            float changeScale_x = w / 1800;
+            float changeScale_y = h / 900;
+
+            Vector2 afterResetPos = new Vector2(nowPoint.x /= changeScale_x, nowPoint.y /= changeScale_y);
+            return afterResetPos;
+        }
+    }
+
 }

@@ -54,17 +54,20 @@ public class FinalManger : Singleton<FinalManger>
         coroutine = StartCoroutine(RollText());
     }
 
-    private void TextUpdate(string name = "xiaopibo", string score = "29:30", string location = "崑崙山")
+    private void TextUpdate(string name = "xiaopibo", string score = "29:30", string location = "宮殿")
     {
 
         mainText.text = "";
 
-        mainText.text += "你發現了崑崙山失竊的靈果\n以及西王母的資產\n";
-        mainText.text += "這是西王母的保險櫃\n";
-        mainText.text += "原來靈果並不是無緣故得消失\n";
-        mainText.text += "而是西王母藏起來了\n";
+        //mainText.text += "你發現了崑崙山失竊的靈果\n以及西王母的資產\n";
+        //mainText.text += "這是西王母的保險櫃\n";
+        //mainText.text += "原來靈果並不是無緣故得消失\n";
+        //mainText.text += "而是西王母藏起來了\n";
+        mainText.text += "你發現了女媧造人是個騙局\n這一切都只是為了鞏固自己身為首領的權力\n";
+        mainText.text += "以及將自己神化而散布出的謠言\n";
+        mainText.text += "雕的失蹤正是因為部落中有一股推翻女媧的勢力正在崛起\n";
+        mainText.text += "女媧為了避免土雕落入敵方勢力而將其鎖在這間暗房之中\n";
         mainText.text += "\n\n\n\n\n";
-        //mainText.fontSize = 70;
 
         mainText.text += "恭喜玩家" + name + "\n";
         mainText.text += "用時 " + score + " 通關 " + location + "\n";
@@ -77,7 +80,7 @@ public class FinalManger : Singleton<FinalManger>
         mainText.text += "美術設計： 許聿銘\n";
         mainText.text += "場景搭建： 張子濰\n";
         mainText.text += "教材設計： 卓育霆\n";
-        mainText.text += "劇情設計： 徐存昇、張子濰、卓育霆";
+        mainText.text += "劇情設計： 徐存昇、張子濰";
 
         mainText.text += "\n\n\n\n\n";
         mainText.text += "《特別感謝》\n";
