@@ -8,6 +8,7 @@ public class CodingManager : Singleton<CodingManager>
     public List<GameObject> blocks = new List<GameObject>();
     public GameObject blockGrid;
     public GameObject emptyBlockSlot;
+    private bool isFirst = true;
 
     [Header("執行列表")]
     public blockList exeLists;
@@ -64,7 +65,7 @@ public class CodingManager : Singleton<CodingManager>
 
     IEnumerator GoStartGame()
     {
-        
+
         for (int i = 0; i < exeLists.exeList.Length; i++)
         {
             yield return new WaitForSeconds(0.5f);
@@ -101,6 +102,12 @@ public class CodingManager : Singleton<CodingManager>
 
     public void ResetBlock()
     {
+        //if (isFirst)
+        //{
+        //    SiginalUI.Instance.SiginalText("請先在左側方塊區設定好數字\n再拖來上呦", 5);
+        //    isFirst = false;
+        //}
+
         for (int i = 0; i < exeLists.exeList.Length; i++)
         {
             exeLists.exeList[i] = -99;

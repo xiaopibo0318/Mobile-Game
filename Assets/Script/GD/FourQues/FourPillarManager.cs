@@ -116,19 +116,35 @@ public class FourPillarManager : EventDetect
         switch (nowQues)
         {
             case 0:
-                if (currentID == 7) { SiginalUI.Instance.SiginalText("沒錯！\n宮殿有7根柱子呦！"); }
+                if (currentID == 7)
+                {
+                    SiginalUI.Instance.SiginalText("沒錯！\n宮殿有7根柱子呦！");
+                    cacheVisable.Instance.siginalSomething("沒錯！\n宮殿有7根柱子呦！");
+                }
                 else { TriggerErrorOption(); }
                 break;
             case 1:
-                if (currentID == 1) { SiginalUI.Instance.SiginalText("沒錯！\n絲綢有1個有問題呦！"); }
+                if (currentID == 1)
+                {
+                    SiginalUI.Instance.SiginalText("沒錯！\n絲綢有1個有問題呦！");
+                    cacheVisable.Instance.siginalSomething("沒錯！\n絲綢有1個有問題呦！");
+                }
                 else { TriggerErrorOption(); }
                 break;
             case 2:
-                if (currentID == 4) { SiginalUI.Instance.SiginalText("沒錯！\n購入了4公斤的草藥呦！"); }
+                if (currentID == 4)
+                {
+                    SiginalUI.Instance.SiginalText("沒錯！\n購入了4公斤的草藥呦！");
+                    cacheVisable.Instance.siginalSomething("沒錯！\n購入了4公斤的草藥呦！");
+                }
                 else { TriggerErrorOption(); }
                 break;
             case 3:
-                if (currentID == 0) { SiginalUI.Instance.SiginalText("沒錯！\n低電位的代表數字是0呦！"); }
+                if (currentID == 0)
+                {
+                    SiginalUI.Instance.SiginalText("沒錯！\n低電位的代表數字是0呦！");
+                    cacheVisable.Instance.siginalSomething("沒錯！\n低電位的代表數字是0呦！");
+                }
                 else { TriggerErrorOption(); }
                 break;
             default:
@@ -155,5 +171,7 @@ public class FourPillarManager : EventDetect
         }
         isError = false;
     }
+
+
 
 }

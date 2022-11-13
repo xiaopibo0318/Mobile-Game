@@ -10,6 +10,7 @@ public class ScratchManager : MonoBehaviour
     public List<GameObject> blocks = new List<GameObject>();
     public GameObject blockGrid;
     public GameObject emptyBlockSlot;
+    private bool isFirst = true;
 
     [Header("執行列表")]
     public blockList exeLists;
@@ -173,6 +174,13 @@ public class ScratchManager : MonoBehaviour
 
     public void ResetBlock()
     {
+        //if (isFirst)
+        //{
+        //    SiginalUI.Instance.SiginalText("請先在左側方塊區設定好數字\n再拖來上呦", 5);
+        //    isFirst = false;
+        //}
+
+
         nowPos.x = 0;
         nowPos.y = 0;
 
