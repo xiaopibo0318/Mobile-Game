@@ -9,6 +9,7 @@ public class StoryManager : EventDetect
 {
     private Sprite[] allStoryBamboo;
     private Sprite[] allStoryPoster;
+    private Sprite[] allStoryPaper;
     [SerializeField] private Image currentImage;
     private RectTransform originalTransform;
     [SerializeField] private Button goBackButton;
@@ -27,6 +28,7 @@ public class StoryManager : EventDetect
     {
         allStoryBamboo = Resources.LoadAll<Sprite>("BambooSlips");
         allStoryPoster = Resources.LoadAll<Sprite>("Poster");
+        allStoryPaper = Resources.LoadAll<Sprite>("Paper");
         originalTransform = currentImage.rectTransform;
         goBackButton.onClick.AddListener(delegate { CanvasManager.Instance.openCanvas("original"); });
     }
@@ -40,6 +42,11 @@ public class StoryManager : EventDetect
     {
         currentImage.sprite = allStoryPoster[currentID];
         currentImage.preserveAspect = true;
+    }
+
+    public void SwitchPaper()
+    {
+        currentImage.sprite = allStoryPaper[currentID];
     }
 
     public override void ChangeScale(Touch touch1, Touch touch2)

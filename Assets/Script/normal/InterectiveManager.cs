@@ -190,6 +190,20 @@ public class InterectiveManager : MonoBehaviour
                 nextWay = 314;
                 break;
 
+            case "paperInterective1":
+                nextWay = 321;
+                break;
+            case "paperInterective2":
+                nextWay = 322;
+                break;
+            case "paperInterective7":
+                nextWay = 327;
+                break;
+
+            case "paperInterective9":
+                nextWay = 329;
+                break;
+
             ///四個共用
             case "motorInterective":
                 nextWay = 401;
@@ -262,6 +276,10 @@ public class InterectiveManager : MonoBehaviour
                 break;
             case "posterInterective6":
                 nextWay = 486;
+                break;
+
+            case "phoenixInterectiveGD":
+                nextWay = 501;
                 break;
         }
     }
@@ -404,6 +422,28 @@ public class InterectiveManager : MonoBehaviour
                 FourPillarManager.Instance.TriggerQues();
                 break;
 
+
+            case 321:
+                StoryManager.Instance.currentID = 0;
+                StoryManager.Instance.SwitchPaper();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 322:
+                StoryManager.Instance.currentID = 1;
+                StoryManager.Instance.SwitchPaper();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 327:
+                StoryManager.Instance.currentID = 6;
+                StoryManager.Instance.SwitchPaper();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 329:
+                StoryManager.Instance.currentID = 8;
+                StoryManager.Instance.SwitchPaper();
+                CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+
             case 401: ///四個共用
                 ItemUIManagerGD.Instance.AddItemToBag("馬達");
                 DestroyTouchObject();
@@ -513,6 +553,10 @@ public class InterectiveManager : MonoBehaviour
                 StoryManager.Instance.currentID = 5;
                 StoryManager.Instance.SwitchPoster();
                 CanvasManager.Instance.openCanvas("Bamboo");
+                break;
+            case 501:
+                DialogueManageGD.Instance.StartDialogue();
+                CanvasManager.Instance.openCanvas("Phoenix");
                 break;
         }
     }

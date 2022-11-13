@@ -10,6 +10,7 @@ public class RayCastManager : Singleton<RayCastManager>, IPointerDownHandler
     private bool isTrigger = false;
     private Coroutine coroutine;
     private Coroutine lightCoroutine;
+    private bool isFirst = true;
 
     public GameObject playerObject { get; set; }
 
@@ -33,7 +34,7 @@ public class RayCastManager : Singleton<RayCastManager>, IPointerDownHandler
     public void TriggerRayCast()
     {
         if (isTrigger) return;
-        SiginalUI.Instance.SiginalText("觸碰到紅外線\n請在10秒內到安全區域\n解除警報");
+        SiginalUI.Instance.SiginalText("觸碰到紅外線\n請在10秒內到\n左側綠色安全區域\n解除警報");
         //AudioManager.Instance.XXXX;
         isTrigger = true;
         coroutine = StartCoroutine(StartWarning());
@@ -86,6 +87,13 @@ public class RayCastManager : Singleton<RayCastManager>, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (isFirst)
+        {
+            SiginalUI.Instance.SiginalText("這個機關...\n好像能解除外面的紅外線");
+            isFirst = false;
+            return;
+        }
+
         Debug.Log($"碰到的物品" + eventData.pointerCurrentRaycast.gameObject.name);
         if (eventData.pointerCurrentRaycast.gameObject.name.Contains("linePrefab") && isPassFirst)
         {

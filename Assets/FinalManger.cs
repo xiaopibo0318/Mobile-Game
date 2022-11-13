@@ -67,12 +67,12 @@ public class FinalManger : Singleton<FinalManger>
         mainText.text += "以及將自己神化而散布出的謠言\n";
         mainText.text += "雕的失蹤正是因為部落中有一股推翻女媧的勢力正在崛起\n";
         mainText.text += "女媧為了避免土雕落入敵方勢力而將其鎖在這間暗房之中\n";
-        mainText.text += "\n\n\n\n\n";
+        mainText.text += "\n\n\n";
 
         mainText.text += "恭喜玩家" + name + "\n";
         mainText.text += "用時 " + score + " 通關 " + location + "\n";
         mainText.text += "\n\n\n";
-        mainText.text += "恭喜您獲得以下獎章\n";
+        mainText.text += "恭喜您獲得以下獎章";
         mainText.text += "\n\n\n\n\n";
         mainText.fontSize = 50;
         mainText.text += "《西境山海》 Cast\n";

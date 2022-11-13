@@ -14,6 +14,8 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private List<Vector2> tempPointList = new List<Vector2>();
 
+    private bool isFirst;
+
     [Header("板子上的素材")]
     [SerializeField] private DragItem operateRange;
     [SerializeField] private List<ElectricSlot> slotSetInBoard;
@@ -50,6 +52,7 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
         ButtonInit();
 
         LoadLevel1();
+        isFirst = true;
     }
 
     [Header("電路查找")]
@@ -179,6 +182,12 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void OnOperateRangePointerDown(PointerEventData eventData)
     {
+        if (isFirst)
+        {
+            SiginalUI.Instance.SiginalText("要怎麼接線\n才能讓燈亮起來呢？");
+            isFirst = false;
+            return;
+        }
         //for (int i = 0; i < detectBagList.Count; i++)
         //{
         //    if (!myBag.itemList.Contains(detectBagList[i]))
@@ -574,14 +583,14 @@ public class BreadBoardManager : Singleton<BreadBoardManager>
 
     private void ElectricSuccess()
     {
-        SiginalUI.Instance.SiginalText("成功");
+        SiginalUI.Instance.SiginalText("燈順利的修好了！\n不過升降梯的動力裝置需要換上新的，快去看看有沒有可以使用的東西吧!",3,40);
         GDMananger.Instance.gameStatus = 5;
         GDMananger.Instance.UpdateMap();
     }
 
     private void ElectricFail()
     {
-        SiginalUI.Instance.SiginalText("失敗");
+        SiginalUI.Instance.SiginalText("失敗\n電應該從5V出去\n並從左邊數過來\n第2個的GND接收呦");
     }
 
 

@@ -77,7 +77,7 @@ public class ResistanceQuesManager : EventDetect
     private void GoToAnswer()
     {
         quesAnswer.SetActive(true);
-        Vector3 endPos = new Vector3(300, 700, 0);
+        Vector3 endPos = new Vector3(350, 700, 0);
         for (int i = 0; i < allPicTransform.Count; i++)
         {
             if (i == currentID)
@@ -138,7 +138,7 @@ public class ResistanceQuesManager : EventDetect
             case 1:
                 if (answer1 == "6K" || answer1 == "6000")
                 {
-                    if (answerZone2.text == "10" || answerZone2.text == "10%")
+                    if (answerZone2.text == "0.1" || answerZone2.text == "0.1%")
                     {
                         SiginalUI.Instance.SiginalText("成功");
                         isCorrect[currentID] = true;
@@ -196,6 +196,7 @@ public class ResistanceQuesManager : EventDetect
     public void OpenQues()
     {
         quesChoose.SetActive(true);
+        SiginalUI.Instance.SiginalText("接下來，試試看這三道題目吧！");
     }
 
 }

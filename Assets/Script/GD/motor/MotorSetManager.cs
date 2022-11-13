@@ -17,9 +17,18 @@ public class MotorSetManager : MonoBehaviour, IPointerDownHandler
 
     [Header("內部變數")]
     private int currentID = -99;
+    private bool isFirst;
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (isFirst)
+        {
+            SiginalUI.Instance.SiginalText("要怎麼擺放馬達\n才能讓電梯向下呢\n可以參考百科全書的特性");
+            isFirst = false;
+            return;
+        }
+
+
         for (int i = 0; i < allMotorTransform.Count; i++)
         {
             if (eventData.pointerCurrentRaycast.gameObject == allMotorTransform[i].gameObject)
@@ -39,6 +48,7 @@ public class MotorSetManager : MonoBehaviour, IPointerDownHandler
     private void Start()
     {
         ButtonInit();
+        isFirst = true;
     }
 
 

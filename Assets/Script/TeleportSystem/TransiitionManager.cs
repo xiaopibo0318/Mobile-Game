@@ -37,6 +37,7 @@ public class TransiitionManager : Singleton<TransiitionManager>
         player.transform.position = new Vector3(-117, -8, 0);
         AudioManager.Instance.SwitchBGMGD();
         yield return Fade(0);
+        fadeCanvasGroup.alpha = 0;
     }
 
 
@@ -81,6 +82,10 @@ public class TransiitionManager : Singleton<TransiitionManager>
         player.transform.position = new Vector3(0, 0, 0);
 
         yield return Fade(0);
+
+
+        GDMananger.Instance.LookStory();
+
     }
 
 }

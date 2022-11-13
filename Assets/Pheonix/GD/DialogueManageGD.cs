@@ -32,8 +32,11 @@ public class DialogueManageGD : Singleton<DialogueManageGD>
     {
         if (story != null) return false;
         story = new Story(inkAsset.text);
-        story.variablesState["gameStatus"] = Player.Instance.myStatus.GetGameStatus();
+        //story.variablesState["gameStatus"] = Player.Instance.myStatus.GetGameStatus();
+        GDMananger.Instance.UpdateMap();
+        story.variablesState["gameStatus"] = GDMananger.Instance.gameStatus;
         //story.variablesState["chatStatus"] = 1;
+        NextDialog();
         NextDialog();
         return true;
     }
@@ -46,7 +49,7 @@ public class DialogueManageGD : Singleton<DialogueManageGD>
 
         Debug.Log($"Logging ink variables. 遊戲狀態: {gameStatus}");
         //Debug.Log(Player.Instance.myStatus.GetGameStatus());
-        if (Player.Instance.myStatus.GetGameStatus() ==1)
+        if (Player.Instance.myStatus.GetGameStatus() == 1)
         {
             story.variablesState["gameStatus"] = 1;
         }
@@ -104,7 +107,6 @@ public class DialogueManageGD : Singleton<DialogueManageGD>
             options[i].gameObject.SetActive(false);
         }
         NextDialog();
-        nowEvent = (string)story.variablesState["nowEvent"];
         MakeSomeEvent(nowEvent);
     }
 

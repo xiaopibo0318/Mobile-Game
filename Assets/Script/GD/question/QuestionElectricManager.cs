@@ -13,6 +13,7 @@ public class QuestionElectricManager : EventDetect
     public RectTransform prefab;
     public Transform prefabParent;
     [SerializeField] private GameObject mainObject;
+    private bool isFirst;
 
     [Header("圖片素材")]
     private Sprite[] allPic;
@@ -54,6 +55,7 @@ public class QuestionElectricManager : EventDetect
         LoadPicture();
         InitScreen();
         mainObject.SetActive(false);
+        isFirst = true;
     }
 
     //private void Update()
@@ -114,6 +116,12 @@ public class QuestionElectricManager : EventDetect
 
     private void Slide()
     {
+        if (isFirst)
+        {
+            SiginalUI.Instance.SiginalText("嘗試配對看看各個電路圖對應的選項吧！");
+            isFirst = false;
+            return;
+        }
         for (int i = 0; i < allPicTransform.Count; i++)
         {
             if (i - currentID < 0)

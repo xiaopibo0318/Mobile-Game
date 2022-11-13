@@ -31,6 +31,7 @@ public class GDMananger : Singleton<GDMananger>
     public void UpdateMap()
     {
         Player.Instance.myStatus.gameStatus = gameStatus;
+        DialogueManageGD.Instance.ChangeChatStatus();
         LoadMap();
     }
 
@@ -103,4 +104,40 @@ public class GDMananger : Singleton<GDMananger>
     }
 
 
+
+    public void LookStory() => StartCoroutine(StartStory());
+
+
+    IEnumerator StartStory()
+    {
+        float time = 12.1f;
+        SiginalUI.Instance.SiginalText("在神農氏22年，女媧所在的宮殿，附近村落的村民懷疑女媧表裡不一、並不是個和藹可親的領導者，",12,45);
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        time = 15.1f;
+        SiginalUI.Instance.SiginalText("反而背後暗藏著黑暗的秘密，身為探險者的你，將前往宮殿一探究竟，一路上會有許多難題，一一破解後帶著你們的發現回報鳳凰吧！", 15, 40);
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        time = 10.1f;
+        SiginalUI.Instance.SiginalText("1.宮殿的主人女媧，據聞是個表裡不一的人，外表看起來和藹可親， 事實上是個最毒婦人心",10,45);
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        time = 7.1f;
+        SiginalUI.Instance.SiginalText("2. 在宮殿中，你需要修復、解除一些裝置來達到某些目的",7);
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        SiginalUI.Instance.SiginalText("3. 鳳凰為了協助探險者們探索，分裂了其中一個靈體到宮殿當中，在探索中如果遇到難以解決的情況，可以向祂尋求幫助！", 12, 40);
+    }
 }

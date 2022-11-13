@@ -1,5 +1,4 @@
 VAR gameStatus = 1
-VAR nowEvent = ""
 
 ->initial
 
@@ -25,7 +24,7 @@ VAR nowEvent = ""
         
 === A_1 ===
 在執行一向任務時，把所有的事項列出來有助於思考，同時能避免遺漏任何重要動作喔! 
- ~ nowEvent = "lotus1"
+
 ->endDiaoluge
 
 === A_2 ===
@@ -115,7 +114,5 @@ VAR nowEvent = ""
 
 === endDiaoluge ===
 快去尋找其他線索吧，下次見
-~ nowEvent = ""
 ->initial
 
-    -> END
