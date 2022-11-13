@@ -105,5 +105,7 @@ public class FinalManger : Singleton<FinalManger>
 
             moveContent.position = new Vector2(mainText.gameObject.transform.position.x, targetPos);
         }
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }

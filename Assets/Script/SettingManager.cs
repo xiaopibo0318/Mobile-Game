@@ -31,6 +31,10 @@ public class SettingManager : MonoBehaviour
     private int hiddenNum = 0;
     private string inputGameStatus;
 
+    [Header("卡死功能")]
+    private GameObject playerTarget;
+    [SerializeField] private Button triggerBugButton;
+
     public static SettingManager Instance;
 
 
@@ -59,10 +63,13 @@ public class SettingManager : MonoBehaviour
 
         hiddenButton.onClick.AddListener(OnClickHiddenButton);
         sendHiddenButton.onClick.AddListener(ChangeGameStatus);
+        triggerBugButton.onClick.AddListener(TriggerBug);
+
         hiddenButton.gameObject.SetActive(true);
         gameStatusInputField.gameObject.SetActive(false);
         sendHiddenButton.gameObject.SetActive(false);
-
+        triggerBugButton.gameObject.SetActive(true);
+        playerTarget = FindObjectOfType<Player>().gameObject;
     }
 
 
@@ -112,7 +119,11 @@ public class SettingManager : MonoBehaviour
     }
 
 
-
+    private void TriggerBug()
+    {
+        playerTarget.transform.position = Vector3.zero;
+        TransiitionManager.Instance.HandleBlackProblem();
+    }
 
 
 }

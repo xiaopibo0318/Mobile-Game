@@ -88,4 +88,11 @@ public class TransiitionManager : Singleton<TransiitionManager>
 
     }
 
+
+    public void HandleBlackProblem()
+    {
+        fadeCanvasGroup.blocksRaycasts = false;
+        fadeCanvasGroup.alpha = 0;
+    }
+
 }
