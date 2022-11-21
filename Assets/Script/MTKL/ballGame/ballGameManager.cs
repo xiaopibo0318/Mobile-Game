@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class ballGameManager : MonoBehaviour
 {
     public GameObject[] ballType;
+    public Transform ballTypeParent;
 
     public GameObject upGround, downGround;
 
@@ -75,6 +76,7 @@ public class ballGameManager : MonoBehaviour
 
     public void StartGame()
     {
+        Debug.Log($"a:{nowType}");
         int a = 0;
         for (int i = 0; i < myBag.itemList.Count; i++)
         {
@@ -98,10 +100,10 @@ public class ballGameManager : MonoBehaviour
                 //    cacheVisable.Instance.siginalSomething("還沒選擇球球喔");
                 //    return;
                 //}
+                Debug.Log("b");
                 InventoryManager.Instance.SubItem(GetNowBall(nowType));
-                ballType[nowType - 1].SetActive(true);
-                ResetPosition();
-                ballType[nowType - 1].GetComponent<Rigidbody2D>().gravityScale = 20;
+                ballTypeParent.GetChild(nowType-1).gameObject.SetActive(true);
+                ballTypeParent.GetChild(nowType - 1).gameObject.GetComponent<Rigidbody2D>().gravityScale = 20;
                 isStart = true;
             }
         }
@@ -163,9 +165,19 @@ public class ballGameManager : MonoBehaviour
         isStart = false;
         if (nowType != 0)
         {
-            ballType[nowType - 1].GetComponent<Rigidbody2D>().gravityScale = 0;
+            ballTypeParent.GetChild(nowType - 1).gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
         }
-
+        for (int i = 0; i < ballTypeParent.childCount; i++)
+        {
+            ballTypeParent.GetChild(i).gameObject.SetActive(true);
+            Destroy(ballTypeParent.GetChild(i).gameObject);
+        }
+        for (int i = 0; i < ballType.Length; i++)
+        {
+            GameObject temp = Instantiate(ballType[i], ballTypeParent);
+            temp.GetComponent<Rigidbody2D>().gravityScale = 0;
+            temp.SetActive(true);
+        }
         ResetPosition();
     }
 
@@ -174,9 +186,10 @@ public class ballGameManager : MonoBehaviour
     {
         topGroundRotateNum = 0;
         downGroundRotateNum = 0;
-        if (nowType != 0)
+        for (int i = 0; i < ballTypeParent.childCount; i++)
         {
-            ballType[nowType - 1].GetComponent<RectTransform>().localPosition = new Vector3(-205, 369, 0);
+            ballTypeParent.GetChild(i).GetComponent<RectTransform>().localPosition = new Vector3(-205, 369, 0);
+            ballTypeParent.GetChild(i).gameObject.SetActive(false);
         }
 
         upGround.transform.rotation = Quaternion.Euler(0, 0, topGroundRotateNum);
@@ -216,7 +229,6 @@ public class ballGameManager : MonoBehaviour
 
     public void EndGame()
     {
-
         InventoryManager.Instance.AddNewItem(Key);
     }
 
