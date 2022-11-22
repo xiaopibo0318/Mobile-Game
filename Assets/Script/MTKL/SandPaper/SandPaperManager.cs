@@ -24,6 +24,10 @@ public class SandPaperManager : MonoBehaviour
     public Item ball3;
 
 
+    [Header("球的背景圖")]
+    [SerializeField] private GameObject[] ballImage;
+
+
     [Header("處理列表")]
     List<int> exeList = new List<int>();
 
@@ -115,7 +119,7 @@ public class SandPaperManager : MonoBehaviour
         }
     }
 
-    public void NowBallType(string myTag)
+    public void UpdateNowBallType(string myTag)
     {
         Debug.Log(myTag);
         if (myTag == "ball0")
@@ -134,9 +138,19 @@ public class SandPaperManager : MonoBehaviour
         {
             nowBall = 999;
         }
+        ChangeBallImage();
     }
 
 
+    private void ChangeBallImage()
+    {
+        for (int i = 0; i < ballImage.Length; i++)
+        {
+            ballImage[i].SetActive(false);
+        }
+        if (nowBall == 999) SiginalUI.Instance.SiginalText("錯誤，請找老師進行修復");
+        else ballImage[nowBall].SetActive(true);
+    }
 
 }
 

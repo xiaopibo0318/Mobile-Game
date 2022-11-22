@@ -26,7 +26,7 @@ public class TransiitionManager : Singleton<TransiitionManager>
     {
         yield return Fade(1);
 
-        player.transform.position = new Vector3(-15.6f, -5, 0);
+        player.transform.position = new Vector3(-19, -10, 0);
         AudioManager.Instance.SwitchBGMGD();
         yield return Fade(0);
     }

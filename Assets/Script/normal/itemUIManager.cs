@@ -104,8 +104,8 @@ public class itemUIManager : MonoBehaviour
 
     public void ballCracker()
     {
-        ///這個一定要先Get
-        SandPaperManager.Instance.NowBallType(GetWhichBall());
+        ///這個一定要先Update
+        SandPaperManager.Instance.UpdateNowBallType(GetWhichBall());
         CanvasManager.Instance.openCanvas("SandPaperBall");
 
     }

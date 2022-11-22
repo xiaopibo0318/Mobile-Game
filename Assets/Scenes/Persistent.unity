@@ -538,8 +538,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2059902312}
-  m_Father: {fileID: 1935225567}
-  m_RootOrder: 0
+  m_Father: {fileID: 1397232784}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8340,7 +8340,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 101
   m_TargetDisplay: 0
 --- !u!1 &1347874620
 GameObject:
@@ -8930,7 +8930,9 @@ Transform:
   - {fileID: 1741235999}
   - {fileID: 791921991}
   - {fileID: 1899629888}
-  - {fileID: 1935225567}
+  - {fileID: 84217669}
+  - {fileID: 1520536654}
+  - {fileID: 1512892298}
   - {fileID: 1882161503}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -9659,8 +9661,8 @@ RectTransform:
   m_Children:
   - {fileID: 24920066}
   - {fileID: 334175085}
-  m_Father: {fileID: 1935225567}
-  m_RootOrder: 2
+  m_Father: {fileID: 1397232784}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9775,8 +9777,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1225382204}
-  m_Father: {fileID: 1935225567}
-  m_RootOrder: 1
+  m_Father: {fileID: 1397232784}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11827,7 +11829,7 @@ Transform:
   m_Children:
   - {fileID: 1346807012}
   m_Father: {fileID: 1397232784}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1882161504
 MonoBehaviour:
@@ -12109,52 +12111,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928396317}
   m_CullTransparentMesh: 0
---- !u!1 &1935225565
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1935225567}
-  - component: {fileID: 1935225566}
-  m_Layer: 0
-  m_Name: AlwaysActivateCanvas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1935225566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1935225565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2497156f3e9cfe408027eb5321cb237, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1935225567
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1935225565}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 84217669}
-  - {fileID: 1520536654}
-  - {fileID: 1512892298}
-  m_Father: {fileID: 1397232784}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1943014257
 GameObject:
   m_ObjectHideFlags: 0
