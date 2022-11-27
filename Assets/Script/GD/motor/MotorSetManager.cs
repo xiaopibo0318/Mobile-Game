@@ -18,6 +18,10 @@ public class MotorSetManager : MonoBehaviour, IPointerDownHandler
     [Header("內部變數")]
     private int currentID = -99;
     private bool isFirst;
+    private MotorData[] motorDatas = new MotorData[4];
+
+    [Header("馬達圖片")]
+    [SerializeField] private Sprite[] allMotorImage;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -60,8 +64,23 @@ public class MotorSetManager : MonoBehaviour, IPointerDownHandler
         confirmButton.onClick.AddListener(DetectSuccess);
     }
 
+    private void ResetMotorData()
+    {
+        for (int i = 0; i < motorDatas.Length; i++)
+        {
+            motorDatas[i] = new MotorData(0, 0);
+        }
+    }
 
-    private void RotateMotor(float dir)
+
+    /// <summary>
+    /// 1右、2下、3左、4上
+    /// 如果往上翻一次、轉 -90 度
+    /// 如果往下翻一次、轉 90 度
+    /// </summary>
+    /// <param name="dir"></param>
+    /// <param name="vect"></param>
+    private void RotateMotor(float dir, int vect = 0)
     {
         if (currentID == -99)
         {
@@ -82,9 +101,46 @@ public class MotorSetManager : MonoBehaviour, IPointerDownHandler
         dir += ((int)(allMotorTransform[currentID].rotation.eulerAngles.z));
         while (dir > 361) dir -= 360;
         while (dir < 1) dir += 360;
-        Vector3 rotateValue = new Vector3(0, 0, dir);
-        allMotorTransform[currentID].DORotate(rotateValue, .5f);
+        motorDatas[currentID].UpdateMotorData(vect, dir);
+
+        int temp = 0;
+        for (int i = 0; i < allMotorImage.Length; i++)
+        {
+            if (allMotorImage[i] == motorDatas[currentID].image)
+            {
+                temp = i;
+            }
+        }
+
+        switch (motorDatas[currentID].vect)
+        {
+            case 1:
+                Debug.Log("右翻");
+                motorDatas[currentID].image = allMotorImage[(temp + 1) % 4];
+                break;
+            case 2:
+                Debug.Log("左翻");
+                motorDatas[currentID].image = allMotorImage[(temp + 3) % 4];
+                break;
+            case 3:
+                Debug.Log("前翻");
+
+                break;
+            case 4:
+                Debug.Log("後翻");
+                break;
+        }
+        SetupMotorTransform();
     }
+
+    private void SetupMotorTransform()
+    {
+        Vector3 rotateValue = new Vector3(0, 0, motorDatas[currentID].dir);
+        allMotorTransform[currentID].DORotate(rotateValue, .5f);
+        allMotorTransform[currentID].GetComponent<Image>().sprite = motorDatas[currentID].image;
+
+    }
+
 
     private void DetectSuccess()
     {
@@ -118,5 +174,34 @@ public class MotorSetManager : MonoBehaviour, IPointerDownHandler
         }
     }
 
+
+}
+
+
+
+
+public class MotorData
+{
+    public int vect { get; set; }
+    public float dir { get; set; }
+    public Sprite image { get; set; }
+
+    public MotorData(int vect, float dir)
+    {
+        this.vect = vect;
+        this.dir = dir;
+    }
+
+    public void ResetMotorData()
+    {
+        this.vect = 0;
+        this.dir = 0;
+    }
+
+    public void UpdateMotorData(int newVect, float newDir)
+    {
+        this.vect = newVect;
+        this.dir = newDir;
+    }
 
 }
