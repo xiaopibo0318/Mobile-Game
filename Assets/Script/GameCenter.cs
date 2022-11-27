@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class GameCenter : MonoBehaviour
 {
     public static GameCenter Instance;
@@ -15,7 +16,8 @@ public class GameCenter : MonoBehaviour
 
     private void OnEnable()
     {
-        //SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1);
+        
     }
 
 

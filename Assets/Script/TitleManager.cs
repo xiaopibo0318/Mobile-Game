@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.Events;
-
+using UpgradeSystem;
 public class TitleManager : Singleton<TitleManager>
 {
     [Header("分房列表")]
@@ -48,6 +48,7 @@ public class TitleManager : Singleton<TitleManager>
         backPageButton.onClick.AddListener(BackPage);
         nextPageButton.gameObject.SetActive(false);
         backPageButton.gameObject.SetActive(false);
+        DetectNewUpdate.Instance.StartDetect();
     }
 
     private void OpenIntroduceImage()
