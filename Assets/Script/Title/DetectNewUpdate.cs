@@ -41,34 +41,32 @@ namespace UpgradeSystem
             {
                 StartCoroutine(CheckForUpdate());
             }
-            
+
         }
-
-
 
 
         IEnumerator CheckForUpdate()
         {
             Debug.Log("開始傳網路");
             UnityWebRequest request = UnityWebRequest.Get(jsonDataURL);
-            request.chunkedTransfer = false;
+            //request.chunkedTransfer = false;
             request.disposeDownloadHandlerOnDispose = true;
             request.timeout = 60;
             Debug.Log(request.isNetworkError);
-            yield return request.Send();
+            yield return request.SendWebRequest();
             Debug.Log($"是否請求成功：{request.isDone}");
             if (request.isDone)
             {
                 isAlreadyCheckForNewUpdate = true;
                 if (!request.isNetworkError)
                 {
-                    Debug.Log("文字"+request.downloadHandler.text);
+                    Debug.Log("文字" + request.downloadHandler.text);
                     lastGameData = JsonUtility.FromJson<GameData>(request.downloadHandler.text);
                     Debug.Log($"讀取到的版本號為{lastGameData.Version}");
                     if (string.IsNullOrEmpty(lastGameData.Version) || !Application.version.Equals(lastGameData.Version))
                     {
                         //
-                        mainText.text = lastGameData.Description +"\n" + lastGameData.Version +"\n當前版本為：\n" +Application.version;
+                        mainText.text = lastGameData.Description + "\n" + lastGameData.Version + "\n當前版本為：\n" + Application.version;
                         MenuManager.Instance.OpenMenu("CheckForUpdate");
                         //showPop
                     }

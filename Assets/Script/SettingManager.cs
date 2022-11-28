@@ -87,8 +87,16 @@ public class SettingManager : MonoBehaviour
     private void ChangeGameStatus()
     {
         inputGameStatus = gameStatusInputField.text;
-        GDMananger.Instance.gameStatus = int.Parse(inputGameStatus);
-        GDMananger.Instance.UpdateMap();
+        if(SceneManager.GetActiveScene().buildIndex != 4)
+        {
+
+        }
+        else
+        {
+            GDMananger.Instance.gameStatus = int.Parse(inputGameStatus);
+            GDMananger.Instance.UpdateMap();
+        }
+        
     }
 
     public void OpenSetting()
