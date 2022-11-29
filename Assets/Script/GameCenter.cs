@@ -16,7 +16,7 @@ public class GameCenter : MonoBehaviour
 
     private void OnEnable()
     {
-        //SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1);
         
     }
 

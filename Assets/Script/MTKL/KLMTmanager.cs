@@ -13,7 +13,7 @@ public class KLMTmanager : MonoBehaviour
 
     public static KLMTmanager Instance;
 
-    int gameStatus;
+    public int gameStatus { get; set; }
 
     public void Awake()
     {
@@ -30,7 +30,8 @@ public class KLMTmanager : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == "MtKL1")
         {
-            switch (Player.Instance.myStatus.GetGameStatus())
+            gameStatus = Player.Instance.myStatus.GetGameStatus();
+            switch (gameStatus)
             {
                 case 2:    //第一階段
                     break;
@@ -52,11 +53,6 @@ public class KLMTmanager : MonoBehaviour
         Camerafollowww.Instance.UpdateNowSceneBuildIndex();
         TimeCounter.Instance.StartCountDown();
         DialogueMTKL.Instance.ChangeChatStatus();
-    }
-
-    private void Update()
-    {
-
     }
 
 

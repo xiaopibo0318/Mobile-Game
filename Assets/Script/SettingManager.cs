@@ -87,16 +87,17 @@ public class SettingManager : MonoBehaviour
     private void ChangeGameStatus()
     {
         inputGameStatus = gameStatusInputField.text;
-        if(SceneManager.GetActiveScene().buildIndex != 4)
+        if (SceneManager.GetActiveScene().buildIndex != 4)
         {
-
+            KLMTmanager.Instance.gameStatus = int.Parse(inputGameStatus);
+            KLMTmanager.Instance.KLMTinitial();
         }
         else
         {
             GDMananger.Instance.gameStatus = int.Parse(inputGameStatus);
             GDMananger.Instance.UpdateMap();
         }
-        
+
     }
 
     public void OpenSetting()
