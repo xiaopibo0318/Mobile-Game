@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BookContentManager : MonoBehaviour
 {
     [Header("已經激活之知識")]
-    public List<GameObject> myKnowledge = new List<GameObject>();
+    public List<GameObject> myKnowledge = new ();
     string nowKnowledge;
 
     [Header("所有知識")]

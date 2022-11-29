@@ -43,8 +43,6 @@ namespace UpgradeSystem
             }
 
         }
-
-
         IEnumerator CheckForUpdate()
         {
             Debug.Log("開始傳網路");
