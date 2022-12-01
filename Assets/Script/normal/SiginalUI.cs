@@ -14,22 +14,27 @@ public class SiginalUI : MonoBehaviour
     private UnityAction nextAction;
     private Coroutine coroutine;
 
+    [SerializeField] private Button skipButton;
+
     public static SiginalUI Instance;
     public void Awake()
     {
         Instance = this;
+        skipButton.onClick.AddListener(SkipStory);
         ResetSiginal();
+        
 
     }
 
 
     public void SiginalText(string myText, int signalTime = 3, int textFontSize = 50)
     {
+        skipButton.gameObject.SetActive(true);
         if (coroutine != null) StopCoroutine(coroutine);
         siginalContent.SetActive(true);
         siginalText.text = myText;
         siginalText.fontSize = textFontSize;
-        panel.SetActive(true);
+        //panel.SetActive(true);
         coroutine = StartCoroutine(CloseSignal(signalTime));
     }
 
@@ -69,7 +74,7 @@ public class SiginalUI : MonoBehaviour
         ResetSiginal();
     }
 
-    private void ResetSiginal()
+    public void ResetSiginal()
     {
         if (coroutine != null) StopCoroutine(coroutine);
 
@@ -79,7 +84,15 @@ public class SiginalUI : MonoBehaviour
         confirm.gameObject.SetActive(false);
         dontDo.gameObject.SetActive(false);
         panel.SetActive(false);
+    }
 
+
+    private void SkipStory()
+    {
+        StopCoroutine(coroutine);
+        coroutine = null;
+        SiginalUI.Instance.ResetSiginal();
+        skipButton.gameObject.SetActive(false);
     }
 
 }

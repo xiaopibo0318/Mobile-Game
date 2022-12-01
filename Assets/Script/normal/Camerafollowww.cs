@@ -96,7 +96,7 @@ public class Camerafollowww : Singleton<Camerafollowww>
         {
             if (target.position.x >= -13 && target.position.x <= 15)
             {
-                if (target.position.y >= -9.5 && target.position.y <= 9.5)
+                if (target.position.y >= -9.5 || target.position.y <= 9.5)
                 {
                     if (transform.position != target.position)
                     {
@@ -109,7 +109,7 @@ public class Camerafollowww : Singleton<Camerafollowww>
             {
                 transform.position = new Vector3(target.position.x, transform.position.y, transform.position.z);
             }
-            else if (target.position.y >= -9.5 && target.position.y <= 9.5)
+            else if (target.position.y >= -9.5 || target.position.y <= 9.5)
             {
                 transform.position = new Vector3(transform.position.x, target.position.y, transform.position.z);
             }

@@ -18,10 +18,12 @@ public class TimeCounter : Singleton<TimeCounter>
 
     Coroutine nowCoroutine;
 
+    [SerializeField] private GameObject clockGameObject;
 
 
     public void StartCountDown()
     {
+        ActivateClockObject();
         if (!isStart)
         {
             nowCoroutine = StartCoroutine(Countdown());
@@ -73,6 +75,17 @@ public class TimeCounter : Singleton<TimeCounter>
         needMin = Player.Instance.myStatus.timeMin;
         needSec = Player.Instance.myStatus.timeSec;
         nowCoroutine = StartCoroutine(Countdown());
+    }
+
+
+    public void CloseClockObject()
+    {
+        clockGameObject.SetActive(false);
+    }
+
+    public void ActivateClockObject()
+    {
+        clockGameObject.SetActive(true);
     }
 
 }

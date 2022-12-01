@@ -214,6 +214,9 @@ public class ScratchManager : MonoBehaviour
 
 public static class DirectPoint
 {
+
+    private static float w = Screen.width;
+    private static float h = Screen.height;
     /// <summary>
     /// 方向對照表。
     /// 上 0  0
@@ -262,5 +265,35 @@ public static class DirectPoint
     }
 
 
+    private static void UpdateAllPointPos(float width, float height, Transform target)
+    {
+        ///算他實際位移量
+        float _x = width / 1800 * 900;
+        float _y = height / 900 * 450;
+
+        Vector3 resetVector = new Vector3(-900, -450);
+        Vector3 newOffsetVector = new Vector3(_x, _y);
+
+        float changeScale_x = width / 1800;
+        float changeScale_y = height / 900;
+
+        Vector3 tempPos = target.position;
+
+
+
+    }
+
+
+    /// <summary>
+    /// 不知道為何，線的座標會維持在1800*900，猜測是UI LineRenderer會把範圍固定在我們所設置的Canvas大小，也就是1800*900
+    /// </summary>
+    public static Vector2 GetOriginPos(Vector2 nowPoint)
+    {
+        float changeScale_x = w / 1800;
+        float changeScale_y = h / 900;
+
+        Vector2 afterResetPos = new Vector2(nowPoint.x /= changeScale_x, nowPoint.y /= changeScale_y);
+        return afterResetPos;
+    }
 
 }

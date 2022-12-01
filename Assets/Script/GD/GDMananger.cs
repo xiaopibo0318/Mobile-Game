@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GDMananger : Singleton<GDMananger>
 {
     public int gameStatus { get; set; }
@@ -18,6 +18,8 @@ public class GDMananger : Singleton<GDMananger>
     [SerializeField] private List<Transform> raycastList;
     [Header("傳送陣物件")]
     [SerializeField] private Transform teleportObject1;
+
+    private Coroutine coroutine;
 
     private void OnEnable()
     {
@@ -105,9 +107,10 @@ public class GDMananger : Singleton<GDMananger>
 
 
 
-    public void LookStory() => StartCoroutine(StartStory());
+    public void LookStory() => coroutine = StartCoroutine(StartStory());
 
 
+    
     IEnumerator StartStory()
     {
         float time = 12.1f;

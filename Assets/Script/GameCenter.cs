@@ -16,8 +16,9 @@ public class GameCenter : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.LoadScene(1);
-        
+        //SceneManager.LoadScene(1);
+        ResetAll();
+
     }
 
 
@@ -34,6 +35,10 @@ public class GameCenter : MonoBehaviour
         Application.Quit();
     }
 
+    private void ResetAll()
+    {
+        TimeCounter.Instance.CloseClockObject();
+    }
 
 
 

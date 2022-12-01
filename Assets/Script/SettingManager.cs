@@ -87,7 +87,7 @@ public class SettingManager : MonoBehaviour
     private void ChangeGameStatus()
     {
         inputGameStatus = gameStatusInputField.text;
-        if (SceneManager.GetActiveScene().buildIndex != 4)
+        if (SceneManager.GetActiveScene().buildIndex != 3)
         {
             KLMTmanager.Instance.gameStatus = int.Parse(inputGameStatus);
             KLMTmanager.Instance.KLMTinitial();

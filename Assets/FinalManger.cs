@@ -59,16 +59,21 @@ public class FinalManger : Singleton<FinalManger>
 
         mainText.text = "";
 
-        //mainText.text += "你發現了崑崙山失竊的靈果\n以及西王母的資產\n";
-        //mainText.text += "這是西王母的保險櫃\n";
-        //mainText.text += "原來靈果並不是無緣故得消失\n";
-        //mainText.text += "而是西王母藏起來了\n";
-        mainText.text += "你發現了女媧造人是個騙局\n這一切都只是為了鞏固自己身為首領的權力\n";
-        mainText.text += "以及將自己神化而散布出的謠言\n";
-        mainText.text += "雕的失蹤正是因為部落中有一股推翻女媧的勢力正在崛起\n";
-        mainText.text += "女媧為了避免土雕落入敵方勢力而將其鎖在這間暗房之中\n";
-        mainText.text += "\n\n\n";
-
+        if(location == "崑崙山")
+        {
+            mainText.text += "你發現了崑崙山失竊的靈果\n以及西王母的資產\n";
+            mainText.text += "這是西王母的保險櫃\n";
+            mainText.text += "原來靈果並不是無緣故得消失\n";
+            mainText.text += "而是西王母藏起來了\n";
+        }
+        else if(location == "宮殿")
+        {
+            mainText.text += "你發現了女媧造人是個騙局\n這一切都只是為了鞏固自己身為首領的權力\n";
+            mainText.text += "以及將自己神化而散布出的謠言\n";
+            mainText.text += "雕的失蹤正是因為部落中有一股推翻女媧的勢力正在崛起\n";
+            mainText.text += "女媧為了避免土雕落入敵方勢力而將其鎖在這間暗房之中\n";
+            mainText.text += "\n\n\n";
+        }
         mainText.text += "恭喜玩家" + name + "\n";
         mainText.text += "用時 " + score + " 通關 " + location + "\n";
         mainText.text += "\n\n\n";
@@ -84,6 +89,7 @@ public class FinalManger : Singleton<FinalManger>
 
         mainText.text += "\n\n\n\n\n";
         mainText.text += "《特別感謝》\n";
+        mainText.text += "友情支援： Tk.Studio\n";
         mainText.text += "音樂設計： 廖于任\n";
         mainText.text += "獎章系統： 劉威成\n";
         mainText.text += "技術指導： Apple Wang\n\n";
