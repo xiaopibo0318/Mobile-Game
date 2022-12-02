@@ -19,6 +19,9 @@ public class GDMananger : Singleton<GDMananger>
     [Header("傳送陣物件")]
     [SerializeField] private Transform teleportObject1;
 
+
+    [SerializeField] private Inventory myBag;
+
     private Coroutine coroutine;
 
     private void OnEnable()
@@ -28,7 +31,20 @@ public class GDMananger : Singleton<GDMananger>
         LoadMap();
         TimeCounter.Instance.StartCountDown();
         //DialogueManageGD.Instance.ChangeChatStatus(); //這行隔壁在start才初始化，因此不能用
+        //ClearBag();
     }
+
+
+    //private void ClearBag()
+    //{
+    //    for (int i = 0; i < myBag.itemList.Count; i++)
+    //    {
+    //        myBag.itemList[i].itemHave = 0;
+    //    }
+    //    InventoryManager.Instance.RefreshFromExternal();
+    //    myBag.itemList.Clear();
+    //}
+
 
     public void UpdateMap()
     {
@@ -110,11 +126,11 @@ public class GDMananger : Singleton<GDMananger>
     public void LookStory() => coroutine = StartCoroutine(StartStory());
 
 
-    
+
     IEnumerator StartStory()
     {
         float time = 12.1f;
-        SiginalUI.Instance.SiginalText("在神農氏22年，女媧所在的宮殿，附近村落的村民懷疑女媧表裡不一、並不是個和藹可親的領導者，",12,45);
+        SiginalUI.Instance.SiginalText("在神農氏22年，女媧所在的宮殿，附近村落的村民懷疑女媧表裡不一、並不是個和藹可親的領導者，", 12, 45);
         while (time > 0)
         {
             time -= Time.deltaTime;
@@ -128,14 +144,14 @@ public class GDMananger : Singleton<GDMananger>
             yield return null;
         }
         time = 10.1f;
-        SiginalUI.Instance.SiginalText("1.宮殿的主人女媧，據聞是個表裡不一的人，外表看起來和藹可親， 事實上是個最毒婦人心",10,45);
+        SiginalUI.Instance.SiginalText("1.宮殿的主人女媧，據聞是個表裡不一的人，外表看起來和藹可親， 事實上是個最毒婦人心", 10, 45);
         while (time > 0)
         {
             time -= Time.deltaTime;
             yield return null;
         }
         time = 7.1f;
-        SiginalUI.Instance.SiginalText("2. 在宮殿中，你需要修復、解除一些裝置來達到某些目的",7);
+        SiginalUI.Instance.SiginalText("2. 在宮殿中，你需要修復、解除一些裝置來達到某些目的", 7);
         while (time > 0)
         {
             time -= Time.deltaTime;

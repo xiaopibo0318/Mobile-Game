@@ -68,12 +68,13 @@ public class KLMTmanager : MonoBehaviour
     public GameObject teleport;
     //public GameObject flowerClose;
     //public GameObject flowerOpen;
+    [SerializeField] private GameObject endObject;
 
 
     //蓮花謎題
     public void firstStepKL()
     {
-        
+
         CanvasManager.Instance.openCanvas("original");
     }
 
@@ -97,6 +98,11 @@ public class KLMTmanager : MonoBehaviour
         DialogueMTKL.Instance.ChangeChatStatus();
     }
 
+    private void endStepKL()
+    {
+        endObject.SetActive(true);
+    }
+
     private int GetGameStatus()
     {
         return Player.Instance.myStatus.GetGameStatus();
@@ -104,23 +110,25 @@ public class KLMTmanager : MonoBehaviour
 
     public void KLMTinitial()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        Debug.Log("QQQ");
+        switch (gameStatus)
         {
-            switch (Player.Instance.myStatus.GetGameStatus())
-            {
-                case 1:    //第一階段
-                    break;
-                case 12:    //第二階段
-                    Debug.Log("重製至第二階段");
-                    secondStepKL();
-                    break;
-                case 13:
-                    thirdStepKL();
-                    break;
-            }
-
+            case 1:    //第一階段
+                break;
+            case 12:    //第二階段
+                Debug.Log("重製至第二階段");
+                secondStepKL();
+                break;
+            case 13:
+                thirdStepKL();
+                break;
+            case 14:
+                endStepKL();
+                break;
 
         }
+
+        Player.Instance.myStatus.gameStatus = gameStatus;
     }
 }
 

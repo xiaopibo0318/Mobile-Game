@@ -22,35 +22,60 @@ public class PlayerStyleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void WhichAmI(int n)
     {
         Debug.Log(n);
-        
-        for(int i=0; i< 2; i++)
+
+        for (int i = 0; i < 2; i++)
         {
-            if(PlayerStyle[i].gameObject == true)
+            if (PlayerStyle[i].gameObject == true)
             {
                 PlayerStyle[i].SetActive(false);
             }
-            
-        }
-        
-        switch (n)
-        {
-            case 0:
-                PlayerStyle[0].SetActive(true);
-                break;
 
-            case 1:
-                PlayerStyle[1].SetActive(true);
-                break;
-
-            case 2:
-                PlayerStyle[2].SetActive(true);
-                break;
         }
+
+        //switch (n)
+        //{
+        //    case 0:
+        //        PlayerStyle[0].SetActive(true);
+        //        break;
+
+        //    case 1:
+        //        PlayerStyle[1].SetActive(true);
+        //        break;
+
+        //    case 2:
+        //        PlayerStyle[2].SetActive(true);
+        //        break;
+        //}
+
+        HandleBug();
     }
+
+    /// <summary>
+    /// 尚未更新其他角色動畫
+    /// </summary>
+    private void HandleBug()
+    {
+
+        //SiginalUI.Instance.SiginalText("其他角色尚未開放\n自動幫您切換成黑色");
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (PlayerStyle[i].gameObject == true)
+            {
+                PlayerStyle[i].SetActive(false);
+            }
+
+        }
+
+        PlayerStyle[1].SetActive(true);
+    }
+
 }
+
+

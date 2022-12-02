@@ -16,7 +16,7 @@ public class FinalManger : Singleton<FinalManger>
     {
         CaculateScore();
         string timeText = ((int)totalTime / 60).ToString() + "：" + ((int)totalTime % 60).ToString();
-        TextUpdate(Player.Instance.myStatus.name, timeText);
+        TextUpdate(Player.Instance.myStatus.name, timeText, Player.Instance.myStatus.levelChoose);
     }
 
     private void OnEnable()
@@ -54,19 +54,19 @@ public class FinalManger : Singleton<FinalManger>
         coroutine = StartCoroutine(RollText());
     }
 
-    private void TextUpdate(string name = "xiaopibo", string score = "29:30", string location = "宮殿")
+    private void TextUpdate(string name = "xiaopibo", string score = "29:30", int locationIndex = 4)
     {
 
         mainText.text = "";
 
-        if(location == "崑崙山")
+        if (locationIndex == 2)
         {
             mainText.text += "你發現了崑崙山失竊的靈果\n以及西王母的資產\n";
             mainText.text += "這是西王母的保險櫃\n";
             mainText.text += "原來靈果並不是無緣故得消失\n";
             mainText.text += "而是西王母藏起來了\n";
         }
-        else if(location == "宮殿")
+        else if (locationIndex == 4)
         {
             mainText.text += "你發現了女媧造人是個騙局\n這一切都只是為了鞏固自己身為首領的權力\n";
             mainText.text += "以及將自己神化而散布出的謠言\n";
@@ -75,7 +75,10 @@ public class FinalManger : Singleton<FinalManger>
             mainText.text += "\n\n\n";
         }
         mainText.text += "恭喜玩家" + name + "\n";
-        mainText.text += "用時 " + score + " 通關 " + location + "\n";
+        if (locationIndex == 2)
+            mainText.text += "用時 " + score + " 通關崑崙山 " + "\n";
+        else if (locationIndex == 4)
+            mainText.text += "用時 " + score + " 通關宮殿 " + "\n";
         mainText.text += "\n\n\n";
         mainText.text += "恭喜您獲得以下獎章";
         mainText.text += "\n\n\n\n\n";
@@ -113,5 +116,6 @@ public class FinalManger : Singleton<FinalManger>
         }
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        TimeCounter.Instance.CloseClockObject();
     }
 }

@@ -167,7 +167,7 @@ public class playerStatus
     public string name;
     public int gameStatus;
     public int totalTime;
-    public int levelChoose;
+    public int levelChoose { get; set; }
     public int bookClick;
 
     public int timeMin;

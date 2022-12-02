@@ -25,7 +25,7 @@ public class InventoryManager : MonoBehaviour
 
     public GameObject siginalObject;
     public SiginalUI siginalUI;
-    
+
     private void Awake()
     {
         //siginalObject = GameObject.FindGameObjectWithTag("SiginalUI");
@@ -40,7 +40,7 @@ public class InventoryManager : MonoBehaviour
 
     private void OnEnable()
     {
-    
+
         RefreshItem();
         //Instance.itemInformation.text = "";
     }
@@ -50,7 +50,7 @@ public class InventoryManager : MonoBehaviour
         //itemInformation.text = ItemDescription;
     }
 
-    
+
     /// <summary>
     /// 背包添加物品
     /// </summary>
@@ -88,6 +88,7 @@ public class InventoryManager : MonoBehaviour
         cacheVisable.Instance.cacheSomething(thisItem);
     }
 
+    public void RefreshFromExternal() => RefreshItem();
 
     public static void RefreshItem()
     {
@@ -102,7 +103,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         //判斷背包內有多少物品
-        for(int i = 0; i < Instance.myBag.itemList.Count; i++)
+        for (int i = 0; i < Instance.myBag.itemList.Count; i++)
         {
             //小於1的數量刪掉
             if (Instance.myBag.itemList[i] != null)
@@ -112,7 +113,7 @@ public class InventoryManager : MonoBehaviour
                     Instance.myBag.itemList[i] = null;
                 }
             }
-                
+
             //CreateNewItem(Instance.myBag.itemList[i]);
 
             //生成空格子
@@ -129,13 +130,13 @@ public class InventoryManager : MonoBehaviour
             //把背包的物品給列表
             Instance.slots[i].GetComponent<Slot>().SetupSlot(Instance.myBag.itemList[i]);
 
-            
+
 
         }
 
     }
 
-    public void SubItem(Item thisItem,int num=1)
+    public void SubItem(Item thisItem, int num = 1)
     {
         if (myBag.itemList.Contains(thisItem))
         {

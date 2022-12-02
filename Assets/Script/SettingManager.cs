@@ -89,6 +89,7 @@ public class SettingManager : MonoBehaviour
         inputGameStatus = gameStatusInputField.text;
         if (SceneManager.GetActiveScene().buildIndex != 3)
         {
+            Debug.Log("333");
             KLMTmanager.Instance.gameStatus = int.Parse(inputGameStatus);
             KLMTmanager.Instance.KLMTinitial();
         }
