@@ -51,7 +51,7 @@ public class SandPaperOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void OnEndDrag(PointerEventData eventData)
     {
         ParticleManager.Instance.WoodParticleDisable();
-        if (eventData.pointerCurrentRaycast.gameObject.name == "Circle")
+        if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Circle"))
         {
             if(stayTime >= 5)
             {

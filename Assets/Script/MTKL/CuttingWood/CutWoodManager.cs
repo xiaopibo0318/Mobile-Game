@@ -47,8 +47,6 @@ public class CutWoodManager : MonoBehaviour
     bool timeFinished;
     Coroutine timeCoroutine = null;
 
-    [Header("顯示信息")]
-    public SiginalUI siginalUI;
 
 
     [Header("事件")]
@@ -212,7 +210,7 @@ public class CutWoodManager : MonoBehaviour
 
     public void CutSucceed()
     {
-        siginalUI.SiginalText("切割成功，木頭已放入背包");
+        SiginalUI.Instance.SiginalText("切割成功，木頭已放入背包");
         StopCoroutine(timeCoroutine);
         foreach (var myWood in woodList)
         {
@@ -234,7 +232,7 @@ public class CutWoodManager : MonoBehaviour
         StopCoroutine(timeCoroutine);
         needSec = 0;
         timerText.text = string.Format("{0}", needSec.ToString("f2")).Replace(".", ":");
-        siginalUI.SiginalText("切割失敗");
+        SiginalUI.Instance.SiginalText("切割失敗");
         ClearLine();
         ResetWoodUI();
     }
