@@ -29,7 +29,7 @@ public class SandPaperOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         //Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
         
 
-        if (eventData.pointerCurrentRaycast.gameObject.name == "Circle")
+        if (eventData.pointerCurrentRaycast.gameObject.name.Contains("Circle"))
         {
             if (!isParticle)
             {

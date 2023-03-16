@@ -254,7 +254,7 @@ public class WiresawManager : MonoBehaviour
 
         if (firstUse)
         {
-            SiginalUI.Instance.SiginalText("請配合左下角的按鍵\n將上方壓力值控制在中間時\n將鋸條拖進去", 10, 40);
+            SiginalUI.Instance.SiginalText("請配合左下角的按鍵\n將上方壓力值控制在中間時\n將鋸條拖進去", 10, 40, false);
             firstUse = false;
             float signalTIme = 10;
             while (signalTIme > 0)
@@ -265,7 +265,7 @@ public class WiresawManager : MonoBehaviour
             }
         }
 
-        
+
         while (thisTime > 0)
         {
             timerText.text = string.Format("{0}", thisTime.ToString("f2")).Replace(".", ":");

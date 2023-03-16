@@ -6,7 +6,6 @@ public class myLoveTag : MonoBehaviour
 {
     [SerializeField] private Inventory mybeg;
 
-    [SerializeField] private SiginalUI signalUI;
     [SerializeField] private Item love;
     [SerializeField] private GameObject mySelf;
 
@@ -16,7 +15,7 @@ public class myLoveTag : MonoBehaviour
 
 
     public static myLoveTag Instance;
-    
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -32,7 +31,8 @@ public class myLoveTag : MonoBehaviour
         if (netHave == false)
         {
             this.transform.tag = "cache";
-        }else if (netHave == true)
+        }
+        else if (netHave == true)
         {
             this.transform.tag = "net";
         }
@@ -44,7 +44,7 @@ public class myLoveTag : MonoBehaviour
 
     public void IsNetInBag()
     {
-        foreach(var myItem in mybeg.itemList)
+        foreach (var myItem in mybeg.itemList)
         {
             if (myItem == null) continue;
 
@@ -83,7 +83,7 @@ public class myLoveTag : MonoBehaviour
 
         if (myTag != "net")
         {
-            signalUI.SiginalText("水有點深，好像需要一些工具才能撈到");
+            SiginalUI.Instance.SiginalText("水有點深，好像需要一些工具才能撈到");
         }
         else
         {

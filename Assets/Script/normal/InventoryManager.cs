@@ -24,7 +24,6 @@ public class InventoryManager : MonoBehaviour
     Item temp;
 
     public GameObject siginalObject;
-    public SiginalUI siginalUI;
 
     private void Awake()
     {
@@ -167,7 +166,7 @@ public class InventoryManager : MonoBehaviour
         //confirm.SetActive(false);
         //dontDo.SetActive(false);
         //StartCoroutine(signalDisable());
-        siginalUI.SiginalText("該物品不可丟棄");
+        SiginalUI.Instance.SiginalText("該物品不可丟棄");
     }
 
     public void RemoveSomethong()
@@ -216,7 +215,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (isBagFull())
         {
-            siginalUI.SiginalText("背包已滿，請丟棄物品在撿取");
+            SiginalUI.Instance.SiginalText("背包已滿，請丟棄物品在撿取");
             return true;
         }
         return false;

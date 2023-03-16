@@ -22,14 +22,16 @@ public class SiginalUI : MonoBehaviour
         Instance = this;
         skipButton.onClick.AddListener(SkipStory);
         ResetSiginal();
-        
+
 
     }
 
 
-    public void SiginalText(string myText, int signalTime = 3, int textFontSize = 50)
+    public void SiginalText(string myText, int signalTime = 3, int textFontSize = 50, bool canSkip = true)
     {
-        skipButton.gameObject.SetActive(true);
+        if (canSkip == true) skipButton.gameObject.SetActive(true);
+        else skipButton.gameObject.SetActive(false);
+
         if (coroutine != null) StopCoroutine(coroutine);
         siginalContent.SetActive(true);
         siginalText.text = myText;
@@ -92,7 +94,7 @@ public class SiginalUI : MonoBehaviour
         StopCoroutine(coroutine);
         coroutine = null;
         SiginalUI.Instance.ResetSiginal();
-        skipButton.gameObject.SetActive(false);
+        //skipButton.gameObject.SetActive(false);
     }
 
 }
