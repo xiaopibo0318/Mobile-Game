@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.Events;
+
 using UpgradeSystem;
 public class TitleManager : Singleton<TitleManager>
 {
@@ -187,6 +188,8 @@ public class TitleManager : Singleton<TitleManager>
     public void EnteringRoomList()
     {
         MenuManager.Instance.OpenMenu("roomlist");
+        EndGameManager.Instance.ChangeRoomState(GameCenter.Instance.tempIndex, GameCenter.Instance.tempText);
+        EndGameManager.Instance.UpdateRoomState();
     }
 
 

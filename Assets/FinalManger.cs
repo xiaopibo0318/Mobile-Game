@@ -17,6 +17,7 @@ public class FinalManger : Singleton<FinalManger>
         CaculateScore();
         string timeText = ((int)totalTime / 60).ToString() + "：" + ((int)totalTime % 60).ToString();
         TextUpdate(Player.Instance.myStatus.name, timeText, Player.Instance.myStatus.levelChoose);
+        GameCenter.Instance.ChangeRoomState(Player.Instance.myStatus.levelChoose, timeText);
     }
 
     private void OnEnable()
@@ -65,6 +66,7 @@ public class FinalManger : Singleton<FinalManger>
             mainText.text += "這是西王母的保險櫃\n";
             mainText.text += "原來靈果並不是無緣故得消失\n";
             mainText.text += "而是西王母藏起來了\n";
+            mainText.text += "\n\n\n\n\n\n";
         }
         else if (locationIndex == 4)
         {
