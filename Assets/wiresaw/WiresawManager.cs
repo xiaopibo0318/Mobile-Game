@@ -167,6 +167,7 @@ public class WiresawManager : MonoBehaviour
 
             isFinished = true;
             textLabel.text = "您以成功組裝手線鋸，可去背包查看，知識也同步進百科全書了。";
+            SiginalUI.Instance.SiginalText("組裝成功");
         }
     }
 

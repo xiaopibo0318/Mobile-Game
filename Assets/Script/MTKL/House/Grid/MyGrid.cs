@@ -12,7 +12,6 @@ public class MyGrid : MonoBehaviour
     private int[] answer;
     private int[] myAnswer;
 
-    public SiginalUI siginalUI;
 
     List<Shape> closeList = new List<Shape>();
 
@@ -115,10 +114,11 @@ public class MyGrid : MonoBehaviour
         {
             KLMTmanager.Instance.thirdStepKL();
             cacheVisable.Instance.siginalSomething("好像有哪裡產生了一些變化");
+            SiginalUI.Instance.SiginalText("好像有哪裡產生了一些變化");
         }
         else
         {
-            siginalUI.SiginalText("好像哪裡怪怪的");
+            SiginalUI.Instance.SiginalText("好像哪裡怪怪的");
             Debug.Log("好像哪裡怪怪的");
         }
 

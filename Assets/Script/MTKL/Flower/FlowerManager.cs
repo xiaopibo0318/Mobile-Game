@@ -20,7 +20,7 @@ public class FlowerManager : MonoBehaviour
 
     public void Awake()
     {
-        answer = new int[8] { 1, 0, 1, 0, 0, 0, 1, 1};   //0,2,6,7  對應 原始密碼2,3,5,7 => 變換的結果。
+        answer = new int[8] { 1, 0, 1, 0, 0, 0, 1, 1 };   //0,2,6,7  對應 原始密碼2,3,5,7 => 變換的結果。
         myAnswer = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
         index = 0;
         firstStep = true;
@@ -33,9 +33,9 @@ public class FlowerManager : MonoBehaviour
     public void FixedUpdate()
     {
 
-            
 
-        
+
+
     }
 
     public void CheckAnswer()
@@ -68,13 +68,16 @@ public class FlowerManager : MonoBehaviour
             flowerUnactivateLook.SetActive(false);
             flowerActivateLook.SetActive(true);
             cacheVisable.Instance.siginalSomething("偏房似乎有了變化，去看看吧！");
+            SiginalUI.Instance.SiginalText("右上方的房子\n似乎傳出一些聲音");
             //KLMTmanager.Instance.gameStatus = KLMTmanager.GameStatus.beforeHouse;
             KLMTmanager.Instance.secondStepKL();
-            
 
-        }else
+
+        }
+        else
         {
             AudioManager.Instance.lotus("failed");
+            SiginalUI.Instance.SiginalText("花朵沒有任何變化");
             Debug.Log("失敗");
         }
         index = 0;

@@ -230,6 +230,7 @@ public class ballGameManager : MonoBehaviour
     public void EndGame()
     {
         InventoryManager.Instance.AddNewItem(Key);
+        SiginalUI.Instance.SiginalText("鑰匙從箱子上\n彈了出來");
     }
 
     public void BallOnClick()

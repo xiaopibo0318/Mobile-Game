@@ -122,6 +122,7 @@ public class itemUIManager : MonoBehaviour
     public void openBox()
     {
         cacheVisable.Instance.siginalSomething("遠處好像有一些聲音，某處可能有了變化");
+        SiginalUI.Instance.SiginalText("遠處傳來一些聲音，某處可能有了變化");
         treasureBox.SetActive(true);
     }
 
