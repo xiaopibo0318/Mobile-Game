@@ -565,12 +565,13 @@ public static class TargetPoint
     private static Vector2[] pointWood601 = new Vector2[] //圓的可能還會再改
     {
         new Vector2(880,120),
-
+        new Vector2(625,277),
         new Vector2(570,435),
-
+        new Vector2(625,602),
         new Vector2(880,770),
-
-        new Vector2(1220,435)
+        new Vector2(1150,602),
+        new Vector2(1220,435),
+        new Vector2(1150,277)
 
     };
 

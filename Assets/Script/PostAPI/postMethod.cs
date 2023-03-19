@@ -57,7 +57,7 @@ public class PostMethod : MonoBehaviour
 
     IEnumerator PostData_Coroutine()
     {
-        string url = "http://140.122.91.142:3000/";
+        string url = "http://140.122.91.204:3000/api/woodWorking/";
         WWWForm form = new WWWForm();
         form.AddField("username", playerName);
         form.AddField("email", playerEmail);
