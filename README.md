@@ -21,7 +21,7 @@ https://youtu.be/PIOPXWeviIA
 
 4.後端資料庫系統 - 我們採用phpAdmin以及MySQL將學生資料保存至後端伺服器，在學生破關時，會將數位徽章傳送至他的Email，可供學生進行後續知識的複習。
 
-若想了解更多，可至官方網站作查看：https://ntnutechpunk112.ml/group/?project=Westpath
+若想了解更多，可至官方網站作查看：https://ntnutechpunk112.hunterhsu.net/group/?project=Westpath
 
 # 遊戲檔案下載處(僅支援Android系統)
 https://drive.google.com/drive/folders/1WMuNEaQAkkhljtTil5IAuYGrOPH-Z_l4?usp=share_link
